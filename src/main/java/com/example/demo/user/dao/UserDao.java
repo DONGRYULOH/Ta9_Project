@@ -9,4 +9,13 @@ public interface UserDao {
 
 	// ----------- 로그인 확인 ----------
     public String signIn() throws Exception;
+
+    // ID 중복체크 검사	
+	public int idCheck(String user_id) throws Exception;
+
+	// 닉네임 중복체크 검사
+	public int nicknameCheck(String user_nickname) throws Exception;
+
+	// 회원가입 처리 
+	public int register(UserDto userDto) throws Exception;
 }
