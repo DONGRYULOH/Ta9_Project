@@ -7,8 +7,8 @@ import com.example.demo.user.dto.UserDto;
 
 public interface UserDao {
 
-	// ----------- 로그인 확인 ----------
-    public String signIn() throws Exception;
+	// 로그인 처리 
+    public UserDto signIn(UserDto userDto) throws Exception;
 
     // ID 중복체크 검사	
 	public int idCheck(String user_id) throws Exception;

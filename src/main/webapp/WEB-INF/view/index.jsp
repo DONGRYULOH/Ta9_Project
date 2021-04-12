@@ -11,6 +11,12 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <%@ include file="/WEB-INF/include/head_import.jsp" %>
+        
+        <script type="text/javascript">       	        	
+        	if('${result}' == 1) {
+        		alert('${msg}');
+        	}
+        </script>
     </head>
 
     <body data-spy="scroll" data-target=".navbar-collapse">

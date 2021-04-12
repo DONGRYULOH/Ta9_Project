@@ -24,5 +24,29 @@
 				values(#{user_id},#{user_pwd},#{user_nickname})		
 	</insert>
 	
+  <!-- 로그인 처리 검사 -->
+  <select id="signIn" parameterType="com.example.demo.user.dto.UserDto" resultType="com.example.demo.user.dto.UserDto">
+  		select user_id,user_pwd
+  			from user
+  		 where user_id = #{user_id}  
+  </select>
+	
+	
 	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -47,7 +47,7 @@ public class UserController {
 	// 회원가입 페이지 이동 
 	@RequestMapping(value="/register" , method = RequestMethod.GET)
 	public String register() {
-		return "register";
+		return "user/register";
 	}
 	
 	// 회원가입 처리 
@@ -64,24 +64,33 @@ public class UserController {
 		}		
 		model.addAttribute("msg",msg);
 		model.addAttribute("result",result);
-		return "register";
+		return "user/register";
 	}
 
+	// 로그인 페이지 이동 
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+	public String signIn() {
+		return "user/login";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping(value="/login")
-	public String signIn() throws Exception {
-		String result = userService.signIn();
-		System.out.println("가져온 로그인 결과값은?"+result);
-		return result;
+	// 로그인 처리
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	public String signIn(UserDto userDto,Model model) {
+		// 로그인 성공여부에 따라 이동될 주소 ( -1 : 로그인 실패 , 1 : 로그인 성공)
+		String url = "user/login";
+		// 로그인시 출력될 메시지 
+		String msg = "로그인 실패! 다시 시도 바람!"; 
+		
+		int result = userService.signIn(userDto);
+		if(result == 1) {
+			url = "index";
+			msg = "로그인 성공!";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("result",result);			
+		
+		return url;
 	}
 	
 	
