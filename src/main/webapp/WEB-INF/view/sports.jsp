@@ -33,7 +33,7 @@
 
             
 			<!-- 스포츠 관련 컨테이너 -->
-			<div class="container" style=" height: 700px;">
+			<div class="container" >
 			
 				<div class="row" style="padding-bottom: 50px;margin-top: 10px;">
 					<div class="dropdown" >
@@ -74,7 +74,7 @@
 				</div>
 				
 				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 2-->
-				<div class="row">
+				<div class="row" style="margin-bottom: 40px;">
 					<!-- 썸네일 -->
 					<div class="col-md-4">
 						<img src="assets/images/blog/3.jpg" alt="">
@@ -94,7 +94,33 @@
 					<!-- 무료,유료 여부 -->
 					<div class="col-md-4">
 						<h4>유료영상(1000P)</h4>
+						<button type="button">결제완료</button>
+					</div>					                                    																		
+				</div>
+				
+				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 3-->
+				<div class="row">
+					<!-- 썸네일 -->
+					<div class="col-md-4">
+						<img src="assets/images/blog/3.jpg" alt="">
 					</div>
+					<!-- 제목,날짜,조회수 -->
+					<div class="col-md-4">
+						<div class="row">
+							<h4>호나우지뉴 맨유 이적</h4>
+						</div>	
+						<div class="row">
+							<h5>2020/04/08</h5>
+						</div>	
+						<div class="row">
+							<h5>조회수 : 2000</h5>
+						</div>		
+					</div>
+					<!-- 무료,유료 여부 -->
+					<div class="col-md-4">
+						<h4>유료영상(5000P)</h4>
+						<button type="button">결제하기</button>
+					</div>					                                    																		
 				</div>
 				
 				<!-- 페이징 -->

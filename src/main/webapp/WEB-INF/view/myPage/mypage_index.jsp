@@ -16,25 +16,6 @@
     <body data-spy="scroll" data-target=".navbar-collapse">
 
 
-        <!-- Preloader -->
-        <div id="loading">
-            <div id="loading-center">
-                <div id="loading-center-absolute">
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                </div>
-            </div>
-        </div>
-        <!--End off Preloader -->
-
 
         <div class="culmn" style="background-color:#a3a3c2;">
             <!-- 헤더 메뉴바 공통 -->
@@ -80,35 +61,39 @@
 					</div>
 					
 					<div class="col-sm-8">
-						<form role="form" method="post" autocomplete="off" enctype="multipart/form-data">
+						<form role="form" method="post" autocomplete="off" action="/mypage_create" enctype="multipart/form-data">
 							<div class="row" style="margin-bottom: 30px;">
-								<input id="title" name="title" type="text" class="form-control">
+								<input id="video_title" name="video_title" type="text" class="form-control">
 							</div>	
 									
+							<!-- 카테고리 선택 -->									
 							<div class="row" style="margin-bottom: 30px;">
 								 <select class="category1" name="category_code">
-								  	<option value="">개발</option>
-								  	<option value="">경제</option>
-								  	<option value="">스포츠</option>
+								 	<option value="101">스포츠</option>
+								  	<option value="102">개발</option>
+								  	<option value="103">경제</option>
+								  	<option value="104">스포츠</option>
+								  	<option value="105">기타 등등(ETC)</option>
 								 </select>
 							</div>		
 												
+							<!-- 공개여부 선택 -->											
 							<div class="row" style="margin-bottom: 30px;">
 								<div class="row">
-									<input type="radio" checked="checked">공개
+									<input type="radio" name="public_check" checked="checked" value="Y">공개
 								</div>
 								<div class="row">
-									<input type="radio">비공개(포인트 입력)
-									<input type="number" min="1">
+									<input type="radio" name="public_check" value="N">비공개(포인트 입력 최소:10P ~ 최대 1,000,000P)
+									<input type="number" name="video_price" min="10" max="10000">
 								</div>
 							</div>
 						
 							<div class="row" style="margin-bottom: 30px;">																  	  	
-							  	  <input type="file" id="thumbNail" name="thumbNail" />				  	  								  	  	
+							  	  <input type="file" id="thumbNail"  />				  	  								  	  	
 							</div>	
 							
 							<div class="row" style="margin-bottom: 30px;">																  	  	
-							  	  <input type="file" id="videoFile" name="videoFile" />				  	  								  	  	
+							  	  <input type="file" id="videoFile"  />				  	  								  	  	
 							</div>	
 							
 							<div align="right" style="margin-bottom: 20px;">
