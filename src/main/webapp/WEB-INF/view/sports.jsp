@@ -69,7 +69,7 @@
 					</div>
 					<!-- 무료,유료 여부 -->
 					<div class="col-md-4">
-						<h4>무료영상</h4>
+						<h4>전체공개</h4>
 					</div>
 				</div>
 				
@@ -93,8 +93,7 @@
 					</div>
 					<!-- 무료,유료 여부 -->
 					<div class="col-md-4">
-						<h4>유료영상(1000P)</h4>
-						<button type="button">결제완료</button>
+						<h4>골드 등급 부터 열람 가능</h4>
 					</div>					                                    																		
 				</div>
 				
@@ -118,8 +117,7 @@
 					</div>
 					<!-- 무료,유료 여부 -->
 					<div class="col-md-4">
-						<h4>유료영상(5000P)</h4>
-						<button type="button">결제하기</button>
+						<h4>브론즈 등급 부터 열람 가능</h4>
 					</div>					                                    																		
 				</div>
 				

@@ -52,7 +52,7 @@
 						<div class="row" style="margin-bottom: 22px;">
 							<h4>공개여부</h4>
 						</div>
-						<div class="row" style="margin-bottom: 22px;">
+						<div class="row" style="margin-bottom: 330px;">
 							<h4>썸네일 이미지 선택</h4>
 						</div>
 						<div class="row" style="margin-bottom: 22px;">
@@ -80,20 +80,28 @@
 							<!-- 공개여부 선택 -->											
 							<div class="row" style="margin-bottom: 30px;">
 								<div class="row">
-									<input type="radio" name="public_check" checked="checked" value="Y">공개
+									<input type="radio" name="public_check" checked="checked" value="Y">전체공개
 								</div>
 								<div class="row">
-									<input type="radio" name="public_check" value="N">비공개(포인트 입력 최소:10P ~ 최대 1,000,000P)
-									<input type="number" name="video_price" min="10" max="10000">
+									<input type="radio" name="public_check" value="N">등급별 게시물 접근 선택 
+									<select name="video_rank_limit">
+									 	<option value="Bronze">브론즈</option>
+									  	<option value="Sliver">실버</option>
+									  	<option value="Gold">골드</option>
+									  	<option value="Platinum">플래티넘</option>									  	
+									</select>
 								</div>
 							</div>
 						
-							<div class="row" style="margin-bottom: 30px;">																  	  	
-							  	  <input type="file" id="thumbNail"  />				  	  								  	  	
+							<!-- 썸네일 이미지 선택 -->
+							<div class="row" style="margin-bottom: 50px;height: 320px;">																  	  	
+							  	  <input type="file" id="thumbNail" onchange="setThumbnail(event);" />
+							  	  <div id="image_container"></div>				  	  								  	  	
 							</div>	
 							
+							<!-- 동영상 파일 선택 -->
 							<div class="row" style="margin-bottom: 30px;">																  	  	
-							  	  <input type="file" id="videoFile"  />				  	  								  	  	
+							  	  <input type="file" id="video_File" name="video_File"  />				  	  								  	  	
 							</div>	
 							
 							<div align="right" style="margin-bottom: 20px;">
@@ -125,5 +133,25 @@
 
     </body>
     
+    <script type="text/javascript">
+    	/* 썸네일 이미지 선택시 화면에 표시해주기 */
+    	function setThumbnail(event) { 
+    		$("#image_container").empty();    		
+    		for (var image of event.target.files) { 
+    			var reader = new FileReader(); 
+    			reader.onload = function(event){ 
+    				var img = document.createElement("img"); 
+    				img.setAttribute("src", event.target.result);    
+    				img.setAttribute("height",300);
+    				document.querySelector("div#image_container").appendChild(img); 
+    			}; 
+    			console.log(image); 
+    			reader.readAsDataURL(image);     			
+    		}
+    		
+    	}
+		
+    </script>
+    	
     <%@ include file="/WEB-INF/include/js_import.jsp" %>
 </html>

@@ -54,7 +54,8 @@
                                         <h4>제목 : 손흥민 바로셀로나 이적</h4>
                                         <ol class="breadcrumb">                                            
                                             <li><a href="#" class="text-black">Feb 28th 2015</a></li>
-                                            <li><a href="#" class="text-black">2 comments</a></li>
+                                            <li><a href="#" class="text-black">조회수 : 100</a></li>
+                                            <li><a href="#" class="text-black">작성자 : dong</a></li>
                                         </ol>
                                     </div>
                                     <div align="center" style="margin-top: 10px;">

@@ -71,8 +71,11 @@
 							<h4>닉네임</h4>
 						</div>							
 						<div class="row" style="margin-bottom: 20px;">
-							<h4>My 포인트</h4>
-						</div>						
+							<h4>My 경험치</h4>
+						</div>	
+						<div class="row" style="margin-bottom: 20px;">
+							<h4>현재등급</h4>
+						</div>					
 					</div>
 					
 					<div class="col-sm-8">	
@@ -83,8 +86,11 @@
 							<h5>비트비트</h5>
 						</div>						
 						<div class="row" style="margin-bottom: 30px;">
-							<h5>5,300 P</h5>
+							<h5>500 EXP</h5>
 						</div>	
+						<div class="row" style="margin-bottom: 30px;">
+							<h5>브론즈</h5>
+						</div>
 					</div>		
 				</div>
 							

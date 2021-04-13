@@ -60,18 +60,18 @@
 					<!-- 제목,날짜,조회수 -->
 					<div class="col-md-4">
 						<div class="row">
-							<h3>손흥민 바르셀로나 이적</h3>
+							<h4>제목:레알 챔스 결승 진출</h4>
 						</div>	
 						<div class="row">
-							<h3>2020/04/06</h3>
+							<h5>2020/04/09</h5>
 						</div>	
 						<div class="row">
-							<h3>조회수 : 1000</h3>
-						</div>		
+							<h5>조회수 : 5000</h5>
+						</div>			
 					</div>
 					<!-- 무료,유료 여부 -->
 					<div class="col-md-4">
-						<h3>무료영상</h3>
+						<h4>전체공개</h4>
 					</div>
 				</div>
 				
@@ -95,9 +95,7 @@
 					</div>
 					<!-- 무료,유료 여부 -->
 					<div class="col-md-4">
-						<h4>유료영상(1000P)</h4>
-						<button type="button" class="btn btn-primary">수정하기</button>
-						<button type="button" class="btn btn-primary">삭제하기</button>
+						<h4>골드 등급 부터 열람 가능</h4>
 					</div>
 				</div>
 				

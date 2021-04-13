@@ -1,6 +1,7 @@
 package com.example.demo.mypage.dto;
 /*
- 	create table video(
+-- 비디오 테이블 
+create table video(
 	video_number int not null auto_increment,
     user_id varchar(20) not null,
     category_code varchar(10) not null,
@@ -9,7 +10,7 @@ package com.example.demo.mypage.dto;
     video_hits int not null default 0,
     video_reports int not null default 0,
     video_date datetime DEFAULT CURRENT_TIMESTAMP not null, 
-    video_price int not null default 0,
+    video_rank_limit varchar(10) not null,
     PRIMARY KEY(video_number),
     FOREIGN KEY(user_id) REFERENCES user(user_id),
     FOREIGN KEY(category_code) REFERENCES video_category(category_code)
@@ -25,7 +26,7 @@ public class VideoDto {
 	private int video_hits;
 	private int video_reports;
 	private String video_date;
-	private int video_price;
+	private String video_rank_limit;
 	
 	public int getVideo_number() {
 		return video_number;
@@ -75,12 +76,13 @@ public class VideoDto {
 	public void setVideo_date(String video_date) {
 		this.video_date = video_date;
 	}
-	public int getVideo_price() {
-		return video_price;
+	public String getVideo_rank_limit() {
+		return video_rank_limit;
 	}
-	public void setVideo_price(int video_price) {
-		this.video_price = video_price;
+	public void setVideo_rank_limit(String video_rank_limit) {
+		this.video_rank_limit = video_rank_limit;
 	}
+	
 	
 	
 	
