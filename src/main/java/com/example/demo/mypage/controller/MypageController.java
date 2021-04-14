@@ -1,5 +1,6 @@
 package com.example.demo.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,30 +32,27 @@ public class MypageController {
 	
 	// 동영상 업로드하기 
 	@RequestMapping(value = "/mypage_create",method = RequestMethod.POST)
-	public String mypage_create(VideoDto videoDto,@RequestPart List<MultipartFile> files,HttpServletRequest request) {
+	public String mypage_create(VideoDto videoDto,HttpServletRequest request) {
 		System.out.println("제목:"+videoDto.getVideo_title());
 		System.out.println("카테고리 코드:"+videoDto.getCategory_code());
 		System.out.println("공개여부:"+videoDto.getPublic_check());
 		System.out.println("제한 등급:"+videoDto.getVideo_rank_limit());
-		
-		for(int i=0;i<files.size();i++) {
-			System.out.println("파일 이름 : " +files.get(i).getOriginalFilename());
-			System.out.println("파일 사이즈 : " +files.get(i).getSize());
-		}
+				
+
 		
 		
 		
 		//HttpServletRequest 이용해 전송된(업로드한) 파일들(썸네일,동영상)을 가져온다 
-//		MultipartHttpServletRequest MultipartHttpServletRequest = (MultipartHttpServletRequest)request;
-//		Iterator<String> iterator = MultipartHttpServletRequest.getFileNames();		
-//		MultipartFile multipartFile = null;
-//		
-//		while(iterator.hasNext()) {
-//			multipartFile = MultipartHttpServletRequest.getFile(iterator.next());
-//
-//			System.out.println("파일 이름 : " + multipartFile.getOriginalFilename());
-//			System.out.println("파일 크기 : " + multipartFile.getSize());
-//		}
+		MultipartHttpServletRequest MultipartHttpServletRequest = (MultipartHttpServletRequest)request;
+		Iterator<String> iterator = MultipartHttpServletRequest.getFileNames();		
+		MultipartFile multipartFile = null;
+		
+		while(iterator.hasNext()) {
+			multipartFile = MultipartHttpServletRequest.getFile(iterator.next());
+
+			System.out.println("파일 이름 : " + multipartFile.getOriginalFilename());
+			System.out.println("파일 크기 : " + multipartFile.getSize());
+		}
 		
 		
 		return "myPage/mypage_index";
