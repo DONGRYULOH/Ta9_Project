@@ -1,11 +1,16 @@
 package com.example.demo.user.dto;
 /*
- 	create table user(
-	user_id varchar(20) not null,
-    user_pwd varchar(30) not null,
-    user_nickname varchar(20) not null,
-    user_point int not null default 0,
-    PRIMARY KEY(user_id)
+ 	-- 회원 테이블 
+	create table user(
+		user_id varchar(20) not null,
+	    user_pwd varchar(100) not null,
+	    user_nickname varchar(20) not null,
+	    user_status char(1) not null,
+	    user_exp int not null default 0,
+	    user_rank varchar(20) not null,
+	    user_insertdate datetime DEFAULT CURRENT_TIMESTAMP not null, 
+	    user_leavedate datetime null,
+	    PRIMARY KEY(user_id)
     );
  */
 public class UserDto {
