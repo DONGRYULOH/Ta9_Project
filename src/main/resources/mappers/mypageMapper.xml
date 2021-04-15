@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.example.demo.mypage.dao.MypageDao"><!--namespace를 통해 UserDAO와 연결합니다. -->
+  		
+  <!-- 파일(비디오,썸네일 이미지)을 제외한 게시글 정보 Insert  -->		
+  <insert id="videoBoardInsert" parameterType="com.example.demo.mypage.dto.VideoDto" useGeneratedKeys="true" keyProperty="video_number">  		
+  		insert into video(user_id,category_code,video_title,public_check,video_rank_limit)
+  				values('dong1234',#{category_code},#{video_title},#{public_check},#{video_rank_limit})
+  		<!-- 게시글이 등록된후 video_number 값을 가져와서 VideoDto에 setter를 이용해서 넣어줌 -->
+  		<selectKey keyProperty="video_number" resultType="integer" order="AFTER">
+			select max(video_number) from video
+		</selectKey>  		  
+  </insert>
+  		
+  		
+  <!-- 파일(비디오,썸네일 이미지) Insert  -->		
+  <insert id="videoFileInsert" parameterType="hashmap" >
+  		insert into video_file(video_number,orgin_video_name,stored_video_name,orgin_video_thumb,stored_video_thumb)
+  				values(#{video_number},#{orgin_video_name},#{stored_video_name},#{orgin_video_thumb},#{stored_video_thumb})  		
+  </insert>
+  		
+  <!-- 해당 유저에 해당하는 동영상 게시물 리스트 가져오기  -->
+  <select id="getVideoList" parameterType="String" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto" >
+	  	select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_hits,v.video_reports,v.video_rank_limit,vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb
+			from video v inner join video_file vf 
+	    	on v.video_number = vf.video_number
+	     where user_id = #{user_id}
+  </select>
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

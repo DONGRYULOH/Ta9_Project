@@ -7,7 +7,7 @@
      			<a href="mypage">영상올리기</a>
      		</li>
      		<li class="breadcrumb-item active" aria-current="page">
-     			<a href="mypage_video_manage">올린영상관리</a>
+     			<a href="mypage_videoList">올린영상관리</a>
      		</li>
      		<li class="breadcrumb-item active" aria-current="page">
      			<a href="mypage_info">내정보</a>

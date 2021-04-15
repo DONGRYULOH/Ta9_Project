@@ -129,6 +129,7 @@
 		for(let i=0;i<3;i++){ 
 			validate[i] = false; 
 		}
+		var blank = /\s/g; // 공백 검증 정규표현식 
     
     	/* 1.썸네일 이미지 선택시 화면에 표시해주기 + 용량 제한 */
     	function setThumbnail(event) { 
@@ -194,20 +195,24 @@
     	
     	// 3.동영상 게시물 업로드시 전체 유효성 검증 
     	$('#video_upload').click(function() {
-    		// 1.글 제목 유효성 검증(글제목에 글자를 입력했을 경우에만 true 값을 넣어줌)
-    	    if($("#video_title").val() != '' &&  $("#video_title").val() != null){
-    	    	validate[0] = true;
-    	    }else{
+    		// console.log("글자수" + $("#video_title").val().length);
+    		// 1.글 제목 유효성 검증
+    	    if( $("#video_title").val().trim() == '' || $("#video_title").val().trim() == null){ // 공백 검증 
     	    	validate[0] = false;
+    	    	alert("제목을 입력해주세요!");
+    	    }else if($("#video_title").val().length > 100){ // 글자수 검증(100자 이내)    	    	 
+    	    	validate[0] = false; 
+    	    	alert("제목은 100자 이내로만 입력 가능합니다!");
+    	    }else{
+    	    	validate[0] = true;
     	    }
     		
-			//유효성 검증 
+			// 2. 전체 유효성 검증 
 			for (let i = 0; i < validate.length; i++) {
 				if (validate[i] == false) {
 					switch (i) {
 					// 글 제목 유효성 검증이 안됬을 경우 
-					case 0:
-						alert("글 제목 부분을 다시 확인 바람!");						
+					case 0:					
 						return false;
 					// 썸네일 이미지 부분에 유효성 검증이 안됬을 경우 
 					case 1:

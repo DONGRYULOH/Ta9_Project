@@ -31,11 +31,20 @@
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-menu">
-                     	<ul class="nav navbar-nav navbar-right" style="padding-left: 50px;">
-                        	<li><a href="login">로그인</a></li>
-                            <li><a href="register">회원가입</a></li>
-                            <li><a href="mypage">마이페이지</a></li>
-                        </ul> 
+                    	<!-- 비로그인 -->
+                    	<c:if test="${User == null}">
+                     		<ul class="nav navbar-nav navbar-right" style="padding-left: 50px;">
+                        		<li><a href="login">로그인</a></li>
+                            	<li><a href="register">회원가입</a></li>                            	                       
+                        	</ul>
+                        </c:if>
+                        <!-- 로그인시 --> 
+                        <c:if test="${User != null}">
+                     		<ul class="nav navbar-nav navbar-right" style="padding-left: 50px;">
+                     			<li><a href="mypage">마이페이지</a></li> 
+                     			<li><a href="signOut">로그아웃</a></li>                         		                            	                                                
+                        	</ul>
+                        </c:if> 
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
                             <li><a href="sports">스포츠</a></li> 
 							<li><a href="aboutus.html">개발</a></li> 							                   

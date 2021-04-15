@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -49,31 +50,34 @@
 					</div>			
 				</div>
 				
-				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 1-->
-				<div class="row" style="margin-bottom: 40px;">
-					<!-- 썸네일 -->
-					<div class="col-md-4">
-						<a href="sportsDetail">
-						<img src="assets/images/blog/3.jpg" alt="">
-						</a>
-					</div>
-					<!-- 제목,날짜,조회수 -->
-					<div class="col-md-4">
-						<div class="row">
-							<h4>제목:레알 챔스 결승 진출</h4>
-						</div>	
-						<div class="row">
-							<h5>2020/04/09</h5>
-						</div>	
-						<div class="row">
-							<h5>조회수 : 5000</h5>
-						</div>			
-					</div>
-					<!-- 무료,유료 여부 -->
-					<div class="col-md-4">
-						<h4>전체공개</h4>
-					</div>
-				</div>
+				<c:forEach items="${videoBrdList}" var="list" begin="0" end="${videoBrdListSize}"  step="1" varStatus="status">
+					<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 1-->
+					<div class="row" style="margin-bottom: 40px;">
+						<!-- 썸네일 -->
+						<div class="col-md-4">
+							<a href="sportsDetail">
+							<img src="assets/images/blog/3.jpg" alt="">
+							</a>
+						</div>
+						<!-- 제목,날짜,조회수 -->
+						<div class="col-md-4">
+							<div class="row">
+								<h4>제목 ${list.video_title}</h4>
+							</div>	
+							<div class="row">
+								<h5>2020/04/09</h5>
+							</div>	
+							<div class="row">
+								<h5>조회수 : 5000</h5>
+							</div>			
+						</div>
+						<!-- 무료,유료 여부 -->
+						<div class="col-md-4">
+							<h4>전체공개</h4>
+						</div>
+					</div>	
+				</c:forEach>
+				
 				
 				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 2-->
 				<div class="row">

@@ -6,13 +6,18 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.example.demo.interceptor.Interceptor;
 
 @Configuration
 @MapperScan(basePackages = "com.example.demo")
-public class DataBaseConfig {
+public class DataBaseConfig extends WebMvcConfigurerAdapter{
 
 		/*
 		 	DataSource란? 
@@ -34,5 +39,17 @@ public class DataBaseConfig {
 	      final SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
 	      return sqlSessionTemplate;
 	    }
+	 	
+	 	@Autowired
+	 	Interceptor interceptor;
+	 	
+	 	@Override
+	 	public void addInterceptors(InterceptorRegistry registry) {
+	 		registry.addInterceptor(interceptor)
+	 				.addPathPatterns("/mypage")
+	 				.addPathPatterns("/mypage_create")
+	 				.addPathPatterns("/mypage_video_manage")
+	 				.addPathPatterns("/mypage_info");
+	 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.example.demo.user.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,17 +78,23 @@ public class UserController {
 	
 	// 로그인 처리
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String signIn(UserDto userDto,Model model) {
+	public String signIn(UserDto userDto,Model model,HttpSession session) {
 		// 로그인 성공여부에 따라 이동될 주소 ( -1 : 로그인 실패 , 1 : 로그인 성공)
 		String url = "user/login";
 		// 로그인시 출력될 메시지 
 		String msg = "로그인 실패! 다시 시도 바람!"; 
 		
 		int result = userService.signIn(userDto);
+		// 로그인 성공시 세션 부여 
 		if(result == 1) {
+			session.setAttribute("User",userDto);	
 			url = "index";
 			msg = "로그인 성공!";
 		}
+		
+		//System.out.println("현재 세션값 : " + session.getAttribute("User"));			
+		//UserDto user = (UserDto)session.getAttribute("User");
+		//System.out.println("현재 세션에 있는 ID: " + user.getUser_id());
 		
 		model.addAttribute("msg",msg);
 		model.addAttribute("result",result);			
@@ -94,7 +102,12 @@ public class UserController {
 		return url;
 	}
 	
-	
+	// 로그아웃 처리시 
+	@RequestMapping(value="/signOut", method = RequestMethod.GET)
+	public String signOut(HttpSession session) {
+		session.invalidate(); // 세션 날리기 
+		return "redirect:/";
+	}
 	
 }
 
