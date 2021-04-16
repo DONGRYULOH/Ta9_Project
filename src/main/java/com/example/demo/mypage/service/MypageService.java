@@ -3,12 +3,15 @@ package com.example.demo.mypage.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.mypage.dao.MypageDao;
 import com.example.demo.mypage.dto.VideoDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
+import com.example.demo.user.dto.UserDto;
 
 @Service
 public class MypageService {
@@ -17,9 +20,13 @@ public class MypageService {
 	private MypageDao mypageDao;
 
 	// 동영상 게시물 업로드 (트랜잭션 걸어주기)  
-	public int videoUpload(VideoDto videoDto, Map<String, Object> files) {
+	public int videoUpload(VideoDto videoDto, Map<String, Object> files,HttpSession session) {
 		
-		int result = 0; // 동영상 게시글 DB에 Insert한 결과(1 -> 정상적으로 수행완료 , 0 -> 에러발생) 
+		// 현재 세션에 있는 유저정보를 가져옴 
+		UserDto user = (UserDto)session.getAttribute("User");
+		videoDto.setUser_id(user.getUser_id());
+		// 동영상 게시글 DB에 Insert한 결과(1 -> 정상적으로 수행완료 , 0 -> 에러발생) 
+		int result = 0; 
 		
 		// 전체공개일 경우는 랭크제한이 없도록 설정을 해줌 
 		if(videoDto.getPublic_check() == 'Y') { 

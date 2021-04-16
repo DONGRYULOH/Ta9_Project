@@ -45,16 +45,16 @@ public class MypageController {
 	
 	// 동영상 게시물 업로드하기 
 	@RequestMapping(value = "/mypage_create",method = RequestMethod.POST)
-	public String mypage_create(VideoDto videoDto,HttpServletRequest request) {
+	public String mypage_create(VideoDto videoDto,HttpServletRequest request,HttpSession session) {
 		
 		//클라이언트에서 전송된 파일정보를 담아서 Mybatis Mapper에서 뿌려줄 정보(썸네일 파일,비디오 파일) 
-		Map<String,Object> Files = new HashMap<String,Object>(); 		
+		Map<String,Object> Files = new HashMap<String,Object>(); 				
 		
 		// 1.파일(동영상,썸네일) 업로드하기 
 		fileUtils.parseInsertFileInfo(Files, request);					
 						
 		// 2.동영상 게시글 + 파일 DB에 INSERT 
-		int result = mypageService.videoUpload(videoDto,Files);
+		int result = mypageService.videoUpload(videoDto,Files,session);
 	
 		if(result == 1) System.out.println("INSERT 성공 해당 동영상 게시글로 이동");
 		else System.out.println("INSERT 실패 또는 INSERT 도중 에러 발생 영상 올리기 페이지로 이동");
@@ -71,14 +71,12 @@ public class MypageController {
 		
 		if(user != null) {
 			videoBrdList = mypageService.getVideoList(user.getUser_id());
-		}
+		}				
 		
-		for(int i=0;i<videoBrdList.size();i++) {
-			System.err.println("동영상 게시글 제목 : " + videoBrdList.get(i).getVideo_title());
+		if(videoBrdList != null) {
+			model.addAttribute("videoBrdList",videoBrdList);
+			model.addAttribute("videoBrdListSize",videoBrdList.size());
 		}
-		
-		model.addAttribute("videoBrdList",videoBrdList);
-		model.addAttribute("videoBrdListSize",videoBrdList.size());
 		
 		return "myPage/mypage_videoList";
 	}

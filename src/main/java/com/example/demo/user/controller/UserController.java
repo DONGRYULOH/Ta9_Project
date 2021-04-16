@@ -84,17 +84,15 @@ public class UserController {
 		// 로그인시 출력될 메시지 
 		String msg = "로그인 실패! 다시 시도 바람!"; 
 		
-		int result = userService.signIn(userDto);
-		// 로그인 성공시 세션 부여 
+		// 로그인 성공시 세션 부여하기 
+		int result = userService.signIn(userDto,session);		
 		if(result == 1) {
-			session.setAttribute("User",userDto);	
 			url = "index";
 			msg = "로그인 성공!";
 		}
 		
 		//System.out.println("현재 세션값 : " + session.getAttribute("User"));			
 		//UserDto user = (UserDto)session.getAttribute("User");
-		//System.out.println("현재 세션에 있는 ID: " + user.getUser_id());
 		
 		model.addAttribute("msg",msg);
 		model.addAttribute("result",result);			

@@ -18,4 +18,7 @@ public interface UserDao {
 
 	// 회원가입 처리 
 	public int register(UserDto userDto) throws Exception;
+	
+	// 회원가입후 유저상태 추가 
+	public int register_st(UserDto userDto) throws Exception;
 }

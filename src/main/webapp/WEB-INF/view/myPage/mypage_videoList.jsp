@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -50,58 +51,55 @@
 					</div>			
 				</div>
 				
+			<c:if test="${videoBrdList != null}">
 				<c:forEach items="${videoBrdList}" var="list" begin="0" end="${videoBrdListSize}"  step="1" varStatus="status">
-					<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 1-->
+					<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 -->
 					<div class="row" style="margin-bottom: 40px;">
 						<!-- 썸네일 -->
 						<div class="col-md-4">
+						
+							<!-- 해당 동영상 게시물 접근 가능 여부(myPage에서는 로직을 걸어줄 필요가 없음 왜냐하면 자기가 올린 영상은 모두 접근이 가능하기 때문에) -->
+							<%-- 
+							<c:choose>
+								<!-- if -->
+								<c:when test="${my_rank >= list.video_rank_limit}">
+									<a href="sportsDetail">
+										<img src="/fileUpload/${list.stored_video_thumb}" >
+									</a>
+								</c:when>
+								<!-- else -->
+								<c:otherwise>
+										<img src="/fileUpload/${list.stored_video_thumb}" >
+								</c:otherwise>
+							</c:choose> 
+							--%>
+							
 							<a href="sportsDetail">
-							<img src="assets/images/blog/3.jpg" alt="">
+								<img src="/fileUpload/${list.stored_video_thumb}" >
 							</a>
 						</div>
 						<!-- 제목,날짜,조회수 -->
 						<div class="col-md-4">
 							<div class="row">
-								<h4>제목 ${list.video_title}</h4>
+								<h4>제목:${list.video_title}</h4>
 							</div>	
 							<div class="row">
-								<h5>2020/04/09</h5>
+								<h5><fmt:formatDate value="${list.video_date}" pattern="yyyy-MM-dd"/></h5>
+								
 							</div>	
 							<div class="row">
-								<h5>조회수 : 5000</h5>
+								<h5>조회수:${list.video_hits}</h5>
+								
 							</div>			
 						</div>
-						<!-- 무료,유료 여부 -->
+						<!-- 전체공개,등급별 공개 여부 -->
 						<div class="col-md-4">
-							<h4>전체공개</h4>
+							<h4>${list.video_rank_limit}</h4>
 						</div>
 					</div>	
 				</c:forEach>
-				
-				
-				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 2-->
-				<div class="row">
-					<!-- 썸네일 -->
-					<div class="col-md-4">
-						<img src="assets/images/blog/3.jpg" alt="">
-					</div>
-					<!-- 제목,날짜,조회수 -->
-					<div class="col-md-4">
-						<div class="row">
-							<h4>제목:비트코인 100% 급등</h4>
-						</div>	
-						<div class="row">
-							<h5>2020/04/06</h5>
-						</div>	
-						<div class="row">
-							<h5>조회수 : 5000</h5>
-						</div>		
-					</div>
-					<!-- 무료,유료 여부 -->
-					<div class="col-md-4">
-						<h4>골드 등급 부터 열람 가능</h4>
-					</div>
-				</div>
+			</c:if>
+					
 				
 				<!-- 페이징 -->
 				<div class="row" align="center">
@@ -126,20 +124,9 @@
 				
 			</div>
 			
-			
-
-          
-
 
             <!-- 풋터 공통 -->
            <%@ include file="/WEB-INF/include/footer.jsp"%>
-
-            
-
-
-
-
-        
 
        
 

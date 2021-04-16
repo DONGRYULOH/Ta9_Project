@@ -31,7 +31,6 @@
                 </div><!--End off container -->
         </div>  	             
 
-            
 			<!-- 스포츠 관련 컨테이너 -->
 			<div class="container" >
 			
@@ -47,8 +46,9 @@
 					
 				</div>
 				
-				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 1-->
-				<div class="row" style="margin-bottom: 40px;">
+				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기1(전체공개 게시글 영상이므로 등급에 상관없이 비회원,회원 모두 접근가능) -->
+				<div class="row" style="margin-bottom: 40px;">												
+					
 					<!-- 썸네일 -->
 					<div class="col-md-4">
 						<a href="sportsDetail">
@@ -73,8 +73,39 @@
 					</div>
 				</div>
 				
-				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 2-->
+				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기2(등급제한이 걸려있는 동영상 <게시물 비회원 + 등급조건에 맞지않는 회원> 접근 불가능) -->
 				<div class="row" style="margin-bottom: 40px;">
+					
+					<%-- @@@<동영상 게시물 리스트 뿌려주는 전체 로직>@@@ 
+						<!-- 전체공개인 경우(Y인 경우)에 로직 -->
+						<c:if test="${list.video_public_check == 'Y' }">
+							<a href="sportsDetail">
+						   		<img src="assets/images/blog/3.jpg" alt="">
+						   	</a>
+						</c:if>
+						<!-- 등급 제한이 걸려있는 경우(N인 경우)에 로직 -->
+						<c:if test="${list.video_public_check == 'N' }">
+						    <c:choose>
+								<!-- if -->
+								<c:when test="${UserSession.my_rank >= list.video_rank_limit && UserSession != null }">
+									<a href="sportsDetail">
+										<img src="/fileUpload/${list.stored_video_thumb}" >
+									</a>
+								</c:when>
+								<!-- if else(내가 올린 동영상 게시물인 경우는 등급조건에 상관없이 접근가능) -->
+								<c:when test="${UserSession.user_id == list.video_user_id }">
+									<a href="sportsDetail">
+										<img src="/fileUpload/${list.stored_video_thumb}" >
+									</a>
+								</c:when>
+								<!-- else -->
+								<c:otherwise>
+										<img src="/fileUpload/${list.stored_video_thumb}" >
+								</c:otherwise>
+							</c:choose> 	
+						</c:if> 
+					--%>
+					
 					<!-- 썸네일 -->
 					<div class="col-md-4">
 						<img src="assets/images/blog/3.jpg" alt="">
@@ -97,7 +128,7 @@
 					</div>					                                    																		
 				</div>
 				
-				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기 3-->
+				<!-- 스포츠 동영상 리스트(썸네일,제목,날짜,조회수) 뿌려주기3(등급제한이 걸려있지만 자신이 올린 동영상 게시물인 경우는 등급에 상관없이 접근 가능) -->
 				<div class="row">
 					<!-- 썸네일 -->
 					<div class="col-md-4">

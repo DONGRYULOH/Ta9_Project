@@ -32,5 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.formLogin().disable() // 기본적으로 제공하는 로그인 페이지 무시 
 				.headers().frameOptions().disable();
 		}
+		
+		
 	
 }

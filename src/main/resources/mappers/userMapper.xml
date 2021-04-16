@@ -4,19 +4,19 @@
  
 <mapper namespace="com.example.demo.user.dao.UserDao"><!--namespace를 통해 UserDAO와 연결합니다. -->
   		
-  <!-- ID 중복체크 검사 -->
-  <select id="idCheck" parameterType="String" resultType="int">
-  		select count(*) 
-  			from user
-  		 where user_id = #{user_id} 
-  </select>
+	 <!-- ID 중복체크 검사 -->
+	 <select id="idCheck" parameterType="String" resultType="int">
+	 		select count(*) 
+	 			from user
+	 		 where user_id = #{user_id} 
+	 </select>
   
-  <!-- 닉네임 중복체크 검사 -->
-  <select id="nicknameCheck" parameterType="String" resultType="int">
-  		select count(*) 
-  			from user
-  		 where user_nickname = #{user_nickname} 
-  </select>
+	 <!-- 닉네임 중복체크 검사 -->
+	 <select id="nicknameCheck" parameterType="String" resultType="int">
+	 		select count(*) 
+	 			from user
+	 		 where user_nickname = #{user_nickname} 
+	 </select>
 
   	<!-- 회원 가입 -->
 	<insert id="register" parameterType="com.example.demo.user.dto.UserDto" >
@@ -24,12 +24,17 @@
 				values(#{user_id},#{user_pwd},#{user_nickname})		
 	</insert>
 	
-  <!-- 로그인 처리 검사 -->
-  <select id="signIn" parameterType="com.example.demo.user.dto.UserDto" resultType="com.example.demo.user.dto.UserDto">
-  		select user_id,user_pwd
-  			from user
-  		 where user_id = #{user_id}  
-  </select>
+	<!-- 회원가입후 회원 상태 추가 -->
+	<insert id="register_st" parameterType="com.example.demo.user.dto.UserDto" >
+		insert into user_st(user_id) values(#{user_id})		
+	</insert>
+	
+	<!-- 로그인 처리 검사 -->
+	<select id="signIn" parameterType="com.example.demo.user.dto.UserDto" resultType="com.example.demo.user.dto.UserDto">
+			select * 
+				from user
+			 where user_id = #{user_id}  
+	</select>
 	
 	
 	

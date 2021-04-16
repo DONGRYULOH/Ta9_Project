@@ -1,5 +1,7 @@
 package com.example.demo.mypage.dto;
 
+import java.util.Date;
+
 // 비디오 테이블과 비디오_파일 테이블 조인해서 데이터 가져오기 
 public class VideoJoinVideoFileDto {
 
@@ -11,7 +13,7 @@ public class VideoJoinVideoFileDto {
 	private char public_check;
 	private int video_hits;
 	private int video_reports;
-	private String video_date;
+	private Date video_date;
 	private String video_rank_limit;
 	
 	// 비디오_파일 테이블 
@@ -22,6 +24,12 @@ public class VideoJoinVideoFileDto {
 	
 	public int getVideo_number() {
 		return video_number;
+	}
+	public Date getVideo_date() {
+		return video_date;
+	}
+	public void setVideo_date(Date video_date) {
+		this.video_date = video_date;
 	}
 	public void setVideo_number(int video_number) {
 		this.video_number = video_number;
@@ -61,12 +69,6 @@ public class VideoJoinVideoFileDto {
 	}
 	public void setVideo_reports(int video_reports) {
 		this.video_reports = video_reports;
-	}
-	public String getVideo_date() {
-		return video_date;
-	}
-	public void setVideo_date(String video_date) {
-		this.video_date = video_date;
 	}
 	public String getVideo_rank_limit() {
 		return video_rank_limit;
