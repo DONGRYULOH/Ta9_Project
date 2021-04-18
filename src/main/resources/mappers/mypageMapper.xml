@@ -29,7 +29,24 @@
 	     where user_id = #{user_id}
   </select>
 	
-	
+	<!-- 해당 유저가 오늘날짜에 동영상 게시물을 업로드 헀는지 검사 (없으면 0 , 있으면 1이상)   -->
+	<select id="videoUploadCk" parameterType="String" resultType="int" >
+		select count(*)
+			from video
+		 where user_id = #{user_id} and date_format(video_date,'%Y-%m-%d') = curdate()
+	</select>
+ 
+  <!-- 해당 유저의 경험치를 100EXP 축척시킴 -->
+  <update id="ExpUpdate" parameterType="String">
+  		update user 
+  			set user_exp = user_exp + 3000
+  		 where user_id = #{user_id}
+  </update>
+  
+	<!--  해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출  -->
+	<select id="rankUpdateCkProcedures" statementType="CALLABLE" parameterType="String">
+		{call rankUpdateCk_procedure(#{user_id})}			
+	</select>	
 	
 </mapper>
 

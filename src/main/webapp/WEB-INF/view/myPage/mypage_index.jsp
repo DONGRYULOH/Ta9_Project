@@ -85,10 +85,10 @@
 								<div class="row">
 									<input type="radio" name="public_check" value="N">등급별 게시물 접근 선택 
 									<select name="video_rank_limit">
-									 	<option value="Bronze">브론즈</option>
-									  	<option value="Sliver">실버</option>
-									  	<option value="Gold">골드</option>
-									  	<option value="Platinum">플래티넘</option>									  	
+									 	<option value="1">브론즈</option>
+									  	<option value="2">실버</option>
+									  	<option value="3">골드</option>
+									  	<option value="4">플래티넘</option>									  	
 									</select>
 								</div>
 							</div>

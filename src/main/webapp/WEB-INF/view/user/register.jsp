@@ -68,7 +68,7 @@
 								            </td>
 								            <td>
 								            	<input type="text" id="user_id" name="user_id" required="required" class="inputTag"/>
-								            	<span class="text-white text-uppercase">(5~12자리의 영문 대소문자,숫자를 사용해주세요)</span>
+								            	<span class="text-white text-uppercase">(5~12자리의 영문 대소문자 또는 숫자를 사용해주세요)</span>
 								            	<!-- ID중복체크  -->
 								            	<div id="id_check"></div>    
 								            </td>  
@@ -79,7 +79,7 @@
 								            </td>
 								            <td>
 								            	<input type="password" id="user_pwd" name="user_pwd" required="required" class="inputTag"/>  
-								            	<span class="text-white text-uppercase">(8~20자리에 특수문자가 반드시 포함된 영어 대소문자,숫자를 사용해주세요)</span>
+								            	<span class="text-white text-uppercase">(8~20자리에 특수문자+영어 대소문자+숫자로 포함된 조합을 사용해주세요)</span>
 								            	<div id="pwd"></div>      
 								            </td>  
 								        </tr>

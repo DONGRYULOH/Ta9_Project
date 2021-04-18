@@ -30,19 +30,37 @@ public class MypageService {
 		
 		// 전체공개일 경우는 랭크제한이 없도록 설정을 해줌 
 		if(videoDto.getPublic_check() == 'Y') { 
-			videoDto.setVideo_rank_limit("no_rank");
+			videoDto.setVideo_rank_limit(0);
 		}
 		
 		try {
-			// 1.파일(비디오,썸네일 이미지)을 제외한 게시글 정보 Insert 
+			// 1.경험치 적립 여부 체크(해당 유저가 오늘날짜에 동영상 게시물을 업로드 헀는지 안했는지 검사)
+			int count = mypageDao.videoUploadCk(user.getUser_id());
+			if(count == 0) { // 경험치 적립 가능(0이면 해당 날짜에 업로드한 동영상 게시물이 없다는 뜻)  				
+				
+				// 1-1.해당 유저의 경험치를 Update 시켜줌 
+				int exp_result = mypageDao.ExpUpdate(user.getUser_id());
+				System.out.println("경험치 업데이트 결과값 :" + exp_result);
+				
+				// 1-2.경험치가 정상적으로 Update 되면 해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출
+				if(exp_result == 1) {
+					mypageDao.rankUpdateCkProcedures(user.getUser_id()); 
+				}
+				
+			}else {
+				System.out.println("이미 적립 됨");
+			}
+			
+			// 2.파일(비디오,썸네일 이미지)을 제외한 게시글 정보 Insert 
 			result = mypageDao.videoBoardInsert(videoDto); // 수행 결과(1-정상 , 0-에러발생)			
 			files.put("video_number",videoDto.getVideo_number());
 		
-			// 2.파일(비디오,썸네일 이미지) 정보 Insert 
-			result = mypageDao.videoFileInsert(files); // 수행 결과(1-정상 , 0-에러발생) 
+			// 3.파일(비디오,썸네일 이미지) 정보 Insert 
+			result = mypageDao.videoFileInsert(files); // 수행 결과(1-정상 , 0-에러발생) 					
+			
 		}catch (Exception e) {
 			e.getStackTrace();
-			System.out.println("동영상 게시글 INSERT 중 에러발생 !!" + e.getMessage());			
+			System.err.println("동영상 게시글 INSERT 중 에러발생 !!" + e.getMessage());			
 		}
 		
 		return result;
@@ -54,7 +72,7 @@ public class MypageService {
 			return mypageDao.getVideoList(user_id);
 		} catch (Exception e) {
 			e.getStackTrace();
-			System.out.println("해당 유저에 해당하는 동영상 게시물 리스트 가져오는중 에러발생 !!" + e.getMessage());
+			System.err.println("해당 유저에 해당하는 동영상 게시물 리스트 가져오는중 에러발생 !!" + e.getMessage());
 		}
 		return null;
 	}
