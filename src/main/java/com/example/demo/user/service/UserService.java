@@ -1,5 +1,7 @@
 package com.example.demo.user.service;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +62,14 @@ public class UserService {
 	}
 	
 	// 로그인 처리 
-	public int signIn(UserDto userDto,HttpSession session) {
+	public HashMap<String,Integer> signIn(UserDto userDto,HttpSession session) {
 		//입력한 패스워드와 db에 암호화해서 저장된 패스워드 일치여부(틀리면 False , 맞으면 true) 
 		boolean pwdMatch = false;
-		// 로그인 성공여부에 따라 이동될 주소 
-		int result = -1;
+		
+		HashMap<String,Integer> resultSet = new HashMap<>();
+		int result = -1; // result가 1이면 로그인 성공 -1이면 로그인 실패 
+		int count = -1; // count가 0이면 처음 로그인인 경우 , count가 -1이면 처음 로그인이 아닌 경우 		
+		
 		try {
 			// 1.DB에 해당 ID의 유저가 존재하는지 확인
 			UserDto user = userdao.signIn(userDto);		
@@ -78,14 +83,25 @@ public class UserService {
 					session.setAttribute("User",user);
 					// 60*60 = 3600초(클라이언트가 1시간동안 요청이 없으면 세션을 제거함) 
 					session.setMaxInactiveInterval(60*60);
+					
+					// 3-1.해당 날짜에 처음 로그인인지 아닌지 검사
+					count = userdao.loginCheck(user.getUser_id());
+					// 3-2.처음 로그인 시도일 경우 출석체크 테이블에 출석처리하고 100EXP 경험치 축적시키기 
+					if(count == 0) {
+						userdao.loginAttInsert(user.getUser_id()); // 출석체크 
+						userdao.loginExpInsert(user.getUser_id()); // 경험치 추가
+					}
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("로그인 처리중 예외 발생 : "+ e.getMessage());
-		}		 		
-		 
-		return result;
+		}finally {
+			resultSet.put("loginCk",result); // 로그인 성공여부에 따라 이동될 주소
+			resultSet.put("loginAttCk",count); // 처음 로그인 시도일 경우인지 아닌지 체크 
+		}		 				
+		
+		return resultSet;
 	}
 }
 

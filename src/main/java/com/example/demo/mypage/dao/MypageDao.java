@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.demo.mypage.dto.VideoDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
+import com.example.demo.user.dto.UserDto;
 
 public interface MypageDao {
 	
@@ -24,6 +25,12 @@ public interface MypageDao {
 	int ExpUpdate(String user_id) throws Exception;
 
 	// 해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출
-	void rankUpdateCkProcedures(String user_id);
+	void rankUpdateCkProcedures(String user_id) throws Exception;
+
+	// 유저 정보 가져오기
+	UserDto getUserInfo(String user_id) throws Exception;
+
+	// 동영상 게시물 번호에 해당하는 정보 가져오기 
+	VideoJoinVideoFileDto getVideoDetail(int video_number);
 
 }

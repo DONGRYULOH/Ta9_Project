@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,15 +65,13 @@ public class MypageController {
 	
 	// 동영상 게시물 리스트 페이지 이동 
 	@RequestMapping(value = "/mypage_videoList",method = RequestMethod.GET)
-	public String mypage_video_manage(HttpSession session,Model model) {
+	public String mypage_videoList(HttpSession session,Model model) {
 		
 		UserDto user = (UserDto)session.getAttribute("User");
 		List<VideoJoinVideoFileDto> videoBrdList = null;
 		
-		if(user != null) {
-			videoBrdList = mypageService.getVideoList(user.getUser_id());
-		}				
-		
+		if(user != null) videoBrdList = mypageService.getVideoList(user.getUser_id());
+
 		if(videoBrdList != null) {
 			model.addAttribute("videoBrdList",videoBrdList);
 			model.addAttribute("videoBrdListSize",videoBrdList.size());
@@ -81,8 +80,29 @@ public class MypageController {
 		return "myPage/mypage_videoList";
 	}
 	
+	// 동영상 게시물 상세 페이지 이동
+	@RequestMapping(value = "/mypage_videoDetail",method = RequestMethod.GET)
+	public String mypage_videoDetail(@RequestParam("n") int video_number, Model model) {
+		
+		// 동영상 게시물 번호에 해당하는 정보 가져오기 
+		VideoJoinVideoFileDto videoDetail = mypageService.getVideoDetail(video_number);
+		model.addAttribute("videoDetail",videoDetail);
+		
+		return "myPage/mypage_videoDetail";
+	}
+	
+	
+	
+	// 내정보 페이지 이동 
 	@RequestMapping("/mypage_info")
-	public String mypage_info() {
+	public String mypage_info(HttpSession session,Model model) {
+		
+		// 현재 세션에 저장되어 있는 유저 정보  
+		UserDto user = (UserDto)session.getAttribute("User");
+		if(user != null) user = mypageService.getUserInfo(user.getUser_id());
+		
+		model.addAttribute("User",user);
+		
 		return "myPage/mypage_info";
 	}
 	

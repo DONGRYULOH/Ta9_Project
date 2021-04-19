@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -80,16 +81,16 @@
 					
 					<div class="col-sm-8">	
 						<div class="row" style="margin-bottom: 30px;margin-top: 5px;">
-							<h5>dhehdfbf23</h5> 
+							<h5>${User.user_id}</h5> 
 						</div>												
 						<div class="row" style="margin-bottom: 30px;">
-							<h5>비트비트</h5>
+							<h5>${User.user_nickname}</h5>
 						</div>						
 						<div class="row" style="margin-bottom: 30px;">
-							<h5>500 EXP</h5>
+							<h5>${User.user_exp} EXP</h5>
 						</div>	
 						<div class="row" style="margin-bottom: 30px;">
-							<h5>브론즈</h5>
+							<h5>${User.user_rank}</h5>
 						</div>
 					</div>		
 				</div>

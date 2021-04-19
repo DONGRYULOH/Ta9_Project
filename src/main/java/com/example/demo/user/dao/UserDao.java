@@ -21,4 +21,13 @@ public interface UserDao {
 	
 	// 회원가입후 유저상태 추가 
 	public int register_st(UserDto userDto) throws Exception;
+
+	// 해당 날짜에 처음 로그인인지 아닌지 검사
+	public int loginCheck(String user_id);
+
+	// 처음 로그인 시도일 경우 출석체크 테이블에 출석처리하기 
+	public void loginAttInsert(String user_id);
+
+	// 처음 로그인 시도일 경우 해당 유저의 경험치 추가하기  
+	public void loginExpInsert(String user_id);
 }

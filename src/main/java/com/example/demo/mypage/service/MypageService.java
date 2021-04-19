@@ -77,5 +77,28 @@ public class MypageService {
 		return null;
 	}
 	
+	// 동영상 게시물 번호에 해당하는 정보 가져오기 
+	public VideoJoinVideoFileDto getVideoDetail(int video_number) {
+		try {
+			return mypageDao.getVideoDetail(video_number);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 동영상 게시물 번호에 해당하는 정보 가져오는중 에러발생!!" + e.getMessage());
+		}
+		return null;
+	}
+	
+	// 유저 정보 가져오기 
+	public UserDto getUserInfo(String user_id) {
+		try {
+			return mypageDao.getUserInfo(user_id);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 유저 정보 가져오는 중 에러발생!!" + e.getMessage());
+		}
+		return null;
+	}
+
+	
 	
 }

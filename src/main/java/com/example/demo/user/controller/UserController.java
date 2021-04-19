@@ -1,5 +1,7 @@
 package com.example.demo.user.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,17 +87,18 @@ public class UserController {
 		String msg = "로그인 실패! 다시 시도 바람!"; 
 		
 		// 로그인 성공시 세션 부여하기 
-		int result = userService.signIn(userDto,session);		
-		if(result == 1) {
+		HashMap<String,Integer> resultSet = userService.signIn(userDto,session);		
+		if(resultSet.get("loginCk") == 1) { // 로그인 성공시 index 페이지로 이동 
 			url = "index";
-			msg = "로그인 성공!";
-		}
+			if(resultSet.get("loginAttCk") == 0) { // 처음 로그인시 100EXP 지급 했다고 메시지 띄우기
+				model.addAttribute("result2",resultSet.get("loginAttCk"));
+				model.addAttribute("msg2","100EXP 지급완료!");
+			}	
+		}  
 		
-		//System.out.println("현재 세션값 : " + session.getAttribute("User"));			
-		//UserDto user = (UserDto)session.getAttribute("User");
-		
+							
 		model.addAttribute("msg",msg);
-		model.addAttribute("result",result);			
+		model.addAttribute("result",resultSet.get("loginCk"));			
 		
 		return url;
 	}

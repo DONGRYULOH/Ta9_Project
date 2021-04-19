@@ -24,9 +24,10 @@
   <!-- 해당 유저에 해당하는 동영상 게시물 리스트 가져오기  -->
   <select id="getVideoList" parameterType="String" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto" >
 	  	select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_hits,v.video_reports,v.video_date,v.video_rank_limit,vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb
-			from video v inner join video_file vf 
+			 from video v inner join video_file vf 
 	    	on v.video_number = vf.video_number
-	     where user_id = #{user_id}
+	      where user_id = #{user_id}
+	   order by v.video_number desc
   </select>
 	
 	<!-- 해당 유저가 오늘날짜에 동영상 게시물을 업로드 헀는지 검사 (없으면 0 , 있으면 1이상)   -->
@@ -47,6 +48,22 @@
 	<select id="rankUpdateCkProcedures" statementType="CALLABLE" parameterType="String">
 		{call rankUpdateCk_procedure(#{user_id})}			
 	</select>	
+	
+	<!-- 해당 유저의 정보 가져오기 -->
+	<select id="getUserInfo" parameterType="String" resultType="com.example.demo.user.dto.UserDto">
+		select * 
+			from user 
+		 where user_id = #{user_id} 
+	</select>
+	
+	<!-- 해당 동영상 게시물 번호에 해당하는 정보 가져오기  -->
+	<select id="getVideoDetail" parameterType="int" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto">
+		select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_hits,v.video_reports,v.video_date,v.video_rank_limit,vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb
+			from video v inner join video_file vf 
+	    	on v.video_number = vf.video_number
+	     where v.video_number = #{video_number}
+	</select>
+	
 	
 </mapper>
 

@@ -74,7 +74,7 @@
 							</c:choose> 
 							--%>
 							
-							<a href="sportsDetail">
+							<a href="mypage_videoDetail?n=${list.video_number}">
 								<img src="/fileUpload/${list.stored_video_thumb}" >
 							</a>
 						</div>
