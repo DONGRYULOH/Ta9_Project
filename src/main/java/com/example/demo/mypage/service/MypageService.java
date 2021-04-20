@@ -114,6 +114,17 @@ public class MypageService {
 		}
 		return null;
 	}
+	
+	// 해당 동영상 게시물 삭제하기 
+	public int deleteVideo(int video_number) {
+		try {
+			return mypageDao.deleteVideo(video_number);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 동영상 게시물 삭제 중 에러발생!!" + e.getMessage());
+		}
+		return 0;
+	}
 
 	
 

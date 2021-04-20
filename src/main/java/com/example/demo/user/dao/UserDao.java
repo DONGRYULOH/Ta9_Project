@@ -30,4 +30,7 @@ public interface UserDao {
 
 	// 처음 로그인 시도일 경우 해당 유저의 경험치 추가하기  
 	public void loginExpInsert(String user_id);
+
+	// 경험치가 Update 되면 해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출
+	public void rankUpdateCkProcedures(String user_id);
 }

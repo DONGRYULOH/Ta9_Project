@@ -15,11 +15,9 @@
         <%@ include file="/WEB-INF/include/head_import.jsp" %>
         
         <script type="text/javascript">       	        	
-        	if('${result}' == 1) {
         		if('${result2}' == '0'){        			
         			alert('${msg2}');
         		}
-        	}
         </script>
     </head>
 

@@ -37,7 +37,7 @@
 		 where user_id = #{user_id} and date_format(video_date,'%Y-%m-%d') = curdate()
 	</select>
  
-  <!-- 해당 유저의 경험치를 100EXP 축척시킴 -->
+  <!-- 오늘날짜에 최초로 동영상을 업로드 했을 때 해당 유저의 경험치를 300EXP 축척시킴 -->
   <update id="ExpUpdate" parameterType="String">
   		update user 
   			set user_exp = user_exp + 3000
@@ -69,6 +69,10 @@
 		select max(video_number) from video 
 	</select>
 	
+	<!-- 해당 동영상 게시물 삭제하기 -->
+	<delete id="deleteVideo" parameterType="int">
+		delete from video where video_number = #{video_number}
+	</delete>
 	
 </mapper>
 

@@ -10,7 +10,6 @@ CREATE TABLE video (
 	video_rank_limit INT NOT NULL DEFAULT 0,
     PRIMARY KEY(video_number)
 );
-drop table video;
 
 CREATE TABLE `user` (
 	`user_id`	VARCHAR(20)	NOT NULL,
@@ -85,6 +84,7 @@ ALTER TABLE `video_file` ADD CONSTRAINT `PK_VIDEO_FILE` PRIMARY KEY (
 );
 
 
+
 -- 유저상태 테이블 PK 제약조건
 ALTER TABLE `user_st` ADD CONSTRAINT `PK_USER_ST` PRIMARY KEY (
 	`user_id`
@@ -106,13 +106,10 @@ REFERENCES `video_category` (
 	`category_code`
 );
 
--- video_file 테이블 video 테이블 식별관계 
-ALTER TABLE `video_file` ADD CONSTRAINT `FK_video_TO_video_file_1` FOREIGN KEY (
-	`video_number`
-)
-REFERENCES `video` (
-	`video_number`
-);
+-- <video_file 테이블 video 테이블 식별관계> 
+-- 비디오 테이블의 해당 컬럼이 삭제되면 해당 컬럼을 참조하는 비디오_파일 행도 삭제가 되는 제약 조건 
+alter table video_file add constraint videoFile_video foreign key(video_number)
+references video(video_number) on delete cascade; 
 
 -- 출석체크 테이블 유저 테이블 비식별관계 
 ALTER TABLE `attendance` ADD CONSTRAINT `FK_attendance_TO_user_1` FOREIGN KEY (
@@ -121,11 +118,6 @@ ALTER TABLE `attendance` ADD CONSTRAINT `FK_attendance_TO_user_1` FOREIGN KEY (
 REFERENCES `user` (
 	`user_id`
 );
-
-
--- 비디오 테이블의 해당 컬럼이 삭제되면 해당 컬럼을 참조하는 비디오_파일 행도 삭제가 되는 제약 조건 
-alter table video_file add constraint videoFile_video foreign key(video_number)
-references video(video_number) on delete cascade; 
 
 -- 출석체크 테이블 + user 테이블 식별관계 
 ALTER TABLE `attendance` ADD CONSTRAINT `FK_user_TO_attendance_1` FOREIGN KEY (
@@ -186,3 +178,21 @@ END
  
 
 call rankUpdateCk_procedure('admin');
+
+
+
+
+################# 테이블 삭제 순서 #####################
+drop table user_st;
+drop table attendance;
+drop table blame;
+drop table video_file;
+drop table video;
+drop table video_category;
+drop table user;
+
+
+
+
+
+

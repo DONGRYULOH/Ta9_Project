@@ -26,6 +26,7 @@
                         <div class="main_home text-center">
                             <div class="home_text">
                                 <h2 class="text-white text-uppercase">My PAGE</h2>
+                                <h4 class="text-white text-uppercase">(동영상 게시물 업로드)</h4>
                             </div>
                         </div>
                     </div><!--End off row-->
@@ -67,7 +68,7 @@
 							</div>	
 									
 							<!-- 카테고리 선택 -->									
-							<div class="row" style="margin-bottom: 30px;">
+							<div class="row" style="margin-bottom: 40px;">
 								 <select class="category1" name="category_code">
 								 	<option value="101">스포츠</option>
 								  	<option value="102">개발</option>
@@ -96,7 +97,7 @@
 							<!-- 썸네일 이미지 선택 -->
 							<div class="row" style="margin-bottom: 50px;height: 320px;">	
 								  <!-- name값이 video로 시작하면 서버에서 받을수 있는데 아니라면 받을수 없는 이유는 뭐지?? -->															  	  	
-							  	  <input type="file" id="video_thumbNail"  name="video_thumbNail" onchange="setThumbnail(event);" />
+							  	  <input type="file" id="video_thumbNail"  name="video_thumbNail" onchange="setThumbnail(event);" required/>
 							  	  <div id="image_container"></div>				  	.
 							  	    								  	  	
 							</div>	
@@ -133,7 +134,11 @@
     
     	/* 1.썸네일 이미지 선택시 화면에 표시해주기 + 용량 제한 */
     	function setThumbnail(event) { 
-    		
+    			console.log(event);
+    			
+    		if($('#video_thumbNail').val() == null){
+    			return;
+    		}
     		$("#image_container").empty();
 
     		console.log("파일 타입:" + event.target.files[0].type);   

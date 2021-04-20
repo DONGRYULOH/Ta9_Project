@@ -55,7 +55,7 @@ public class UserService {
 			result = userdao.register_st(userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("회원가입 처리중 예외 발생 : "+ e.getMessage());			
+			System.err.println("회원가입 처리중 예외 발생 : "+ e.getMessage());			
 		}
 		
 		return result;
@@ -90,6 +90,9 @@ public class UserService {
 					if(count == 0) {
 						userdao.loginAttInsert(user.getUser_id()); // 출석체크 
 						userdao.loginExpInsert(user.getUser_id()); // 경험치 추가
+						// 경험치가 Update 되면 해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출
+						userdao.rankUpdateCkProcedures(user.getUser_id()); 
+						
 					}
 				}
 			}

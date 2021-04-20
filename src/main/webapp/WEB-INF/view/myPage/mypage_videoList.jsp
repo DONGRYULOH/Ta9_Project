@@ -27,6 +27,7 @@
                         <div class="main_home text-center">
                             <div class="home_text">
                                 <h2 class="text-white text-uppercase">My PAGE</h2>
+                                <h4 class="text-white text-uppercase">(동영상 게시물 관리)</h4>
                             </div>
                         </div>
                     </div><!--End off row-->
@@ -94,7 +95,23 @@
 						</div>
 						<!-- 전체공개,등급별 공개 여부 -->
 						<div class="col-md-4">
-							<h4>${list.video_rank_limit}</h4>
+							<c:choose>
+								<c:when test="${list.video_rank_limit eq 0}">
+									<h4>비회원,회원 전체 공개</h4>
+								</c:when>
+								<c:when test="${list.video_rank_limit eq 1}">
+									<h4>브론즈 등급부터 시청가능</h4>
+								</c:when>
+								<c:when test="${list.video_rank_limit eq 2}">
+									<h4>실버 등급부터 시청가능</h4>
+								</c:when>
+								<c:when test="${list.video_rank_limit eq 3}">
+									<h4>골드 등급부터 시청가능</h4>
+								</c:when>
+								<c:when test="${list.video_rank_limit eq 4}">
+									<h4>플래티넘 등급부터 시청가능</h4>
+								</c:when>				
+							</c:choose> 
 						</div>
 					</div>	
 				</c:forEach>

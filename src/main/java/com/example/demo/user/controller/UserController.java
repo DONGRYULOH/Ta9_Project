@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.user.dao.UserDao;
 import com.example.demo.user.dto.UserDto;
@@ -57,28 +58,26 @@ public class UserController {
 	
 	// 회원가입 처리 
 	@RequestMapping(value="/register" , method = RequestMethod.POST)
-	public String register(UserDto userDto,Model model) {
-		String msg = null; 
+	public String register(UserDto userDto,Model model,RedirectAttributes rd) {
+		 
 		String url = "user/register";
 		int result = userService.register(userDto);
 		
-		if(result == 1) {
-			msg = "회원가입 성공!";
-			url = "user/login";
+		if(result == 1) {			
+			url = "redirect:/login";
 		}
 		else {
 			result = -1;
-			msg = "회원가입 실패 다시 회원가입 시도 바람!";
-		}
+			model.addAttribute("register_msg","회원가입 실패 다시 회원가입 시도 바람!");
+			model.addAttribute("register_result",result);
+		}			
 		
-		model.addAttribute("register_msg",msg);
-		model.addAttribute("register_result",result);
 		return url;
 	}
 
 	// 로그인 페이지 이동 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public String signIn() {
+	public String signIn(RedirectAttributes rd) {
 		return "user/login";
 	}
 	
@@ -87,8 +86,6 @@ public class UserController {
 	public String signIn(UserDto userDto,Model model,HttpSession session) {
 		// 로그인 성공여부에 따라 이동될 주소 ( -1 : 로그인 실패 , 1 : 로그인 성공)
 		String url = "user/login";
-		// 로그인시 출력될 메시지 
-		String msg = "로그인 실패! 다시 시도 바람!"; 
 		
 		// 로그인 성공시 세션 부여하기 
 		HashMap<String,Integer> resultSet = userService.signIn(userDto,session);		
@@ -96,13 +93,12 @@ public class UserController {
 			url = "index";
 			if(resultSet.get("loginAttCk") == 0) { // 처음 로그인시 100EXP 지급 했다고 메시지 띄우기
 				model.addAttribute("result2",resultSet.get("loginAttCk"));
-				model.addAttribute("msg2","100EXP 지급완료!");
+				model.addAttribute("msg2","오늘 최초 로그인이시네요~ 100EXP 지급완료!");
 			}	
 		}  
-		
-							
-		model.addAttribute("msg",msg);
-		model.addAttribute("result",resultSet.get("loginCk"));			
+								
+		model.addAttribute("login_msg","로그인 실패! 다시 시도 바람!");
+		model.addAttribute("login_result",resultSet.get("loginCk"));			
 		
 		return url;
 	}

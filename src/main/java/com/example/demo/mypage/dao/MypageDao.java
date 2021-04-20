@@ -21,7 +21,7 @@ public interface MypageDao {
 	// 포인트 지급 여부 체크(해당 유저가 오늘날짜에 동영상 게시물을 업로드 헀는지 안했는지 검사)
 	int videoUploadCk(String user_id) throws Exception;
 
-	// 해당 유저의 경험치를 Update 시켜줌
+	// 해당 유저의 경험치를 300 EXP Update 시켜줌
 	int ExpUpdate(String user_id) throws Exception;
 
 	// 해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출
@@ -35,5 +35,8 @@ public interface MypageDao {
 	
 	// 동영상 게시글 INSERT 후 해당 동영상 게시글 상세 페이지로 이동하기 위한 번호를 얻어옴 
 	int videoDetailNumber() throws Exception;
+	
+	// 해당 동영상 게시물 삭제하기 
+	int deleteVideo(int video_number) throws Exception;
 
 }

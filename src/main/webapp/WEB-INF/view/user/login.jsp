@@ -14,8 +14,8 @@
         <%@ include file="/WEB-INF/include/head_import.jsp" %>
         
         <script type="text/javascript">       	        	
-        	if('${result}' == -1) {
-        		alert('${msg}');
+        	if('${login_result}' == -1) {
+        		alert('${login_msg}');
         	}
         	if('${register_result}' == 1) {
         		alert('${register_msg}');

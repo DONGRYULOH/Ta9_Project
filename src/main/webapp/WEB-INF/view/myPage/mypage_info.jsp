@@ -16,29 +16,6 @@
 
     <body data-spy="scroll" data-target=".navbar-collapse">
 
-
-        <!-- Preloader -->
-
-        <div id="loading">
-            <div id="loading-center">
-                <div id="loading-center-absolute">
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                </div>
-            </div>
-        </div>
-
-        <!--End off Preloader -->
-
-
         <div class="culmn" style="background-color:#a3a3c2;">
             <!-- 헤더 메뉴바 공통 -->
             <%@ include file="/WEB-INF/include/header.jsp"%>
@@ -48,6 +25,7 @@
                         <div class="main_home text-center">
                             <div class="home_text">
                                 <h2 class="text-white text-uppercase">My PAGE</h2>
+                                <h4 class="text-white text-uppercase">(내정보)</h4>
                             </div>
                         </div>
                     </div><!--End off row-->

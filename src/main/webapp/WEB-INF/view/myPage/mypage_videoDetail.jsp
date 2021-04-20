@@ -75,8 +75,8 @@
                                         </ol>
                                     </div>
                                     <div align="center" style="margin-top: 10px;">
-                                    	<button type="submit" class="btn btn-primary">수정하기</button>
-                                    	<button type="submit" class="btn btn-primary">삭제하기</button>										
+                                    	<a href="mypage_videoUpdate?n=${videoDetail.video_number}" class="btn btn-warning">수정하기 </a>
+                                    	<a href="mypage_videoDelete?n=${videoDetail.video_number}"  id="delete_btn" class="btn btn-danger">삭제하기 </a>                                    	                                    										
 									</div>                                    
                                 </div>
                             </div>
@@ -97,7 +97,22 @@
 
        
 		
-    </body>
-    	
+    </body>    	
     	<%@ include file="/WEB-INF/include/js_import.jsp" %>
+    	
+    	
+    	<script>
+			  
+			  $("#delete_btn").on("click",function(event){
+				  	var con = confirm("정말로 삭제하시겠습니까?");
+				  	
+				  	if(!con){
+				  		event.preventDefault();	
+				  	}
+				    
+				});
+				
+		 </script>
+    	
+    	
 </html>
