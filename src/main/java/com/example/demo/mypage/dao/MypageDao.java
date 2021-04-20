@@ -31,6 +31,9 @@ public interface MypageDao {
 	UserDto getUserInfo(String user_id) throws Exception;
 
 	// 동영상 게시물 번호에 해당하는 정보 가져오기 
-	VideoJoinVideoFileDto getVideoDetail(int video_number);
+	VideoJoinVideoFileDto getVideoDetail(int video_number) throws Exception;
+	
+	// 동영상 게시글 INSERT 후 해당 동영상 게시글 상세 페이지로 이동하기 위한 번호를 얻어옴 
+	int videoDetailNumber() throws Exception;
 
 }

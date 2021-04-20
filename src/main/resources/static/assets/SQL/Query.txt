@@ -48,8 +48,10 @@ CREATE TABLE `video_file` (
 );
 
 CREATE TABLE `attendance` (
+	`att_number` INT NOT NULL AUTO_INCREMENT,
 	`user_id`	VARCHAR(20)	NOT NULL,
-	`att_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+	`att_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(att_number)
 );
 
 CREATE TABLE `blame` (
@@ -82,10 +84,6 @@ ALTER TABLE `video_file` ADD CONSTRAINT `PK_VIDEO_FILE` PRIMARY KEY (
 	`video_number`
 );
 
--- attendance 테이블 PK 제약조건 
-ALTER TABLE `attendance` ADD CONSTRAINT `PK_ATTENDANCE` PRIMARY KEY (
-	`user_id`
-);
 
 -- 유저상태 테이블 PK 제약조건
 ALTER TABLE `user_st` ADD CONSTRAINT `PK_USER_ST` PRIMARY KEY (
@@ -115,6 +113,15 @@ ALTER TABLE `video_file` ADD CONSTRAINT `FK_video_TO_video_file_1` FOREIGN KEY (
 REFERENCES `video` (
 	`video_number`
 );
+
+-- 출석체크 테이블 유저 테이블 비식별관계 
+ALTER TABLE `attendance` ADD CONSTRAINT `FK_attendance_TO_user_1` FOREIGN KEY (
+	`user_id`
+)
+REFERENCES `user` (
+	`user_id`
+);
+
 
 -- 비디오 테이블의 해당 컬럼이 삭제되면 해당 컬럼을 참조하는 비디오_파일 행도 삭제가 되는 제약 조건 
 alter table video_file add constraint videoFile_video foreign key(video_number)

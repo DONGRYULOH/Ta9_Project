@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.mypage.dao.MypageDao;
 import com.example.demo.mypage.dto.VideoDto;
@@ -88,6 +89,21 @@ public class MypageService {
 		return null;
 	}
 	
+	// 동영상 게시글 INSERT 후 해당 동영상 게시글 상세 페이지로 이동하기 위한 번호를 얻어옴  	
+	public String videoDetailNumber(RedirectAttributes redirectAttributes,String url) {
+		try {
+			int seq = mypageDao.videoDetailNumber();
+			if(seq != ' ') {
+				url = "redirect:mypage_videoDetail";
+				redirectAttributes.addAttribute("n",seq);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 동영상 게시물 번호 가져오는 중 에러발생" + e.getMessage());
+		} 
+		return url;
+	}
+	
 	// 유저 정보 가져오기 
 	public UserDto getUserInfo(String user_id) {
 		try {
@@ -98,6 +114,9 @@ public class MypageService {
 		}
 		return null;
 	}
+
+	
+
 
 	
 	

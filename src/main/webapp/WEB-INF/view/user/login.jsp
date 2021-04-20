@@ -17,6 +17,9 @@
         	if('${result}' == -1) {
         		alert('${msg}');
         	}
+        	if('${register_result}' == 1) {
+        		alert('${register_msg}');
+        	}
         </script>
     </head>
 

@@ -59,17 +59,21 @@ public class UserController {
 	@RequestMapping(value="/register" , method = RequestMethod.POST)
 	public String register(UserDto userDto,Model model) {
 		String msg = null; 
+		String url = "user/register";
 		int result = userService.register(userDto);
+		
 		if(result == 1) {
 			msg = "회원가입 성공!";
+			url = "user/login";
 		}
 		else {
 			result = -1;
 			msg = "회원가입 실패 다시 회원가입 시도 바람!";
-		}		
-		model.addAttribute("msg",msg);
-		model.addAttribute("result",result);
-		return "user/register";
+		}
+		
+		model.addAttribute("register_msg",msg);
+		model.addAttribute("register_result",result);
+		return url;
 	}
 
 	// 로그인 페이지 이동 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.mypage.dto.VideoDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
@@ -46,7 +47,7 @@ public class MypageController {
 	
 	// 동영상 게시물 업로드하기 
 	@RequestMapping(value = "/mypage_create",method = RequestMethod.POST)
-	public String mypage_create(VideoDto videoDto,HttpServletRequest request,HttpSession session) {
+	public String mypage_create(VideoDto videoDto,HttpServletRequest request,HttpSession session,RedirectAttributes redirectAttributes) {
 		
 		//클라이언트에서 전송된 파일정보를 담아서 Mybatis Mapper에서 뿌려줄 정보(썸네일 파일,비디오 파일) 
 		Map<String,Object> Files = new HashMap<String,Object>(); 				
@@ -56,11 +57,15 @@ public class MypageController {
 						
 		// 2.동영상 게시글 + 파일 DB에 INSERT 
 		int result = mypageService.videoUpload(videoDto,Files,session);
-	
-		if(result == 1) System.out.println("INSERT 성공 해당 동영상 게시글로 이동");
-		else System.out.println("INSERT 실패 또는 INSERT 도중 에러 발생 영상 올리기 페이지로 이동");
 		
-		return "myPage/mypage_index";
+		// 3.동영상 게시글 INSERT 후 해당 동영상 게시글 상세 페이지로 이동하기 위한 번호를 얻어옴 
+		String url = "redirect:mypage_create";
+		if(result == 1) {
+			url = mypageService.videoDetailNumber(redirectAttributes,url);
+		}
+		else System.err.println("INSERT 실패 또는 INSERT 도중 에러 발생 영상 올리기 페이지로 이동");
+		
+		return url;
 	}
 	
 	// 동영상 게시물 리스트 페이지 이동 
