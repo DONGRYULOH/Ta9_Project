@@ -24,7 +24,7 @@
                         </button>
                         <a class="navbar-brand" href="/">
                             <img src="assets/images/logo.png" class="logo logo-display" alt="">
-                            <img src="assets/images/logo-black.png" class="logo logo-scrolled" alt="">
+                            <img src="assets/images/logo.png" class="logo logo-scrolled" alt="">
                         </a>
                     </div>
                     <!-- End Header Navigation -->

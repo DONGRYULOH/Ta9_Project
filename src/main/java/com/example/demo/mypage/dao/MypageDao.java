@@ -38,5 +38,42 @@ public interface MypageDao {
 	
 	// 해당 동영상 게시물 삭제하기 
 	int deleteVideo(int video_number) throws Exception;
+	
+	// 현재 유저가 삭제하고자 하는 썸네일명을 DB에서 꺼내옴
+	String getThumbFileName(int video_number) throws Exception;
+	
+	// 해당 동영상 게시물 업데이트(파일 제외)
+	int videoBrdUpdate(VideoDto videoDto) throws Exception;
 
+	// 해당 동영상 썸네일 업데이트 
+	int videoThumbUpdate(Map<String, Object> thumbFile) throws Exception;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

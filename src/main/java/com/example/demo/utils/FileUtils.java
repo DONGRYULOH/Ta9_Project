@@ -25,6 +25,7 @@ public class FileUtils {
 	static final int THUMB_WIDTH = 370;
 	static final int THUMB_HEIGHT = 246;
 	
+	// 썸네일 이미지 파일,동영상 파일 해당 서버의 폴더에 업로드 하는 메서드 
 	public Map<String,Object> parseInsertFileInfo(Map<String,Object> videoFile,HttpServletRequest request) { 
 		
 		try {
@@ -88,11 +89,89 @@ public class FileUtils {
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("파일을 업로드하는 도중 에러 발생 ... " + e.getMessage());
+			System.out.println("파일(동영상,썸네일)을 업로드하는 도중 에러 발생 ... " + e.getMessage());
 		}		
 		
 		return videoFile; 
 		
 	}
+	
+	
+	
+	
+	// 해당 폴더에 저장된 썸네일 파일 삭제 처리하는 메서드
+	public Map<String,Object> parseDeleteFileInfo(Map<String,Object> thumbFile,HttpServletRequest request,String thumbNail) { 
+			
+			try {
+				
+				// <기존에 올렸던 썸네일 파일 삭제 처리>
+				File file2 = new File(filePath + thumbNail); // 서버에 업로드된 썸네일 저장 폴더 + 썸네일 파일명 
+				file2.delete(); // 기존에 올렸던 썸네일 이미지 파일 삭제 
+				
+				// 1.HttpServletRequest 이용해 전송된(업로드한) 파일들(썸네일,동영상)을 가져온다 
+				MultipartHttpServletRequest MultipartHttpServletRequest = (MultipartHttpServletRequest)request;
+				Iterator<String> iterator = MultipartHttpServletRequest.getFileNames();		
+				MultipartFile multipartFile = null;
+				
+				String originalFileName = null; // 올린 파일 이름 
+				String originalFileExtension = null; // 확장명 
+				String storedFileName = null; // 중복되지 않은 이름으로 저장될 파일명 
+				
+				// 2.파일을 저장할 경로에 해당폴더가 없으면 폴더를 생성함 
+				File file = new File(filePath); 
+				if(file.exists() == false){ 
+					file.mkdirs(); 
+				}
+
+				// 3.기존에 올렸던 썸네일 이미지 삭제후 새로운 썸네일 이미지 업로드 처리
+				while(iterator.hasNext()) {
+					multipartFile = MultipartHttpServletRequest.getFile(iterator.next());
+		
+					System.out.println("파일 이름 : " + multipartFile.getOriginalFilename());
+					System.out.println("파일 크기 : " + multipartFile.getSize());
+					
+	
+					// multipartFile 안에 있는 이름이 "video_thumbNail" 경우 지정된 장소에 업로드 
+					originalFileName = multipartFile.getOriginalFilename(); //원본파일의 이름을 받아옴 (exam.png)
+					originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 해당원본파일의 확장명을 뽑아냄 (png)  
+					storedFileName = "Thumb" + UUID.randomUUID().toString().replaceAll("-","") + originalFileExtension; // 32자리의 랜덤파일이름 + 확장명 	
+															
+					file = new File(filePath + storedFileName); // 서버에 실제파일이 저장될 경로와 저장될 파일설정
+					multipartFile.transferTo(file); // 업로드한 파일을 지정된 폴더에 저장함 
+					
+					// <새롭게 올린 썸네일 이미지를 그려주고 서버에 업로드 하는 과정> 
+					BufferedImage orginal = ImageIO.read(file);
+					BufferedImage thumbnail = new BufferedImage(THUMB_WIDTH,THUMB_HEIGHT,BufferedImage.TYPE_3BYTE_BGR);
+					// 1.썸네일 그리기 
+					Graphics2D g = thumbnail.createGraphics();
+					g.drawImage(orginal,0,0,THUMB_WIDTH,THUMB_HEIGHT,null);
+					// 2.파일생성
+					FileOutputStream out = new FileOutputStream(filePath+storedFileName);
+					ImageIO.write(thumbnail,"jpg",out);
+					
+					thumbFile.put("orgin_video_thumb", originalFileName); // 사용자가 업로드한 원본 썸네일 동영상 이름
+					thumbFile.put("stored_video_thumb", storedFileName); //  중복되지 않은 이름으로 저장될 썸네일 동영상 파일명
+					
+					out.flush(); // 파일객체를 다사용하면 연결되어있는 파일 자원들을 끊어줌  										
+					
+					
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("썸네일 파일 업로드 도중 에러 발생 ... " + e.getMessage());
+			}		
+			
+			return thumbFile; 
+			
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

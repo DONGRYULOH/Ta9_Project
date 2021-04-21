@@ -120,29 +120,37 @@ public class MypageController {
 	
 	// 동영상 게시물 수정 처리하기 
 	@RequestMapping(value = "/mypage_videoUpdate",method = RequestMethod.POST)
-	public String mypage_videoUpdatePost(VideoDto videoDto,HttpServletRequest request) {
+	public String mypage_videoUpdatePost(VideoDto videoDto,HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		
 		//클라이언트에서 전송된 파일정보를 담아서 Mybatis Mapper에서 뿌려줄 정보(썸네일 파일,비디오 파일) 
 		Map<String,Object> thumbFile = new HashMap<String,Object>(); 	
+		thumbFile.put("video_number", videoDto.getVideo_number());
 				
 		//System.out.println("기존에 올린 썸네일 이미지 존재 여부:"+request.getParameter("orgin_video_thumbNail"));
 		// 1.새로운 썸네일 이미지를 첨부한 경우(동영상 게시글 + 동영상 썸네일 이미지 업데이트 처리)  
-		if(request.getParameter("orgin_video_thumbNail") == null) { 
-			// 1-1. 기존에 올렸던 썸네일 이미지를 삭제 처리후 새로운 썸네일 이미지를 만들어서 업로드 처리 
-			fileUtils.parseInsertFileInfo(thumbFile, request);	
+		if(request.getParameter("orgin_video_thumbNail") == null) {
+			// 1-1. 현재 유저가 삭제하고자 하는 썸네일명을 DB에서 꺼내옴 
+			String thumbNail = mypageService.getThumbFileName(videoDto);
 			
-			// 1-2. 동영상 게시글 업데이트 처리
+			// 1-2. 기존에 올렸던 썸네일 이미지를 삭제 처리후 새로운 썸네일 이미지를 만들어서 업로드 처리 
+			fileUtils.parseDeleteFileInfo(thumbFile,request,thumbNail);
 			
-			// 1-3. 동영상 썸네일 이미지 업데이트 처리
+			// 1-3. 동영상 게시글 업데이트 처리
+			int result = mypageService.videoBrdUpdate(videoDto);
+			
+			// 1-4. 동영상 썸네일 이미지 업데이트 처리
+			mypageService.videoThumbUpdate(thumbFile);
 		}
 		
-		// 2.썸네일 이미지를 수정하지 않은 경우(동영상 게시글만 업데이트 처리)   
-		if(request.getParameter("orgin_video_thumbNail") == "orgin_ok") { 
+		// 2.썸네일 이미지를 수정하지 않은 경우(동영상 게시글만 업데이트 처리)
+		if(request.getParameter("orgin_video_thumbNail") != null) { 
 			// 2-1. 동영상 게시글 업데이트 처리 
+			int result = mypageService.videoBrdUpdate(videoDto);
 		}
+	
 		
-		
-		return "myPage/mypage_videoUpdate";
+		redirectAttributes.addAttribute("n",videoDto.getVideo_number());
+		return "redirect:mypage_videoDetail";
 	}
 	
 	

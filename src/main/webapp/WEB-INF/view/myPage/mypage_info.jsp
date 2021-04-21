@@ -72,26 +72,64 @@
 						</div>
 					</div>		
 				</div>
-							
 				
+				<div class="row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-11">
+						<table class="table">
+						 <thead>
+						   <tr>
+						      <th>등급</th>
+						      <th>경험치(EXP)</th>
+						      <th>혜택</th>
+						   </tr>
+						 </thead>
+						 <tbody>
+						   <tr
+						   	<c:if test="${User.user_rank eq 'Bronze' }">
+								class="success"
+							</c:if>
+						   >
+						      <td>브론즈(Bronze)</td>
+						      <td>0 EXP ~ 999 EXP</td>
+						      <td>전체공개 + 브론즈 등급의 게시물 접근가능</td>
+						   </tr>
+						   <tr
+						   	<c:if test="${User.user_rank eq 'Sliver' }">
+								class="success"
+							</c:if>
+						   >
+						      <td>실버(Sliver)</td>
+						      <td>1000 EXP ~ 2999 EXP</td>
+						      <td>전체공개 + 브론즈,실버 게시물 접근가능</td>
+						   </tr>
+						   <tr
+						   	<c:if test="${User.user_rank eq 'Gold' }">
+								class="success"
+							</c:if>
+						   >
+						      <td>골드(Gold)</td>
+						      <td>3000 EXP ~ 9999 EXP</td>
+						      <td>전체공개 + 브론즈,실버,골드 게시물 접근가능</td>
+						   </tr>
+						   <tr
+						   	<c:if test="${User.user_rank eq 'Platinum' }">
+								class="success"
+							</c:if>
+						   >
+						      <td>플래티넘(Platinum)</td>
+						      <td>10000 EXP 이상</td>
+						      <td>모든 게시물 접근가능</td>
+						   </tr>
+						 </tbody> 						
+						</table>
+					</div>
+				</div>						
 			</div>
 			
-			
-
-          
-
 
             <!-- 풋터 공통 -->
            <%@ include file="/WEB-INF/include/footer.jsp"%>
-
-            
-
-
-
-
-        
-
-       
 
     </body>
     

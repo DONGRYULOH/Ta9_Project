@@ -74,6 +74,27 @@
 		delete from video where video_number = #{video_number}
 	</delete>
 	
+	<!-- 현재 유저가 삭제하고자 하는 썸네일명을 DB에서 꺼내옴 -->
+	<select id="getThumbFileName" parameterType="int" resultType="String">
+		select stored_video_thumb 
+			from video_file 
+		 where video_number = #{video_number}
+	</select>
+	
+	<!-- 해당 동영상 게시물 업데이트(파일 제외) -->
+	<update id="videoBrdUpdate" parameterType="com.example.demo.mypage.dto.VideoDto">
+			update video 
+				set category_code=#{category_code},video_title=#{video_title},public_check=#{public_check},video_rank_limit=#{video_rank_limit}
+   			 where video_number = #{video_number}
+	</update>
+	
+	<!-- 해당 동영상 썸네일 업데이트  -->
+	<update id="videoThumbUpdate" parameterType="hashmap">
+			update video_file
+				set orgin_video_thumb=#{orgin_video_thumb},stored_video_thumb=#{stored_video_thumb}
+   			 where video_number = #{video_number}
+	</update>
+	
 </mapper>
 
 

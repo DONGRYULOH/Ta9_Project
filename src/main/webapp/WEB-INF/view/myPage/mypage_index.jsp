@@ -48,7 +48,7 @@
                             <h4>제목</h4>                                                                         
 						</div>			
 						<div class="row" style="margin-bottom: 22px;">
-							<h4>카테고리 선택</h4>
+							<h4>카테고리</h4>
 						</div>							
 						<div class="row" style="margin-bottom: 22px;">
 							<h4>공개여부</h4>

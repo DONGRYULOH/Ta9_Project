@@ -126,6 +126,39 @@ public class MypageService {
 		return 0;
 	}
 
+	//  현재 유저가 삭제하고자 하는 썸네일명을 DB에서 꺼내옴
+	public String getThumbFileName(VideoDto videoDto) {  		
+		try {
+			return mypageDao.getThumbFileName(videoDto.getVideo_number());
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("현재 유저가 삭제하고자 하는 썸네일명 가져오는 중 에러발생!!" + e.getMessage());
+		}
+		return null;
+	}
+
+	// 동영상 게시글 업데이트(파일 제외) 
+	public int videoBrdUpdate(VideoDto videoDto) {
+		try {
+			return mypageDao.videoBrdUpdate(videoDto);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 동영상 게시물 업데이트 중 에러발생!!" + e.getMessage());
+		}
+		return 0;		
+	}
+	
+	// 동영상 썸네일 업데이트 처리 
+	public int videoThumbUpdate(Map<String, Object> thumbFile) {
+		try {
+			return mypageDao.videoThumbUpdate(thumbFile);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 동영상 썸네일 업데이트 중 에러발생!!" + e.getMessage());
+		}
+		return 0;			
+	}
+
 	
 
 

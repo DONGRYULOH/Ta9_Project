@@ -56,13 +56,14 @@
                     <div class="row">
                         <div class="main_home text-center">
                             <div class="home_text">
-                                <h4 class="text-white text-uppercase">a new creative studio</h4>
-                                <h1 class="text-white text-uppercase">good design is always in season</h1>
+                                <h1 class="text-white text-uppercase">Welcome</h1>
+                                <h2 class="text-white text-uppercase">TA9 카테고리별 동영상 시청 사이트에 오신것을 환영합니다!</h2>
 
                                 <div class="separator"></div>
 
-                                <h5 class=" text-uppercase text-white"><em>One day, the dream will come true with lorem ipsum dolor sit amet, 
-                                        consectetuer adipiscing elit, nummy nibh euismod tincidunt laoreet.</em></h5>
+                                <h5 class=" text-uppercase text-white"><em>
+                                	The way to get started is to quit talking and begin doing.
+                                </em></h5>
                             </div>
                         </div>
                     </div><!--End off row-->
