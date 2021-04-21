@@ -6,16 +6,16 @@ import lombok.Data;
 
 /*
  	-- 회원 테이블 
-create table user(
-	user_id varchar(20) not null,
-    user_pwd varchar(100) not null,
-    user_nickname varchar(20) not null,
-    user_exp int not null default 0,
-    user_rank varchar(20) default 'Bronze' not null,
-    user_insertdate datetime DEFAULT CURRENT_TIMESTAMP not null, 
-    user_leavedate datetime null,
-    PRIMARY KEY(user_id)
-    );
+CREATE TABLE `user` (
+	`user_id`	VARCHAR(20)	NOT NULL,
+	`user_pwd`	VARCHAR(100)	NOT NULL,
+	`user_nickname`	VARCHAR(20)	NOT NULL,
+	`user_exp`	INT	NOT NULL	DEFAULT 0,
+	`user_rank`	VARCHAR(20)	NOT NULL DEFAULT 'Bronze',
+	`user_rank_code`	INT	NOT NULL DEFAULT 1,
+	`user_insertdate`	DATETIME	NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`user_leavedate`	DATETIME	NULL
+);
  */
 
 @Data
@@ -25,7 +25,8 @@ public class UserDto {
 	private String user_pwd;
 	private String user_nickname;
 	private int user_exp;
-	private String user_rank;		
+	private String user_rank;
+	private int user_rank_code;	
 	private Date user_insertdate;
 	private Date user_leavedate;
 	

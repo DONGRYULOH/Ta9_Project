@@ -46,11 +46,11 @@
                         	</ul>
                         </c:if> 
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-                            <li><a href="sports">스포츠</a></li> 
-							<li><a href="aboutus.html">개발</a></li> 							                   
-                            <li><a href="model.html">경제</a></li> 							
-                            <li><a href="blog.html">외국어</a></li>                                    
-                            <li><a href="contactus.html">ETC</a></li>                                              
+                            <li><a href="categoryList?cateCode=101">스포츠</a></li> 
+							<li><a href="categoryList?cateCode=102">개발</a></li> 							                   
+                            <li><a href="categoryList?cateCode=103">경제</a></li> 							
+                            <li><a href="categoryList?cateCode=104">외국어</a></li>                                    
+                            <li><a href="categoryList?cateCode=105">ETC</a></li>                                              
                         </ul>
                        
                     </div><!-- /.navbar-collapse -->
