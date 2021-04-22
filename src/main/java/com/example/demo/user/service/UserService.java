@@ -51,8 +51,9 @@ public class UserService {
 			// 패스워드 암호화후 회원가입 처리  
 			userDto.setUser_pwd(securityConfig.getPasswordEncoder().encode(userDto.getUser_pwd()));
 			result = userdao.register(userDto);
+			
 			// 회원가입후 유저상태 추가 
-			result = userdao.register_st(userDto);
+			// result = userdao.register_st(userDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("회원가입 처리중 예외 발생 : "+ e.getMessage());			
