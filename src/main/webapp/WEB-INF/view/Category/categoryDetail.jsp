@@ -48,9 +48,18 @@
 			        height: 100%;
 			        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
 			        text-indent: -9999px;
-			    }
-			        
+			    }			        
         </style>
+        
+        <script type="text/javascript">       	        	
+        	if('${result}' == 1) {
+        		alert('${blameRe}');
+        	}
+        	if('${result}' == 0) {
+        		alert('${blameRe}');
+        	}
+        </script>
+        
         <%@ include file="/WEB-INF/include/head_import.jsp" %>
     </head>
 

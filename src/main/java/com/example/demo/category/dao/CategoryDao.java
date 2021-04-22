@@ -13,5 +13,8 @@ public interface CategoryDao {
 
 	// 해당 동영상 게시물 신고처리 
 	int reportInsert(BlameDto blameDto) throws Exception;
+	
+	// 신고수 1 증가 
+	void videoReportUpdate(int video_number) throws Exception;
 
 }

@@ -37,4 +37,14 @@ public class CategoryService {
 		}
 		return 0;
 	}
+	
+	// 신고수 1증가 
+	public void videoReportUpdate(int video_number) {
+		try {
+			categoryDao.videoReportUpdate(video_number);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 동영상 게시물 신고수 1증가 중 에러발생!!" + e.getMessage());
+		}
+	}
 }

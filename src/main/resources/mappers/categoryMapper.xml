@@ -13,9 +13,15 @@
    		 order by v.video_number desc 
  	</select>
 	
+	<!-- 해당 동영상 게시물 신고사유 INSERT -->
 	<insert id="reportInsert" parameterType="com.example.demo.category.dto.BlameDto" >
 		insert into blame(video_number,user_id,blame_name) values(#{video_number},#{user_id},#{blame_name})
 	</insert>
+	
+	<!-- 해당 동영상 게시물 신고수 1증가 -->
+	<update id="videoReportUpdate" parameterType="int">
+		update video set video_reports = video_reports + 1 where video_number = #{video_number}
+	</update>
 </mapper>
 
 
