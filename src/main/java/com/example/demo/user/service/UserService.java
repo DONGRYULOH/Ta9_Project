@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.SecurityConfig;
 import com.example.demo.user.dao.UserDao;
 import com.example.demo.user.dto.UserDto;
+import com.example.demo.user.dto.VideoCartDto;
 
 @Service
 public class UserService {
@@ -106,6 +107,27 @@ public class UserService {
 		}		 				
 		
 		return resultSet;
+	}
+
+	// 해당 유저가 해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크
+	public int videoCartCk(VideoCartDto videoCartDto) {
+		try {
+			return userdao.videoCartCk(videoCartDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크 중 에러발생! : "+ e.getMessage());			
+		}
+		return 1;
+	}
+	
+	// 해당 유저의 위시리스트 목록에 동영상 추가하기 
+	public void addVideoCart(VideoCartDto videoCartDto) {
+		try {
+			userdao.addVideoCart(videoCartDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("위시리스트 목록에 동영상 추가하기 중 에러발생! : "+ e.getMessage());			
+		}		
 	}
 }
 

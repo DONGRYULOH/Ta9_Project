@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.mypage.dto.VideoCart_FileDto;
 import com.example.demo.mypage.dto.VideoDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
 import com.example.demo.mypage.service.MypageService;
@@ -165,6 +166,30 @@ public class MypageController {
 		model.addAttribute("User",user);
 		
 		return "myPage/mypage_info";
+	}
+	
+	// 동영상 게시물 위시리스트 페이지 이동 
+	@RequestMapping("/mypage_cartList")
+	public String mypage_cartList(HttpSession session,Model model) {
+		
+		// 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기  
+		UserDto user = (UserDto)session.getAttribute("User");
+		List<VideoCart_FileDto> vcf = null; 
+		if(user != null) vcf = mypageService.mypage_cartList(user.getUser_id());
+		
+		model.addAttribute("vcf",vcf);
+		model.addAttribute("vcfSize",vcf.size());
+		
+		return "myPage/mypage_cartList";
+	}
+	
+	// 동영상 게시물 위시리스트 페이지에서 해당 게시물 제거 
+	@RequestMapping("/mypage_cartDelete")
+	public String mypage_cartDelete(@RequestParam("n") int video_cart_number,Model model) {
+		
+		mypageService.mypage_cartDelete(video_cart_number);		
+		
+		return "redirect:/mypage_cartList";
 	}
 	
 }

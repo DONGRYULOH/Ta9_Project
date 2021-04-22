@@ -51,6 +51,7 @@ public class DataBaseConfig extends WebMvcConfigurerAdapter{
 	 				.addPathPatterns("/mypage_video_manage")
 	 				.addPathPatterns("/mypage_videoList")
 	 				.addPathPatterns("/mypage_videoDetail")
+	 				.addPathPatterns("/mypage_cartList")
 	 				.addPathPatterns("/mypage_info");
 	 	}
 	

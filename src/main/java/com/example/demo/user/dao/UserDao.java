@@ -3,6 +3,7 @@ package com.example.demo.user.dao;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.user.dto.UserDto;
+import com.example.demo.user.dto.VideoCartDto;
 
 
 public interface UserDao {
@@ -33,4 +34,23 @@ public interface UserDao {
 
 	// 경험치가 Update 되면 해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출
 	public void rankUpdateCkProcedures(String user_id);
+	
+	// 해당 유저가 해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크
+	public int videoCartCk(VideoCartDto videoCartDto) throws Exception;
+	
+	// 해당 유저의 위시리스트 목록에 동영상 추가하기 
+	public void addVideoCart(VideoCartDto videoCartDto) throws Exception;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

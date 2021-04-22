@@ -31,16 +31,16 @@
                                 		<h1 class="text-white text-uppercase">스포츠(카테고리)</h1>
                                 	</c:when>
                                 	<c:when test="${cateCode == '102'}">
-                                		<h2 class="text-white text-uppercase">개발(카테고리)</h2>
+                                		<h1 class="text-white text-uppercase">개발(카테고리)</h1>
                                 	</c:when>
                                 	<c:when test="${cateCode == '103'}">
-                                		<h2 class="text-white text-uppercase">경제(카테고리)</h2>
+                                		<h1 class="text-white text-uppercase">경제(카테고리)</h1>
                                 	</c:when>
                                 	<c:when test="${cateCode == '104'}">
-                                		<h2 class="text-white text-uppercase">외국어(카테고리)</h2>
+                                		<h1 class="text-white text-uppercase">외국어(카테고리)</h1>
                                 	</c:when>
                                 	<c:when test="${cateCode == '105'}">
-                                		<h2 class="text-white text-uppercase">ETC(카테고리)</h2>
+                                		<h1 class="text-white text-uppercase">ETC(카테고리)</h1>
                                 	</c:when>
                                 </c:choose>
                             </div>
@@ -92,17 +92,17 @@
 											2.if else(내가 올린 동영상 게시물인 경우는 등급조건에 상관없이 접근가능)											
 									 -->
 								    <c:choose>
-										<c:when test="${UserSession.user_rank_code >= list.video_rank_limit}">
-											<a href="categoryDetail?n=${list.video_number}">
-												<img src="/fileUpload/${list.stored_video_thumb}" >
-											</a>
-										</c:when>
-										<c:when test="${UserSession.user_id == list.user_id }">
+								    	<c:when test="${UserSession.user_id eq list.user_id }">
 											<a href="mypage_videoDetail?n=${list.video_number}">
 												<img src="/fileUpload/${list.stored_video_thumb}" >
 											</a>
 											<h5 class=" text-uppercase text-black" align="center">My 동영상 게시물</h5>
-										</c:when>									
+										</c:when>
+										<c:when test="${UserSession.user_rank_code >= list.video_rank_limit}">
+											<a href="categoryDetail?n=${list.video_number}">
+												<img src="/fileUpload/${list.stored_video_thumb}" >
+											</a>
+										</c:when>																			
 										<c:otherwise>
 												<img src="/fileUpload/${list.stored_video_thumb}" >
 										</c:otherwise>

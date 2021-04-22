@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.user.dao.UserDao;
 import com.example.demo.user.dto.UserDto;
+import com.example.demo.user.dto.VideoCartDto;
 import com.example.demo.user.service.UserService;
 
 @Controller
@@ -108,6 +110,25 @@ public class UserController {
 	public String signOut(HttpSession session) {
 		session.invalidate(); // 세션 날리기 
 		return "redirect:/";
+	}
+	
+	// 해당 유저의 위시리스트 목록에 추가 
+	@RequestMapping(value="/addVideoCart", method = RequestMethod.GET)
+	@ResponseBody
+	public int addVideoCart(@RequestParam("video_number") int video_number,HttpSession session) {
+		
+		UserDto user = (UserDto)session.getAttribute("User");
+		VideoCartDto videoCartDto = new VideoCartDto();
+		videoCartDto.setUser_id(user.getUser_id());
+		videoCartDto.setVideo_number(video_number); 
+		
+		// 1.해당 유저가 해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크
+		int result = userService.videoCartCk(videoCartDto);
+		
+		// 2.위시리스트 목록에 추가가 안되어있다면 추가를 해줌 
+		if(result == 0) userService.addVideoCart(videoCartDto);
+				
+		return result;
 	}
 	
 }

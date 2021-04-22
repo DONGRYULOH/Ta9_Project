@@ -11,7 +11,10 @@
      		</li>
      		<li class="breadcrumb-item active" aria-current="page">
      			<a href="mypage_info">내정보</a>
-     		</li>			     		
+     		</li>
+     		<li class="breadcrumb-item active" aria-current="page">
+     			<a href="mypage_cartList">동영상 게시물 위시리스트</a>
+     		</li>		     		
 	  	</ol>
 		</nav>
 	</div>

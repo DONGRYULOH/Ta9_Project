@@ -58,6 +58,18 @@
 		{call rankUpdateCk_procedure(#{user_id})}			
 	</select>	
 	
+	<!--  해당 유저가 해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크  -->
+	<select id="videoCartCk" parameterType="com.example.demo.user.dto.VideoCartDto" resultType="int">
+		select count(*) 
+			from video_cart 
+		 where user_id = #{user_id} AND video_number = #{video_number}
+	</select>
+	
+	<!--  해당 유저가 해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크  -->
+	<insert id="addVideoCart" parameterType="com.example.demo.user.dto.VideoCartDto">
+		insert into video_cart(user_id,video_number) values(#{user_id},#{video_number})				
+	</insert>
+	
 </mapper>
 
 

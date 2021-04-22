@@ -95,6 +95,20 @@
    			 where video_number = #{video_number}
 	</update>
 	
+	 <!-- 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기  -->
+	  <select id="mypage_cartList" parameterType="String" resultType="com.example.demo.mypage.dto.VideoCart_FileDto" >
+		  	select *
+					from (select * from video_cart where user_id = #{user_id}) vc JOIN video v 
+				 on vc.video_number = v.video_number
+				   JOIN video_file vf 
+				on vc.video_number = vf.video_number
+	  </select>
+	  
+	  <!-- 동영상 게시물 위시리스트 페이지에서 해당 게시물 제거 -->
+	  <delete id="mypage_cartDelete" parameterType="int">
+	  		delete from video_cart where video_cart_number = #{video_cart_number} 
+	  </delete>
+	
 </mapper>
 
 

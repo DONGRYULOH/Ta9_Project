@@ -3,6 +3,7 @@ package com.example.demo.mypage.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.mypage.dto.VideoCart_FileDto;
 import com.example.demo.mypage.dto.VideoDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
 import com.example.demo.user.dto.UserDto;
@@ -47,6 +48,12 @@ public interface MypageDao {
 
 	// 해당 동영상 썸네일 업데이트 
 	int videoThumbUpdate(Map<String, Object> thumbFile) throws Exception;
+
+	// 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기
+	List<VideoCart_FileDto> mypage_cartList(String user_id) throws Exception;
+	
+	// 동영상 게시물 위시리스트 페이지에서 해당 게시물 제거
+	void mypage_cartDelete(int video_cart_number) throws Exception;
 }
 
 

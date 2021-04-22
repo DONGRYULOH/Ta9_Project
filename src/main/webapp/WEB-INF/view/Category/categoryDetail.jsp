@@ -97,9 +97,10 @@
                 </div><!--End off container -->
 		</div>
            
-
+			
 			<!-- 동영상 세부 정보(동영상,제목,조회수,올린이 닉네임) -->
             <section id="blog_fashion" class="blog_fashion roomy-100">
+            	<input type="hidden" id="video_number" value="${videoDetail.video_number}" />
                 <div class="container">
                     <div class="row">
                         <div class="main_blog_fashion">
@@ -125,9 +126,10 @@
                                     <div align="center" style="margin-top: 10px;">
                                     	<c:choose>
 											<c:when test="${UserSession != null}">
+												<button type="button" class="btn btn-primary" id="video_cart">위시리스트 추가</button> 
 												<button type="button" class="btn btn-primary" id="modal_btn">신고하기</button>	                                    	
 		                                    	<div class="black_bg"></div>
-												  <div class="modal_wrap">
+												  <div class="modal_wrap">1
 												    <div class="modal_close"><a href="#">close</a></div>
 													    <div class="row">												    	
 													    	 <form role="form" method="post" autocomplete="off" action="/report">
@@ -172,7 +174,7 @@
     	
     	<%@ include file="/WEB-INF/include/js_import.jsp" %>
     	
-    	
+    	<!-- 신고하기 모달 창  -->
     	<script>
 		    window.onload = function() {
 		 
@@ -192,6 +194,65 @@
 		</script>
 
     	
+    	<!-- 위시리스트 추가  -->
+    	<script type="text/javascript">
+    		var video_number = $('#video_number').val();
+    		
+    		document.getElementById('video_cart').onclick = function(){
+    			
+    			console.log("위시리스트 추가 클릭!");
+    			console.log("동영상 번호 : " + video_number);
+    			
+    			// 비동기 방식으로 해당 동영상 게시물을 해당 유저의 위시리스트에 추가함
+    			$.ajax({
+					async : true, // true 설멍하면 비동기 방식을 사용하겠다(기본값:true)
+					url : 'addVideoCart', // 요청을 받을 컨트롤러 
+					type : 'GET',
+					data : {						
+							video_number : video_number
+					},  
+					contentType : 'application/json; charset=UTF-8', // json 형식으로 서버로 보낼때 설정값 
+					success : function(data) {							
+							if(data == 0) alert("위시리시트 목록에 해당 동영상이 추가되었습니다!");
+							if(data == 1) alert("이미 위시리시트 목록에 해당 동영상이 존재합니다!");
+					}, 
+					error : function() {
+						console.log("위시리스트 추가 하는 중 에러발생...");
+					}
+				});
+				
+				
+    		}
     	
+    	</script>
     	
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
