@@ -70,6 +70,13 @@
 		insert into video_cart(user_id,video_number) values(#{user_id},#{video_number})				
 	</insert>
 	
+	<!-- 로그인 처리 검사 -->
+	<select id="userTotalCount" parameterType="String" resultType="int">
+			select count(*)
+				from video 			
+   		      where user_id = #{user_id} 
+	</select>
+	
 </mapper>
 
 

@@ -17,7 +17,7 @@ public interface MypageDao {
 	int videoFileInsert(Map<String, Object> files) throws Exception;
 
 	// 해당 유저에 해당하는 동영상 게시물 리스트 가져오기 
-	List<VideoJoinVideoFileDto> getVideoList(String user_id) throws Exception;
+	List<VideoJoinVideoFileDto> getVideoList(Map<String,Object> userVideoList) throws Exception;
 
 	// 포인트 지급 여부 체크(해당 유저가 오늘날짜에 동영상 게시물을 업로드 헀는지 안했는지 검사)
 	int videoUploadCk(String user_id) throws Exception;
@@ -50,10 +50,16 @@ public interface MypageDao {
 	int videoThumbUpdate(Map<String, Object> thumbFile) throws Exception;
 
 	// 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기
-	List<VideoCart_FileDto> mypage_cartList(String user_id) throws Exception;
+	List<VideoCart_FileDto> mypage_cartList(Map<String,Object> userVideoList) throws Exception;
 	
 	// 동영상 게시물 위시리스트 페이지에서 해당 게시물 제거
 	void mypage_cartDelete(int video_cart_number) throws Exception;
+	
+	// 해당 유저의 총 동영상 게시물 수
+	int userTotalCount(String user_id) throws Exception;
+
+	// 해당 유저가 위시리스트에 담은 총 동영상 게시물 수 
+	int userCartTotalCount(String user_id) throws Exception;
 }
 
 

@@ -5,12 +5,13 @@
 <mapper namespace="com.example.demo.category.dao.CategoryDao"><!--namespace를 통해 UserDAO와 연결합니다. -->
   		
   	<!-- 카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오기 -->
- 	<select id="getCategoryList" parameterType="String" resultType="com.example.demo.category.dto.CvideoJoinVideoFileDto">
- 		 select * 
+ 	<select id="getCategoryList" parameterType="hashMap" resultType="com.example.demo.category.dto.CvideoJoinVideoFileDto">
+ 		  select * 
 				from video v JOIN video_file vf
-			on v.video_number = vf.video_number	
-   		  where v.category_code = #{category_code}
-   		 order by v.video_number desc 
+			  on v.video_number = vf.video_number	
+   		    where v.category_code = #{cateCode}
+   		  order by v.video_number desc
+   		LIMIT #{pageStart},#{perPageNum} 
  	</select>
 	
 	<!-- 해당 동영상 게시물 신고사유 INSERT -->
@@ -22,6 +23,12 @@
 	<update id="videoReportUpdate" parameterType="int">
 		update video set video_reports = video_reports + 1 where video_number = #{video_number}
 	</update>
+	
+	<select id="totalCount" parameterType="String" resultType="int">
+		select count(*)
+				from video 			
+   		  where category_code = #{cateCode}
+	</select>
 </mapper>
 
 

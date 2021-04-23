@@ -31,6 +31,8 @@ import com.example.demo.user.dao.UserDao;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.service.UserService;
 import com.example.demo.utils.FileUtils;
+import com.example.demo.utils.PageMaker;
+import com.example.demo.utils.Pagination;
 
 @Controller
 public class MypageController {
@@ -71,16 +73,21 @@ public class MypageController {
 	
 	// 동영상 게시물 리스트 페이지 이동 
 	@RequestMapping(value = "/mypage_videoList",method = RequestMethod.GET)
-	public String mypage_videoList(HttpSession session,Model model) {
+	public String mypage_videoList(HttpSession session,Pagination page,Model model) {
 		
 		UserDto user = (UserDto)session.getAttribute("User");
-		List<VideoJoinVideoFileDto> videoBrdList = null;
 		
-		if(user != null) videoBrdList = mypageService.getVideoList(user.getUser_id());
+		// 페이지를 만들기 위한 PageMaker 객체 생성 
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(page);
+		pageMaker.setTotalCount(mypageService.userTotalCount(user.getUser_id())); // 해당 유저의 총 동영상 게시물 수 
+
+		List<VideoJoinVideoFileDto> videoBrdList = mypageService.getVideoList(user.getUser_id(),page);
 
 		if(videoBrdList != null) {
 			model.addAttribute("videoBrdList",videoBrdList);
 			model.addAttribute("videoBrdListSize",videoBrdList.size());
+			model.addAttribute("pageMaker", pageMaker);	
 		}
 		
 		return "myPage/mypage_videoList";
@@ -170,15 +177,21 @@ public class MypageController {
 	
 	// 동영상 게시물 위시리스트 페이지 이동 
 	@RequestMapping("/mypage_cartList")
-	public String mypage_cartList(HttpSession session,Model model) {
+	public String mypage_cartList(HttpSession session,Model model,Pagination page) {
+		
+		UserDto user = (UserDto)session.getAttribute("User");
+		
+		// 페이지를 만들기 위한 PageMaker 객체 생성 
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(page);
+		pageMaker.setTotalCount(mypageService.userCartTotalCount(user.getUser_id())); // 해당 유저의 총 동영상 게시물 수 
 		
 		// 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기  
-		UserDto user = (UserDto)session.getAttribute("User");
-		List<VideoCart_FileDto> vcf = null; 
-		if(user != null) vcf = mypageService.mypage_cartList(user.getUser_id());
+		List<VideoCart_FileDto> vcf = mypageService.mypage_cartList(user.getUser_id(),page);
 		
 		model.addAttribute("vcf",vcf);
 		model.addAttribute("vcfSize",vcf.size());
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "myPage/mypage_cartList";
 	}

@@ -22,12 +22,13 @@
   </insert>
   		
   <!-- 해당 유저에 해당하는 동영상 게시물 리스트 가져오기  -->
-  <select id="getVideoList" parameterType="String" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto" >
+  <select id="getVideoList" parameterType="hashmap" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto" >
 	  	select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_hits,v.video_reports,v.video_date,v.video_rank_limit,vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb
 			 from video v inner join video_file vf 
 	    	on v.video_number = vf.video_number
 	      where user_id = #{user_id}
 	   order by v.video_number desc
+	  LIMIT #{pageStart},#{perPageNum}
   </select>
 	
 	<!-- 해당 유저가 오늘날짜에 동영상 게시물을 업로드 헀는지 검사 (없으면 0 , 있으면 1이상)   -->
@@ -96,12 +97,13 @@
 	</update>
 	
 	 <!-- 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기  -->
-	  <select id="mypage_cartList" parameterType="String" resultType="com.example.demo.mypage.dto.VideoCart_FileDto" >
+	  <select id="mypage_cartList" parameterType="hashmap" resultType="com.example.demo.mypage.dto.VideoCart_FileDto" >
 		  	select *
 					from (select * from video_cart where user_id = #{user_id}) vc JOIN video v 
 				 on vc.video_number = v.video_number
 				   JOIN video_file vf 
 				on vc.video_number = vf.video_number
+		   LIMIT #{pageStart},#{perPageNum}
 	  </select>
 	  
 	  <!-- 동영상 게시물 위시리스트 페이지에서 해당 게시물 제거 -->
@@ -109,6 +111,19 @@
 	  		delete from video_cart where video_cart_number = #{video_cart_number} 
 	  </delete>
 	
+	<!-- 해당 유저의 총 동영상 게시물 수  -->
+	<select id="userTotalCount" parameterType="String" resultType="int">
+		select count(*)
+				from video 			
+   		  where user_id = #{user_id}
+	</select>
+	
+	<!-- 해당 유저의 위시리스트 총 동영상 게시물 수  -->
+	<select id="userCartTotalCount" parameterType="String" resultType="int">
+		select count(*)
+				from video_cart 			
+   		  where user_id = #{user_id}
+	</select>
 </mapper>
 
 

@@ -1,6 +1,8 @@
 package com.example.demo.category.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import com.example.demo.category.dao.CategoryDao;
 import com.example.demo.category.dto.BlameDto;
 import com.example.demo.category.dto.CvideoJoinVideoFileDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
+import com.example.demo.utils.Pagination;
 
 @Service
 public class CategoryService {
@@ -17,9 +20,14 @@ public class CategoryService {
 	private CategoryDao categoryDao;
 	
 	// 카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오기 
-	public List<CvideoJoinVideoFileDto> getCategoryList(String cateCode) {
+	public List<CvideoJoinVideoFileDto> getCategoryList(String cateCode,Pagination page) {
 		try {
-			return categoryDao.getCategoryList(cateCode);
+			Map<String,Object> list = new HashMap<>();
+			list.put("cateCode", cateCode);
+			list.put("perPageNum", page.getPerPageNum());
+			list.put("pageStart", page.getPageStart());
+			
+			return categoryDao.getCategoryList(list);
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.err.println("카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오는중 에러발생 !!" + e.getMessage());
@@ -47,4 +55,41 @@ public class CategoryService {
 			System.err.println("해당 동영상 게시물 신고수 1증가 중 에러발생!!" + e.getMessage());
 		}
 	}
+	
+	// 해당 카테고리의 총 동영상 게시글 수 가져오기
+	public int totalCount(String cateCode) {
+		try {
+			return categoryDao.totalCount(cateCode);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 카테고리의 총 동영상 게시글 수 가져오는 중 에러발생!!" + e.getMessage());
+		}
+		return 0;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

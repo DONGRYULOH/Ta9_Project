@@ -1,5 +1,6 @@
 package com.example.demo.mypage.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ import com.example.demo.mypage.dto.VideoCart_FileDto;
 import com.example.demo.mypage.dto.VideoDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
 import com.example.demo.user.dto.UserDto;
+import com.example.demo.utils.PageMaker;
+import com.example.demo.utils.Pagination;
 
 @Service
 public class MypageService {
@@ -69,9 +72,14 @@ public class MypageService {
 	}
 	
 	// 해당 유저에 해당하는 동영상 게시물 리스트 가져오기 
-	public List<VideoJoinVideoFileDto> getVideoList(String user_id) {
-		try {
-			return mypageDao.getVideoList(user_id);
+	public List<VideoJoinVideoFileDto> getVideoList(String user_id,Pagination page) {
+		try {			
+			Map<String,Object> userVideoList = new HashMap<>();
+			userVideoList.put("user_id", user_id);
+			userVideoList.put("perPageNum", page.getPerPageNum());
+			userVideoList.put("pageStart", page.getPageStart());
+			
+			return mypageDao.getVideoList(userVideoList);
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.err.println("해당 유저에 해당하는 동영상 게시물 리스트 가져오는중 에러발생 !!" + e.getMessage());
@@ -79,6 +87,17 @@ public class MypageService {
 		return null;
 	}
 	
+	// 해당 유저의 총 동영상 게시물 수 
+	public int userTotalCount(String user_id) {
+		try {
+			return mypageDao.userTotalCount(user_id);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 유저의 총 동영상 게시물 수 가져오는중 에러발생!!" + e.getMessage());
+		}
+		return -1;
+	}
+
 	// 동영상 게시물 번호에 해당하는 정보 가져오기 
 	public VideoJoinVideoFileDto getVideoDetail(int video_number) {
 		try {
@@ -161,9 +180,14 @@ public class MypageService {
 	}
 
 	// 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기  
-	public List<VideoCart_FileDto> mypage_cartList(String user_id) {
+	public List<VideoCart_FileDto> mypage_cartList(String user_id,Pagination page) {
 		try {
-			return mypageDao.mypage_cartList(user_id);
+			Map<String,Object> userVideoList = new HashMap<>();
+			userVideoList.put("user_id", user_id);
+			userVideoList.put("perPageNum", page.getPerPageNum());
+			userVideoList.put("pageStart", page.getPageStart());
+			
+			return mypageDao.mypage_cartList(userVideoList);
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.err.println("현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기 중 에러발생!!" + e.getMessage());
@@ -181,7 +205,16 @@ public class MypageService {
 		}
 	}
 
-	
+	// 해당 유저가 위시리스트에 담은 총 동영상 게시물 수 
+	public int userCartTotalCount(String user_id) {
+		try {
+			return mypageDao.userCartTotalCount(user_id);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("해당 유저가 위시리스트에 담은 총 동영상 게시물 수 가져오는중 에러발생!!" + e.getMessage());
+		}
+		return -1;
+	}
 
 
 	

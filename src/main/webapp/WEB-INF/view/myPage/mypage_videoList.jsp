@@ -117,26 +117,35 @@
 				</c:forEach>
 			</c:if>
 					
-				
 				<!-- 페이징 -->
 				<div class="row" align="center">
-				 	 <ul class="pagination">
-					   	 <li class="page-item">
-					      <a class="page-link" href="#" aria-label="Previous">
+			 	  <ul class="pagination">
+			 	  
+			 	    <c:if test="${pageMaker.prev}">
+					    <li class="page-item">
+					      <a class="page-link" href="mypage_videoList?page=${pageMaker.startPage-1}" aria-label="Previous">
 					        <span aria-hidden="true">&laquo;</span>
 					        <span class="sr-only">Previous</span>
 					      </a>
 					    </li>
-					    <li class="page-item"><a class="page-link" href="#">1</a></li>
-					    <li class="page-item"><a class="page-link" href="#">2</a></li>
-					    <li class="page-item"><a class="page-link" href="#">3</a></li>
+				    </c:if>
+				    
+				    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
+					    <li>
+					       <a class="page-link" href="mypage_videoList?page=${pageNum}">${pageNum}</a>
+					    </li>
+				    </c:forEach>
+					
+					<c:if test="${pageMaker.next}">
 					    <li class="page-item">
-					      <a class="page-link" href="#" aria-label="Next">
+					      <a class="page-link" href="mypage_videoList?page=${pageMaker.endPage+1}" aria-label="Next">
 					        <span aria-hidden="true">&raquo;</span>
 					        <span class="sr-only">Next</span>
 					      </a>
 					    </li>
-					 </ul>		
+				    </c:if>
+				    
+				  </ul>
 				</div>
 				
 			</div>

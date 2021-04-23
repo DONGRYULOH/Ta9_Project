@@ -20,6 +20,8 @@ import com.example.demo.mypage.service.MypageService;
 import com.example.demo.user.dao.UserDao;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.service.UserService;
+import com.example.demo.utils.PageMaker;
+import com.example.demo.utils.Pagination;
 
 @Controller
 public class CategoryController {
@@ -31,20 +33,21 @@ public class CategoryController {
 	private MypageService mypageService;
 	
 	@RequestMapping(value = "/categoryList",method=RequestMethod.GET)
-	public String categoryList(@RequestParam("cateCode") String cateCode,Model model,HttpSession session) {
+	public String categoryList(@RequestParam("cateCode") String cateCode,Model model,Pagination page,HttpSession session) {
+				
+		UserDto user = (UserDto)session.getAttribute("User");	
 		
-		System.out.println("카테고리 코드 번호 : " + cateCode);
-		List<CvideoJoinVideoFileDto> categoryList = categoryService.getCategoryList(cateCode);
+		// 페이지를 만들기 위한 PageMaker 객체 생성 
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(page);
+		pageMaker.setTotalCount(categoryService.totalCount(cateCode)); // 해당 카테고리의 총 동영상 게시글 수
 		
-		for(int i=0;i<categoryList.size();i++) {
-			System.out.println("제목 : " + categoryList.get(i).getVideo_title());
-		}//clear 
-		
+		List<CvideoJoinVideoFileDto> categoryList = categoryService.getCategoryList(cateCode,page);
+					
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryListSize", categoryList.size());
 		model.addAttribute("cateCode", cateCode);
-		
-		UserDto user = (UserDto)session.getAttribute("User");
+		model.addAttribute("pageMaker", pageMaker);		
 		model.addAttribute("UserSession",user);
 		
 		return "Category/categoryList";
