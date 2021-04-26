@@ -11,6 +11,42 @@
         <title>myPageInfo</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+         <style type="text/css">
+        	.modal_wrap{
+			        display: none;
+			        width: 500px;
+			        height: 300px;
+			        position: absolute;
+			        top:50%;
+			        left: 50%;
+			        margin: -250px 0 0 -250px;
+			        z-index: 2;
+			    }
+			    .black_bg{
+			        display: none;
+			        position: absolute;
+			        content: "";
+			        width: 100%;
+			        height: 100%;
+			        top:0;
+			        left: 0;
+			        z-index: 1;
+			    }
+			    .modal_close{
+			        width: 26px;
+			        height: 26px;
+			        position: absolute;
+			        top: -30px;
+			        right: 0;
+			    }
+			    .modal_close> a{
+			        display: block;
+			        width: 100%;
+			        height: 100%;
+			        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+			        text-indent: -9999px;
+			    }			        
+        </style>
         <%@ include file="/WEB-INF/include/head_import.jsp" %>
     </head>
 
@@ -67,11 +103,60 @@
 						<div class="row" style="margin-bottom: 30px;">
 							<h5>${User.user_exp} EXP</h5>
 						</div>	
-						<div class="row" style="margin-bottom: 30px;">
-							<h5>${User.user_rank}</h5>
+						<div class="row" style="margin-bottom: 30px;">						
+							<div class="col-sm-8">	
+								<h5>${User.user_rank}</h5>								
+							</div>
+							<div class="col-sm-4">
+								<button type="button" class="btn btn-primary" id="modal_btn">패스워드 변경</button>
+							</div>
+							<!-- 패스워드 변경 DIV -->
+							<div class="black_bg"></div>
+							  <div class="modal_wrap">
+							    <div class="modal_close"><a href="#">close</a></div>
+								    <div class="row" style="background-color:#666699;height: 500px;">
+						                        <div class="main_home text-center" style="padding-top: 200px;">
+						                          <div align="center">
+							                         <form  method="post">	
+														 <table style="margin-bottom: 20px;">
+														   	 <tbody>
+																<tr>
+														            <td>
+														            	<h5 class="text-white text-uppercase">패스워드</h5>
+														            </td>
+														            <td>
+														            	<input type="password" id="user_pwd" name="user_pwd" required="required" placeholder="8~20자리에 특수문자+영어대소문자+숫자로 포함된 조합을 사용!" style="width: 408px;"/>  								            	
+														            	<div id="pwd"></div>      
+														            </td>  
+														        </tr>
+														        <tr>
+														            <td>
+														            	<h5 class="text-white text-uppercase">패스워드 확인</h5>														            
+														            </td>
+														            <td>
+														            	<input type="password" placeholder="다시한번 더 입력하세요"  id="user_pwd_check" name="user_pwd_check"  required="required" style="width: 408px;"/>
+														            	<div id="pwd_check"></div>       
+														            </td>  
+														        </tr>
+														       		     
+														    </tbody>
+														</table>								
+													<div>				
+											 			 <button type="submit" id="reg_submit" class="btn btn-primary">회원가입</button>
+													</div>
+										 		</form>
+									 		</div>
+						               </div>
+        	  						</div>
+							    </div>
+							<!-- 패스워드 변경 DIV -->	  							
 						</div>
 					</div>		
 				</div>
+				
+				<div class="row">
+					
+				  </div>
 				
 				<div class="row">
 					<div class="col-sm-1"></div>
@@ -133,5 +218,38 @@
 
     </body>
     
+    
     <%@ include file="/WEB-INF/include/js_import.jsp" %>
+    
+    
+    
+    	<!-- 패스워드 수정 모달 창  -->
+    	<script>
+		    window.onload = function() {
+		 
+		    function onClick() {
+		        document.querySelector('.modal_wrap').style.display ='block';
+		        document.querySelector('.black_bg').style.display ='block';
+		    }   
+		    function offClick() {
+		        document.querySelector('.modal_wrap').style.display ='none';
+		        document.querySelector('.black_bg').style.display ='none';
+		    }
+		 
+		    document.getElementById('modal_btn').addEventListener('click', onClick);
+		    document.querySelector('.modal_close').addEventListener('click', offClick);
+		 
+		};
+		</script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </html>

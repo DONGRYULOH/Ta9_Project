@@ -180,10 +180,10 @@
 
     		console.log("파일 타입:" + event.target.files[0].type);
     		
-    		// 파일 업로드 용량이 200MB 까지 올릴수 있도록 제한 시킴 (200 000 000 byte -> 200MB)
-    		if(event.target.files[0].size > 200000000){
+    		// 파일 업로드 용량이 100MB 까지 올릴수 있도록 제한 시킴 (100 000 000 byte -> 100MB)
+    		if(event.target.files[0].size > 100000000){
     			validate[2] = false;
-    			alert("동영상 파일 용량이 200MB 넘었습니다!! 200MB 이하로 다시 첨부해주세요");    			
+    			alert("동영상 파일 용량이 100MB 넘었습니다!! 100MB 이하로 다시 첨부해주세요");    			
     			return false;
     		}
     		
