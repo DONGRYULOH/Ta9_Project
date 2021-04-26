@@ -71,7 +71,7 @@
                                         <h4>제목 : ${videoDetail.video_title}</h4>
                                         <ol class="breadcrumb">                                            
                                             <li><a href="#" class="text-black"><fmt:formatDate value="${videoDetail.video_date}" pattern="yyyy-MM-dd"/></a></li>
-                                            <li><a href="#" class="text-black">조회수 : ${videoDetail.video_hits}</a></li>
+                                            <li><a href="#" class="text-black">작성자 : ${videoDetail.user_nickname}</a></li>
                                         </ol>
                                     </div>
                                     <div align="center" style="margin-top: 10px;">

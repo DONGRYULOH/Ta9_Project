@@ -41,7 +41,7 @@
 				<!-- Mypage 공통 메뉴바 -->
 				<%@ include file="/WEB-INF/view/myPage/include/myPage_menu.jsp" %>
 				
-				<div class="row" style="padding-bottom: 50px;margin-top: 10px;">
+				<!-- <div class="row" style="padding-bottom: 50px;margin-top: 10px;">
 					<div class="dropdown" >
 					  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">최신순
 					  <span class="caret"></span></button>
@@ -50,7 +50,7 @@
 					    <li><a href="#">조회수</a></li>					    
 					  </ul>
 					</div>			
-				</div>
+				</div> -->
 				
 			<c:if test="${videoBrdList != null}">
 				<c:forEach items="${videoBrdList}" var="list" begin="0" end="${videoBrdListSize}"  step="1" varStatus="status">
@@ -85,12 +85,7 @@
 								<h4>제목:${list.video_title}</h4>
 							</div>	
 							<div class="row">
-								<h5><fmt:formatDate value="${list.video_date}" pattern="yyyy-MM-dd"/></h5>
-								
-							</div>	
-							<div class="row">
-								<h5>조회수:${list.video_hits}</h5>
-								
+								<h5><fmt:formatDate value="${list.video_date}" pattern="yyyy-MM-dd"/></h5>								
 							</div>			
 						</div>
 						<!-- 전체공개,등급별 공개 여부 -->

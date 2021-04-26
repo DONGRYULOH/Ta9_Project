@@ -50,19 +50,7 @@
         </div>  	             
 
 			<!-- 스포츠 관련 컨테이너 -->
-			<div class="container" >
-			
-				<div class="row" style="padding-bottom: 50px;margin-top: 10px;">
-					<div class="dropdown" >
-					  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">최신순
-					  <span class="caret"></span></button>
-					  <ul class="dropdown-menu" >
-					    <li><a href="#">최신순</a></li>
-					    <li><a href="#">조회수</a></li>					    
-					  </ul>
-					</div>
-					
-				</div>
+			<div class="container" style="margin-top: 50px;">			
 				
 				<c:forEach items="${categoryList}" var="list" begin="0" end="${categoryListSize}"  step="1" varStatus="status">
 					<div class="row" style="margin-bottom: 40px;">												
@@ -120,9 +108,6 @@
 							</div>	
 							<div class="row">
 								<h5><fmt:formatDate value="${list.video_date}" pattern="yyyy-MM-dd"/></h5>
-							</div>	
-							<div class="row">
-								<h5>조회수:${list.video_hits}</h5>
 							</div>		
 						</div>
 						<!-- 전체공개,등급별 공개 여부 -->

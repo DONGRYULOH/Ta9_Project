@@ -1,6 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <!-- Mypage 공통 메뉴바 -->
-	<div class="row" >
+	<div class="row" style="margin-bottom: 50px;">
 		<nav aria-label="breadcrumb" role="navigation" >
 		<ol class="breadcrumb" style=" background-color:#a797de;">			     					
      		<li class="breadcrumb-item active" aria-current="page">

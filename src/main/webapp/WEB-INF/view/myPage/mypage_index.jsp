@@ -73,7 +73,7 @@
 								 	<option value="101">스포츠</option>
 								  	<option value="102">개발</option>
 								  	<option value="103">경제</option>
-								  	<option value="104">스포츠</option>
+								  	<option value="104">외국어</option>
 								  	<option value="105">기타 등등(ETC)</option>
 								 </select>
 							</div>		

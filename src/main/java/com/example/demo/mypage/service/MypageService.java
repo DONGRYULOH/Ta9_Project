@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.mypage.dao.MypageDao;
@@ -24,7 +25,8 @@ public class MypageService {
 	@Autowired
 	private MypageDao mypageDao;
 
-	// 동영상 게시물 업로드 (트랜잭션 걸어주기)  
+	// <동영상 게시물 업로드 서비스> 
+	@Transactional
 	public int videoUpload(VideoDto videoDto, Map<String, Object> files,HttpSession session) {
 		
 		// 현재 세션에 있는 유저정보를 가져옴 

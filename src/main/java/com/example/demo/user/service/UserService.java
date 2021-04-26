@@ -7,8 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.SecurityConfig;
+import com.example.demo.config.SecurityConfig;
 import com.example.demo.user.dao.UserDao;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.dto.VideoCartDto;
@@ -64,6 +65,7 @@ public class UserService {
 	}
 	
 	// 로그인 처리 
+	@Transactional
 	public HashMap<String,Integer> signIn(UserDto userDto,HttpSession session) {
 		//입력한 패스워드와 db에 암호화해서 저장된 패스워드 일치여부(틀리면 False , 맞으면 true) 
 		boolean pwdMatch = false;
