@@ -70,7 +70,7 @@
                                     <div class="fashion_test text-center">                                        
                                         <h4>제목 : ${videoDetail.video_title}</h4>
                                         <ol class="breadcrumb">                                            
-                                            <li><a href="#" class="text-black"><fmt:formatDate value="${videoDetail.video_date}" pattern="yyyy-MM-dd"/></a></li>
+                                            <li><a href="#" class="text-black"><fmt:formatDate value="${videoDetail.video_insert_date}" pattern="yyyy-MM-dd"/></a></li>
                                             <li><a href="#" class="text-black">작성자 : ${videoDetail.user_nickname}</a></li>
                                         </ol>
                                     </div>

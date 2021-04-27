@@ -3,6 +3,7 @@ package com.example.demo.user.service;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +31,7 @@ public class UserService {
 			return userdao.idCheck(user_id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("ID 중복체크 검사중 예외 발생 : "+ e.getMessage());
+			System.err.println("ID 중복체크 검사중 예외 발생 : "+ e.getMessage());
 			return 1;
 		}		
 	}
@@ -41,7 +42,7 @@ public class UserService {
 			return userdao.nicknameCheck(user_nickname);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("닉네임 중복체크 검사중 예외 발생 : "+ e.getMessage());
+			System.err.println("닉네임 중복체크 검사중 예외 발생 : "+ e.getMessage());
 			return 1;
 		}		
 	}
@@ -102,7 +103,7 @@ public class UserService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("로그인 처리중 예외 발생 : "+ e.getMessage());
+			System.err.println("로그인 처리중 예외 발생 : "+ e.getMessage());
 		}finally {
 			resultSet.put("loginCk",result); // 로그인 성공여부에 따라 이동될 주소
 			resultSet.put("loginAttCk",count); // 처음 로그인 시도일 경우인지 아닌지 체크 
@@ -117,7 +118,7 @@ public class UserService {
 			return userdao.videoCartCk(videoCartDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크 중 에러발생! : "+ e.getMessage());			
+			System.err.println("해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크 중 에러발생! : "+ e.getMessage());			
 		}
 		return 1;
 	}
@@ -128,8 +129,22 @@ public class UserService {
 			userdao.addVideoCart(videoCartDto);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("위시리스트 목록에 동영상 추가하기 중 에러발생! : "+ e.getMessage());			
+			System.err.println("위시리스트 목록에 동영상 추가하기 중 에러발생! : "+ e.getMessage());			
 		}		
+	}
+
+	// 패스워드 변경 
+	public int pwd_update(UserDto userDto,HttpSession session) {
+		try {
+			UserDto user = (UserDto)session.getAttribute("User");
+			userDto.setUser_id(user.getUser_id());
+			userDto.setUser_pwd(securityConfig.getPasswordEncoder().encode(userDto.getUser_pwd()));			
+			return userdao.pwd_update(userDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("패스워드 변경 중 에러발생! : "+ e.getMessage());			
+		}
+		return 0;
 	}
 }
 

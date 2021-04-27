@@ -23,7 +23,7 @@
   		
   <!-- 해당 유저에 해당하는 동영상 게시물 리스트 가져오기  -->
   <select id="getVideoList" parameterType="hashmap" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto" >
-	  	select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_hits,v.video_reports,v.video_date,v.video_rank_limit,vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb
+	  	select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb
 			 from video v inner join video_file vf 
 	    	on v.video_number = vf.video_number
 	      where user_id = #{user_id}
@@ -35,7 +35,7 @@
 	<select id="videoUploadCk" parameterType="String" resultType="int" >
 		select count(*)
 			from video
-		 where user_id = #{user_id} and date_format(video_date,'%Y-%m-%d') = curdate()
+		 where user_id = #{user_id} and date_format(video_insert_date,'%Y-%m-%d') = curdate()
 	</select>
  
   <!-- 오늘날짜에 최초로 동영상을 업로드 했을 때 해당 유저의 경험치를 300EXP 축척시킴 -->
@@ -59,7 +59,7 @@
 	
 	<!-- 해당 동영상 게시물 번호에 해당하는 정보 가져오기  -->
 	<select id="getVideoDetail" parameterType="int" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto">
-		select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_hits,v.video_reports,v.video_date,v.video_rank_limit,vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,u.user_nickname
+		select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,u.user_nickname
 			from video v inner join video_file vf 
 				on v.video_number = vf.video_number
 					join user u 

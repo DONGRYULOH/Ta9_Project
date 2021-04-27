@@ -119,7 +119,7 @@
                                     <div class="fashion_test text-center">                                        
                                         <h4>제목 : ${videoDetail.video_title}</h4>
                                         <ol class="breadcrumb">                                            
-                                            <li><a href="#" class="text-black"><fmt:formatDate value="${videoDetail.video_date}" pattern="yyyy-MM-dd"/></a></li>
+                                            <li><a href="#" class="text-black"><fmt:formatDate value="${videoDetail.video_insert_date}" pattern="yyyy-MM-dd"/></a></li>
                                             <li><a href="#" class="text-black">작성자 : ${videoDetail.user_nickname}</a></li>
                                         </ol>
                                     </div>
@@ -200,9 +200,6 @@
     		
     		document.getElementById('video_cart').onclick = function(){
     			
-    			console.log("위시리스트 추가 클릭!");
-    			console.log("동영상 번호 : " + video_number);
-    			
     			// 비동기 방식으로 해당 동영상 게시물을 해당 유저의 위시리스트에 추가함
     			$.ajax({
 					async : true, // true 설멍하면 비동기 방식을 사용하겠다(기본값:true)
@@ -213,8 +210,8 @@
 					},  
 					contentType : 'application/json; charset=UTF-8', // json 형식으로 서버로 보낼때 설정값 
 					success : function(data) {							
-							if(data == 0) alert("위시리시트 목록에 해당 동영상이 추가되었습니다!");
-							if(data == 1) alert("이미 위시리시트 목록에 해당 동영상이 존재합니다!");
+							if(data == 0) alert("위시리스트 목록에 해당 동영상이 추가되었습니다!");
+							if(data == 1) alert("이미 위시리스트 목록에 해당 동영상이 존재합니다!");
 					}, 
 					error : function() {
 						console.log("위시리스트 추가 하는 중 에러발생...");

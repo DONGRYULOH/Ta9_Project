@@ -1,5 +1,7 @@
 package com.example.demo.mypage.dto;
 
+import java.util.Date;
+
 import lombok.Data;
 import lombok.Getter;
 
@@ -26,9 +28,8 @@ public class VideoDto {
 	private String category_code;
 	private String video_title;
 	private char public_check;
-	private int video_hits;
 	private int video_reports;
-	private String video_date;
+	private Date video_insert_date;
 	private int video_rank_limit;
 	
 	

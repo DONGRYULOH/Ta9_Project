@@ -21,26 +21,7 @@
         </script>
     </head>
 
-    <body data-spy="scroll" data-target=".navbar-collapse">
-
-
-       <!-- 메인 페이지 새로고침시 로딩 효과 -->
-        <div id="loading">
-            <div id="loading-center">
-                <div id="loading-center-absolute">
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                </div>
-            </div>
-        </div>       
+    <body data-spy="scroll" data-target=".navbar-collapse">    
 	
         <div class="culmn" style=" background-color:#a3a3c2;">
             

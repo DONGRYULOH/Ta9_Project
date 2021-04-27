@@ -58,22 +58,6 @@
 					<div class="row" style="margin-bottom: 40px;">
 						<!-- 썸네일 -->
 						<div class="col-md-4">
-						
-							<!-- 해당 동영상 게시물 접근 가능 여부(myPage에서는 로직을 걸어줄 필요가 없음 왜냐하면 자기가 올린 영상은 모두 접근이 가능하기 때문에) -->
-							<%-- 
-							<c:choose>
-								<!-- if -->
-								<c:when test="${my_rank >= list.video_rank_limit}">
-									<a href="sportsDetail">
-										<img src="/fileUpload/${list.stored_video_thumb}" >
-									</a>
-								</c:when>
-								<!-- else -->
-								<c:otherwise>
-										<img src="/fileUpload/${list.stored_video_thumb}" >
-								</c:otherwise>
-							</c:choose> 
-							--%>
 							
 							<a href="mypage_videoDetail?n=${list.video_number}">
 								<img src="/fileUpload/${list.stored_video_thumb}" >
@@ -85,7 +69,7 @@
 								<h4>제목:${list.video_title}</h4>
 							</div>	
 							<div class="row">
-								<h5><fmt:formatDate value="${list.video_date}" pattern="yyyy-MM-dd"/></h5>								
+								<h5><fmt:formatDate value="${list.video_insert_date}" pattern="yyyy-MM-dd"/></h5>								
 							</div>			
 						</div>
 						<!-- 전체공개,등급별 공개 여부 -->

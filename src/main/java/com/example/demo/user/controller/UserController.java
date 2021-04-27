@@ -131,6 +131,17 @@ public class UserController {
 		return result;
 	}
 	
+	// 패스워드 변경 처리 
+	@RequestMapping(value="/pwd_update", method = RequestMethod.POST)
+	public String pwd_update(UserDto userDto,Model model,HttpSession session) {
+		
+		// 패스워드 변경 
+		userService.pwd_update(userDto,session);
+		
+		session.invalidate(); // 세션 날리기 
+		return "redirect:/";
+	}
+	
 }
 
 

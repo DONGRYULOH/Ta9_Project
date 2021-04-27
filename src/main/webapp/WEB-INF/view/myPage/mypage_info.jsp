@@ -117,7 +117,7 @@
 								    <div class="row" style="background-color:#666699;height: 500px;">
 						                        <div class="main_home text-center" style="padding-top: 200px;">
 						                          <div align="center">
-							                         <form  method="post">	
+							                         <form  method="post" action="pwd_update">	
 														 <table style="margin-bottom: 20px;">
 														   	 <tbody>
 																<tr>
@@ -131,7 +131,8 @@
 														        </tr>
 														        <tr>
 														            <td>
-														            	<h5 class="text-white text-uppercase">패스워드 확인</h5>														            
+														            	<h5 class="text-white text-uppercase">패스워드 확인</h5>
+														            															            
 														            </td>
 														            <td>
 														            	<input type="password" placeholder="다시한번 더 입력하세요"  id="user_pwd_check" name="user_pwd_check"  required="required" style="width: 408px;"/>
@@ -142,7 +143,7 @@
 														    </tbody>
 														</table>								
 													<div>				
-											 			 <button type="submit" id="reg_submit" class="btn btn-primary">회원가입</button>
+											 			 <button type="submit" id="reg_submit" class="btn btn-primary">변경완료</button>
 													</div>
 										 		</form>
 									 		</div>
@@ -177,7 +178,7 @@
 						   >
 						      <td>브론즈(Bronze)</td>
 						      <td>0 EXP ~ 999 EXP</td>
-						      <td>전체공개 + 브론즈 등급의 게시물 접근가능</td>
+						      <td>전체공개 + 브론즈등급 이상의 게시물 접근가능</td>
 						   </tr>
 						   <tr
 						   	<c:if test="${User.user_rank eq 'Sliver' }">
@@ -186,7 +187,7 @@
 						   >
 						      <td>실버(Sliver)</td>
 						      <td>1000 EXP ~ 2999 EXP</td>
-						      <td>전체공개 + 브론즈,실버 게시물 접근가능</td>
+						      <td>전체공개 + 브론즈,실버등급 이상의 게시물 접근가능</td>
 						   </tr>
 						   <tr
 						   	<c:if test="${User.user_rank eq 'Gold' }">
@@ -195,7 +196,7 @@
 						   >
 						      <td>골드(Gold)</td>
 						      <td>3000 EXP ~ 9999 EXP</td>
-						      <td>전체공개 + 브론즈,실버,골드 게시물 접근가능</td>
+						      <td>전체공개 + 브론즈,실버,골드등급 이상의 게시물 접근가능</td>
 						   </tr>
 						   <tr
 						   	<c:if test="${User.user_rank eq 'Platinum' }">
@@ -243,6 +244,76 @@
 		</script>
     
     
+    <!-- 패스워드 변경 검증 로직 -->
+    <script type="text/javascript">
+    	
+    	var validate = new Array; // 회원가입 유효성을 검사할 배열 (false - 유효성 검증 실패 , true - 유효성 검증 성공)
+    	//  vaildate[0]-패스워드 , validate[1]-패스워드확인
+    	validate[0] = false;
+    	validate[1] = false;
+    	    
+		// 패스워드 정규표현식 
+		var pwd = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+		var blank = /\s/g;    	
+		
+		// 1.패스워드 유효성 검증
+		$('#user_pwd').keyup(function() {
+			var user_pwd = $('#user_pwd').val();
+			if (!pwd.test($(this).val()) || blank.test($(this).val())) {
+				//alert("패스워드"+$(this).val());
+				$('#pwd').text("8~20자에 특수문자가 반드시 포함된 영어 대소문자 + 숫자를 사용!");
+				$('#pwd').css('color', 'red');
+				validate[0] = false;
+			} else {
+				$('#pwd').text("사용가능한 패스워드");
+				$('#pwd').css('color', 'blue');
+				validate[0] = true;
+			}
+			
+		});
+		
+		// 2.패스워드 일치여부 확인
+		$('#user_pwd_check,#user_pwd').keyup(function() {
+			if ($('#user_pwd').val() != $('#user_pwd_check').val()) {
+				$('#pwd_check').text("비밀번호가 다릅니다.");
+				$('#pwd_check').css('color', 'red');
+				validate[1] = false;
+			}else if($('#user_pwd_check').val() == ''){
+				$('#pwd_check').text("패스워드를 재입력 바람!");
+				$('#pwd_check').css('color', 'red');
+				validate[1] = false;
+			}else{
+				$('#pwd_check').text("비밀번호가 일치합니다.");
+				$('#pwd_check').css('color', 'blue');
+				validate[1] = true;
+			}
+			
+		});
+					
+		// 3.가입버튼 클릭시 유효성 검증 (validate 전체 배열중 하나라도 false 값이 있으면 회원가입 X)
+		//$('button:submit').click
+		$('#reg_submit').click(function() {
+			//유효성 검증 
+			for (let i = 0; i < validate.length; i++) {
+				if (validate[i] == false) {
+					switch (i) {
+					case 0:
+						$('#pwd').focus();
+						$('#pwd').text('패스워드 입력부분 다시 확인 바람!');
+						$('#pwd').css('color', 'red');						
+						return false;
+					case 1:
+						$('#pwd_check').focus();
+						$('#pwd_check').text('패스워드를 재입력부분 다시 확인 바람!');
+						$('#pwd_check').css('color', 'red');
+						return false;
+					}
+				}
+			}
+			
+		});	 
+    
+    </script>
     
     
     

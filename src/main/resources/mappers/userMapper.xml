@@ -77,6 +77,11 @@
    		      where user_id = #{user_id} 
 	</select>
 	
+	<!-- 패스워드 변경 -->
+	<update id="pwd_update" parameterType="com.example.demo.user.dto.UserDto">
+			update user set user_pwd = #{user_pwd} where user_id = #{user_id}
+	</update>
+	
 </mapper>
 
 

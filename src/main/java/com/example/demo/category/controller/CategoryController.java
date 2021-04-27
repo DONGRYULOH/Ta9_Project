@@ -56,19 +56,18 @@ public class CategoryController {
 	// 동영상 게시물 상세 페이지 이동
 	@RequestMapping(value = "/categoryDetail",method = RequestMethod.GET)
 	public String categoryDetail(@RequestParam("n") int video_number,@RequestParam(value = "blameRe",defaultValue = "no") String blameRe,@RequestParam(value = "result",defaultValue = "-1") int result,Model model,HttpSession session) {
-		
-		System.out.println(blameRe);
-		System.out.println(result);
+
 		// 동영상 게시물 번호에 해당하는 정보 가져오기 
 		VideoJoinVideoFileDto videoDetail = mypageService.getVideoDetail(video_number);
-		model.addAttribute("videoDetail",videoDetail);
-		
+					
 		UserDto user = (UserDto)session.getAttribute("User");
+		
+		model.addAttribute("videoDetail",videoDetail);	
 		model.addAttribute("UserSession",user);
 		model.addAttribute("blameRe",blameRe);
-		model.addAttribute("result",result);
+		model.addAttribute("result",result);							
 		
-		return "Category/categoryDetail";
+		return  "Category/categoryDetail";
 	}
 	
 	// 동영상 게시물 신고 처리 

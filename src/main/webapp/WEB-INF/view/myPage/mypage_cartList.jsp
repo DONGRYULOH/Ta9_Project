@@ -68,7 +68,7 @@
 								<h4>제목:${list.video_title}</h4>
 							</div>	
 							<div class="row">
-								<h5><fmt:formatDate value="${list.video_date}" pattern="yyyy-MM-dd"/></h5>								
+								<h5><fmt:formatDate value="${list.video_insert_date}" pattern="yyyy-MM-dd"/></h5>								
 							</div>			
 						</div>
 						<!-- 전체공개,등급별 공개 여부 -->

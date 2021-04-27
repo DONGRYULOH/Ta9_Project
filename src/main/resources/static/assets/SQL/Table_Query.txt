@@ -6,9 +6,8 @@ CREATE TABLE video (
 	category_code	VARCHAR(10)	NOT NULL,
 	video_title	VARCHAR(150) NOT NULL,
 	public_check	CHAR(1)	NOT NULL,
-	video_hits	INT	NOT NULL DEFAULT 0,
 	video_reports	INT	NOT NULL DEFAULT 0,
-	video_date	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	video_insert_date	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	video_rank_limit INT NOT NULL DEFAULT 0,
     PRIMARY KEY(video_number)
 );
@@ -96,18 +95,13 @@ REFERENCES `user` (
 	`user_id`
 );
 
--- 위시리스트 FK 
+-- 위시리스트 FK(비디오 테이블에 있는 해당 비디오 게시글이 지워지면 게시글 번호에 해당하는 위시리스트에 있는 게시글도 지워짐)  
 ALTER TABLE `video_cart` ADD CONSTRAINT `FK_video_TO_video_cart_1` FOREIGN KEY (
 	`video_number`
 )
 REFERENCES `video` (
 	`video_number`
 ) on delete cascade;
-
--- video_file 테이블 PK 제약조건 
-ALTER TABLE `video_file` ADD CONSTRAINT `PK_VIDEO_FILE` PRIMARY KEY (
-	`video_number`
-);
 
 -- video 테이블 + user 테이블 비식별 관계 
 ALTER TABLE `video` ADD CONSTRAINT `FK_user_TO_video_1` FOREIGN KEY (
@@ -123,6 +117,11 @@ ALTER TABLE `video` ADD CONSTRAINT `FK_video_category_TO_video_1` FOREIGN KEY (
 )
 REFERENCES `video_category` (
 	`category_code`
+);
+
+-- video_file 테이블 PK 제약조건 
+ALTER TABLE `video_file` ADD CONSTRAINT `PK_VIDEO_FILE` PRIMARY KEY (
+	`video_number`
 );
 
 -- <video_file 테이블 video 테이블 식별관계> 

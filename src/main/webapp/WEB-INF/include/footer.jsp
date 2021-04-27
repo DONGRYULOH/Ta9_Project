@@ -9,8 +9,9 @@
                     <div class="row">
                         <div class="main_company roomy-100 text-center">
                             <h3 class="text-uppercase">Information</h3>
-                            <p>7th floor - Palace Building - 221b Walk of Fame - London- United Kingdom</p>                            
+                            <p>name - DONG RYUL OH</p>                            
                             <p>email - rifoamo4587@Daum.net</p>
+                            <p>github - <a href="https://github.com/DONGRYULOH">https://github.com/DONGRYULOH</a></p>
                         </div>
                     </div>
                 </div>

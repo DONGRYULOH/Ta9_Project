@@ -14,10 +14,9 @@ public class VideoJoinVideoFileDto {
 	private String category_code;
 	private String video_title;
 	private char public_check;
-	private int video_hits;
 	private int video_reports;
-	private Date video_date;
-	private String video_rank_limit;
+	private Date video_insert_date;
+	private int video_rank_limit;
 	
 	// 비디오_파일 테이블 
 	private String orgin_video_name;

@@ -40,6 +40,9 @@ public interface UserDao {
 	
 	// 해당 유저의 위시리스트 목록에 동영상 추가하기 
 	public void addVideoCart(VideoCartDto videoCartDto) throws Exception;
+	
+	// 패스워드 변경 
+	public int pwd_update(UserDto userDto) throws Exception;
 }
 
 
