@@ -50,6 +50,19 @@ CREATE TABLE `video_file` (
 	`stored_video_thumb`	VARCHAR(300)	NULL
 );
 
+-- 비디오 댓글 테이블 
+CREATE TABLE `video_reply` (
+	`reply_number`	INT	NOT NULL AUTO_INCREMENT,
+	`video_number`	INT	NOT NULL,
+	`reply_content`	VARCHAR(100) NOT NULL,
+	`reply_register`VARCHAR(20) NOT NULL,
+	`reply_insert_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`reply_orgin_number` INT NOT NULL,
+	`reply_order`	INT	NOT NULL,
+	`reply_depth`	INT	NOT NULL,
+    primary key(reply_number)
+);
+
 -- 출석체크 테이블 
 CREATE TABLE `attendance` (
 	`att_number` INT NOT NULL AUTO_INCREMENT,
@@ -161,6 +174,15 @@ ALTER TABLE `blame` ADD CONSTRAINT `FK_user_TO_blame_1` FOREIGN KEY (
 REFERENCES `user` (
 	`user_id`
 );
+
+
+-- 비디오 댓글 테이블 + 비디오 테이블 비식별 관계 
+ALTER TABLE `video_reply` ADD CONSTRAINT `FK_video_TO_video_reply_1` FOREIGN KEY (
+	`video_number`
+)
+REFERENCES `video` (
+	`video_number`
+) on delete cascade;
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 테이블 생성 + 제약조건 끝 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

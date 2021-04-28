@@ -10,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.category.dto.BlameDto;
 import com.example.demo.category.dto.CvideoJoinVideoFileDto;
+import com.example.demo.category.dto.VideoReplyDto;
 import com.example.demo.category.service.CategoryService;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
 import com.example.demo.mypage.service.MypageService;
@@ -89,6 +91,22 @@ public class CategoryController {
 		redirectAttributes.addAttribute("result",result);
 		
 		return "redirect:/categoryDetail";
+	}
+	
+	
+	// *********************************** <댓글 AJAX> START ***********************************************
+	
+	// 댓글 작성  AJAX
+	@ResponseBody
+	@RequestMapping(value="replyInsert", method=RequestMethod.POST)
+	public void replyInsert(VideoReplyDto videoReplyDto,HttpSession session)throws Exception{
+		
+		//현재세션에 저장되어있는 유저닉네임 가져오기 
+		UserDto user = (UserDto)session.getAttribute("User");		
+		videoReplyDto.setReply_register(user.getUser_nickname());
+		int result = categoryService.replyInsert(videoReplyDto);
+		System.out.println("댓글 작성 결과값:" + result);
+		
 	}
 	
 	

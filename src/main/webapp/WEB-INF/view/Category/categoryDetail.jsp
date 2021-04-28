@@ -12,6 +12,9 @@
         <title>LOGIN</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+		
+		<!-- 신고하기 CSS -->
         <style type="text/css">
         	.modal_wrap{
 			        display: none;
@@ -157,10 +160,115 @@
 
                     </div><!-- End off row -->
 
+				<div class="row" style="margin-left: 0px;margin-top: 20px;">
+					<!-- 로그인 되지 않은 상태일떄 -->
+					 <c:if test="${UserSession == null }">
+					  	<p>소감을 남기시려면 <a href="/login">로그인</a>해주세요</p>
+					 </c:if>
+					 <!-- 로그인이 된경우 -->
+					 <c:if test="${UserSession != null}">
+						  	  <!-- name 값을 DTO에 있는 컬럼이랑 다르게 작성하면 자동매칭이 안되서 값이 안들어감  -->
+							  <input type="hidden" name="video_number" id="video_number" value="${videoDetail.video_number}" >
+							   <div >
+							    	<textarea name="reply_content" id="reply_content" style="width: 746px;"></textarea>
+							   </div>
+							   
+							   <div align="right" style="width: 740px;">							    							    
+							    	<button type="button" id="reply_btn">소감 남기기</button>							    							   								
+							   </div>						   
+					 </c:if>
+					 				 
+					 <!-- 댓글 리스트-->
+					<div class="blog_comments">
+                                    <h4 class="m-bottom-30">Comment</h4>
+										
+									<!-- 부모댓글 -->
+                                    <div class="row">
+                                        <div class="comment_item">
+
+                                            <div class="col-sm-12">
+                                                <div class="comments_top_tex">
+                                                    <div class="row">
+                                                        <div class="col-sm-8 pull-left">
+                                                            <h5 class="text-uppercase">닉네임:test1</h5>
+                                                            <small><em>Feb 29th 2016 at 16:50</em></small>
+                                                        </div>
+                                                        <div class="col-sm-2 pull-right">
+                                                            <a href="#"><i class="fa fa-mail-reply-all"></i> Reply</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <article class="comments_bottom_text m-top-10">
+                                                    <p>오늘의 영상입니다!</p>
+                                                </article>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+									<!-- 부모댓글에 대한 답글 -->				
+                                    <div class="row">
+                                        <div class="comment_item m-l-40">
+                                            <div class="col-sm-12">
+                                                <div class="comments_top_tex">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 pull-left">
+                                                            <h5 class="text-uppercase">닉네임:test2</h5>
+                                                            <small><em>Feb 29th 2016 at 16:50</em></small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <article class="comments_bottom_text m-top-10">
+                                                    <p>와우 재밌습니다!</p>
+                                                </article>
+                                            </div> 
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <!-- 부모댓글 -->
+                                    <div class="row">
+                                        <div class="comment_item">
+
+                                            <div class="col-sm-12">
+                                                <div class="comments_top_tex">
+                                                    <div class="row">
+                                                        <div class="col-sm-8 pull-left">
+                                                            <h5 class="text-uppercase">닉네임:test1</h5>
+                                                            <small><em>Feb 29th 2016 at 16:50</em></small>
+                                                        </div>
+                                                        <div class="col-sm-2 pull-right">
+                                                            <a href="#"><i class="fa fa-mail-reply-all"></i> Reply</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <article class="comments_bottom_text m-top-10">
+                                                    <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.
+                                                        Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit
+                                                        litterarum formasㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁ</p>
+                                                </article>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                            </div>
+                            <!-- 댓글리스트END  -->
+				</div>
 
                 </div><!-- End off container -->
             </section>
 			
+			
+			
+				
+				
 			
            <!-- 풋터 공통 -->
            <%@ include file="/WEB-INF/include/footer.jsp"%>
@@ -219,7 +327,38 @@
 				});
 				
 				
-    		}
+    		}    	
+    	</script>
+    	
+    	
+    	<!-- 댓글 자바스크립트   -->
+    	<script type="text/javascript">
+    	
+    		<!-- 해당 동영상 게시글에 대한 댓글 작성시 이벤트 발생 함수  -->
+			 $("#reply_btn").click(function(){									  
+				  var video_number = $("#video_number").val(); // 동영상 게시글 번호 
+				  var reply_content = $("#reply_content").val(); // 댓글내용
+				  
+				  console.log("현재 동영상 게시글 번호:" + video_number);
+				  console.log("댓글 내용:" + reply_content);
+				  
+				    var data = {
+						  video_number : video_number,
+						  reply_content : reply_content
+				    };
+				  
+				  $.ajax({
+				  	 url : "replyInsert",
+				  	 type : "post",
+				   	 data : data,
+				     success : function(){
+				    	 console.log("댓글 작성 성공!")
+				    	 //replyList();
+				    	 //$("#reply_content").val("");
+				     }
+				  });
+			 });
+	
     	
     	</script>
     	

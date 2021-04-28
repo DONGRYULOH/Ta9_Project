@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.demo.category.dto.BlameDto;
 import com.example.demo.category.dto.CvideoJoinVideoFileDto;
+import com.example.demo.category.dto.VideoReplyDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
 
 public interface CategoryDao {
@@ -20,5 +21,8 @@ public interface CategoryDao {
 
 	// 해당 카테고리의 총 동영상 게시글 수 가져오기
 	int totalCount(String cateCode) throws Exception;
+
+	// 댓글 작성 
+	int replyInsert(VideoReplyDto videoReplyDto) throws Exception;
 
 }

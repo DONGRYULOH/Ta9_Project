@@ -41,7 +41,7 @@
   <!-- 오늘날짜에 최초로 동영상을 업로드 했을 때 해당 유저의 경험치를 300EXP 축척시킴 -->
   <update id="ExpUpdate" parameterType="String">
   		update user 
-  			set user_exp = user_exp + 3000
+  			set user_exp = user_exp + 300
   		 where user_id = #{user_id}
   </update>
   

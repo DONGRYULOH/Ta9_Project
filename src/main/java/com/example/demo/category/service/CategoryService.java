@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.category.dao.CategoryDao;
 import com.example.demo.category.dto.BlameDto;
 import com.example.demo.category.dto.CvideoJoinVideoFileDto;
+import com.example.demo.category.dto.VideoReplyDto;
 import com.example.demo.mypage.dto.VideoJoinVideoFileDto;
 import com.example.demo.utils.Pagination;
 
@@ -66,6 +67,19 @@ public class CategoryService {
 		}
 		return 0;
 	}
+
+	// 댓글 작성 
+	public int replyInsert(VideoReplyDto videoReplyDto) {
+		try {
+			return categoryDao.replyInsert(videoReplyDto);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("댓글 작성 중 에러발생!!" + e.getMessage());
+		}
+		return 0;		
+	}
+	
+	
 }
 
 

@@ -24,11 +24,21 @@
 		update video set video_reports = video_reports + 1 where video_number = #{video_number}
 	</update>
 	
+	<!-- 카테고리별 총 동영상 게시물 개수 -->
 	<select id="totalCount" parameterType="String" resultType="int">
 		select count(*)
 				from video 			
    		  where category_code = #{cateCode}
 	</select>
+	
+	
+	<!-- 상품 소감(댓글) 작성 -->
+	<insert id="replyInsert" parameterType="com.example.demo.category.dto.VideoReplyDto" >
+		insert into video_reply(video_number,reply_content,reply_register,reply_orgin_number,reply_order,reply_depth) 
+			values(#{video_number},#{reply_content},#{reply_register},0,0,0)
+	</insert>
+	
+	
 </mapper>
 
 
