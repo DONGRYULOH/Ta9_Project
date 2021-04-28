@@ -99,7 +99,7 @@ public class CategoryController {
 	// 댓글 작성  AJAX
 	@ResponseBody
 	@RequestMapping(value="replyInsert", method=RequestMethod.POST)
-	public void replyInsert(VideoReplyDto videoReplyDto,HttpSession session)throws Exception{
+	public void replyInsert(VideoReplyDto videoReplyDto,HttpSession session){
 		
 		//현재세션에 저장되어있는 유저닉네임 가져오기 
 		UserDto user = (UserDto)session.getAttribute("User");		
@@ -108,6 +108,16 @@ public class CategoryController {
 		System.out.println("댓글 작성 결과값:" + result);
 		
 	}
+	
+	// 댓글 리스트  AJAX
+	@ResponseBody
+	@RequestMapping(value="replyList", method=RequestMethod.GET)
+	public List<VideoReplyDto> replyList(@RequestParam("n") int video_number){
+		
+		return categoryService.getReplyList(video_number);
+							
+	}
+	
 	
 	
 }

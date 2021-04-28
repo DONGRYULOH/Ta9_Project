@@ -70,13 +70,27 @@ public class CategoryService {
 
 	// 댓글 작성 
 	public int replyInsert(VideoReplyDto videoReplyDto) {
+		int result = 0;
 		try {
-			return categoryDao.replyInsert(videoReplyDto);
+			result = categoryDao.replyInsert(videoReplyDto);
+			result = categoryDao.replyUpdate_ref(videoReplyDto);
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.err.println("댓글 작성 중 에러발생!!" + e.getMessage());
 		}
-		return 0;		
+		return result;		
+	}
+	
+	// 댓글 리스트 가져오기
+	public List<VideoReplyDto> getReplyList(int video_number) {
+		List<VideoReplyDto> replyList = null;
+		try {
+			 replyList = categoryDao.getReplyList(video_number);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("댓글 리스트 가져오는 중 에러발생!!" + e.getMessage());
+		}
+		return replyList;
 	}
 	
 	

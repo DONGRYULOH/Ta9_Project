@@ -12,8 +12,7 @@
         <title>LOGIN</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-       
-		
+       		    
 		<!-- 신고하기 CSS -->
         <style type="text/css">
         	.modal_wrap{
@@ -62,6 +61,110 @@
         		alert('${blameRe}');
         	}
         </script>
+        
+        <!-- 댓글 리스트 뿌려주기 -->
+        <script type="text/javascript">  	
+        
+        	var user_session = '${UserSession}';
+        	var user_nickname = '${UserSession.user_nickname}';        	
+        	
+    		function replyList(){
+    			
+    			$.getJSON("replyList?n=" + $("#video_number").val() , function(getReplyList){
+					
+    				var reply_view = "<h4 class='m-bottom-30'>Comment</h4>";
+
+    				 /* 해당 동영상 게시글에 해당하는 모든 댓글 가져와서 뿌려주기 */
+    				 $(getReplyList).each(function(){
+ 		   				
+ 		   			   //작성일을 한국 시각으로 바꿈 
+ 					   var reply_insert_date = new Date(this.reply_insert_date);
+ 					   reply_insert_date = reply_insert_date.toLocaleDateString("ko-US");
+ 					   
+	 		   			if(this.reply_depth == 0){ //depth 0일경우(부모댓글)
+		   					//답글쓰기 버튼 추가 
+		 		   			reply_view += "<div class='row'>" 
+		   						 +"<div class='comment_item'>"
+		   						 	+ "<div class='col-sm-12'>"
+		   						 	   +"<div class='comments_top_tex'>"
+		   						 	      +"<div class='row'>"
+		   						 	         +"<div class='col-sm-8 pull-left'>"
+		   						 	            +"<h5 class='text-uppercase'>작성자 : "+ this.reply_register + "</h5>"
+	                                            +"<small><em>"+ reply_insert_date +"</em></small>"
+	                                         +"</div>";
+	                        
+	                        // 세션이 있는 경우만 답글을 달수 있음 
+	                        if(user_session != null && user_session != ''){
+	                        		
+	                        	// 로그인한 유저의 세션의 닉네임이 댓글을 작성한 닉네임과 똑같을경우 수정과 삭제가 가능 
+	                        	if(user_nickname == this.reply_register){
+	                        		reply_view +=  "<div class='col-sm-2 pull-right'>"
+					                        			+ "<div class='replyFooter'>"
+					           						     //수정폼으로 이동시 
+					           					    	+ "<button type='button' class='modify' reply_num='" + this.reply_number + "'>수정</button>"
+					           					    	 //삭제시 해당 댓글의 고유번호,참조번호,depth 를 받음 
+					           					    	+ "<button type='button' class='delete' reply_num='" + this.reply_number + "'  origin_ref='" + this.reply_orgin_number + "' group_layer='" + this.reply_depth + "'>삭제</button>"
+					           					    	+ "</div>"
+									 	           		+"<button type='button' class='replyBtn' id='replyBtn'><i class='fa fa-mail-reply-all'></i> Reply</button>"	 	                                            
+				                             	+"</div>";
+	                        	}else{
+	                        		reply_view +=  "<div class='col-sm-2 pull-right'>"	                        			
+									 	           		+"<a href='#'><i class='fa fa-mail-reply-all'></i> Reply</a>"	 	                                            
+				                             	+"</div>";
+	                        	}
+	                        	
+	                        }else{
+	                        	reply_view +=  "<div class='col-sm-2 pull-right'>" 	                                            
+				                           +"</div>";
+	                        }
+	                                         
+	                        reply_view +="</div>"
+	                                   		+"</div>"
+	                                   +"<article class='comments_bottom_text m-top-10'>"
+	                                     +"<p>"+this.reply_content+"</p>"
+	                                   +"</article>"
+	                               +"</div>"
+	                              +"</div>"
+	                             +"</div><hr>";
+	                             
+		   				}else{ //depth 1이상일경우(댓글에 대한 답글인 경우) 
+		   					reply_view += "<div class='row'>" 
+		   						 +"<div class='comment_item m-l-40'>"
+		   						  +"<div class='col-sm-12'>"
+		   						 	   +"<div class='comments_top_tex'>"
+		   						 	      +"<div class='row'>"
+		   						 	         +"<div class='col-sm-12 pull-left'>"
+		   						 	            +"<h5 class='text-uppercase'>작성자 : "+ this.reply_register + "</h5>"
+	                                            +"<small><em>"+ reply_insert_date +"</em></small>"
+	                                         +"</div>"                 
+                    					+ "</div>"
+	                                   +"</div>"
+	                                   +"<article class='comments_bottom_text m-top-10'>"
+	                                     +"<p>"+this.reply_content+"</p>"
+	                                   +"</article>";
+                                  
+	                            // 로그인한 유저의 세션의 닉네임이 댓글을 작성한 닉네임과 똑같을경우 수정과 삭제가 가능 
+	                          	if(user_nickname == this.reply_register){	                          		  
+	                          		reply_view +=  "<div class='replyFooter'>"
+	  			           						     //수정폼으로 이동시 
+	  			           					    	+ "<button type='button' class='modify' reply_num='" + this.reply_number + "'>수정</button>"
+	  			           					    	 //삭제시 해당 댓글의 고유번호,참조번호,depth 를 받음 
+	  			           					    	+ "<button type='button' class='delete' reply_num='" + this.reply_number + "'  origin_ref='" + this.reply_orgin_number + "' group_layer='" + this.reply_depth + "'>삭제</button>"
+	  							 	           	+"</div>";	  			                             	
+	                          	}
+	                              
+                              reply_view += "</div>"
+			                              +"</div>"
+			                          	+ "</div><hr>";
+		   				}	 		   			                    
+ 		   				
+    				 });
+    				 
+    				 $(".blog_comments").html(reply_view);
+    				
+    			});
+    		}	
+    	</script>
         
         <%@ include file="/WEB-INF/include/head_import.jsp" %>
     </head>
@@ -159,7 +262,8 @@
                         </div>
 
                     </div><!-- End off row -->
-
+				
+				<!-- 댓글 관련 @@@@ -->
 				<div class="row" style="margin-left: 0px;margin-top: 20px;">
 					<!-- 로그인 되지 않은 상태일떄 -->
 					 <c:if test="${UserSession == null }">
@@ -178,89 +282,15 @@
 							   </div>						   
 					 </c:if>
 					 				 
-					 <!-- 댓글 리스트-->
+					<!-- 댓글 리스트-->
 					<div class="blog_comments">
-                                    <h4 class="m-bottom-30">Comment</h4>
-										
-									<!-- 부모댓글 -->
-                                    <div class="row">
-                                        <div class="comment_item">
-
-                                            <div class="col-sm-12">
-                                                <div class="comments_top_tex">
-                                                    <div class="row">
-                                                        <div class="col-sm-8 pull-left">
-                                                            <h5 class="text-uppercase">닉네임:test1</h5>
-                                                            <small><em>Feb 29th 2016 at 16:50</em></small>
-                                                        </div>
-                                                        <div class="col-sm-2 pull-right">
-                                                            <a href="#"><i class="fa fa-mail-reply-all"></i> Reply</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <article class="comments_bottom_text m-top-10">
-                                                    <p>오늘의 영상입니다!</p>
-                                                </article>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-									<!-- 부모댓글에 대한 답글 -->				
-                                    <div class="row">
-                                        <div class="comment_item m-l-40">
-                                            <div class="col-sm-12">
-                                                <div class="comments_top_tex">
-                                                    <div class="row">
-                                                        <div class="col-sm-12 pull-left">
-                                                            <h5 class="text-uppercase">닉네임:test2</h5>
-                                                            <small><em>Feb 29th 2016 at 16:50</em></small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <article class="comments_bottom_text m-top-10">
-                                                    <p>와우 재밌습니다!</p>
-                                                </article>
-                                            </div> 
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <!-- 부모댓글 -->
-                                    <div class="row">
-                                        <div class="comment_item">
-
-                                            <div class="col-sm-12">
-                                                <div class="comments_top_tex">
-                                                    <div class="row">
-                                                        <div class="col-sm-8 pull-left">
-                                                            <h5 class="text-uppercase">닉네임:test1</h5>
-                                                            <small><em>Feb 29th 2016 at 16:50</em></small>
-                                                        </div>
-                                                        <div class="col-sm-2 pull-right">
-                                                            <a href="#"><i class="fa fa-mail-reply-all"></i> Reply</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <article class="comments_bottom_text m-top-10">
-                                                    <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.
-                                                        Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit
-                                                        litterarum formasㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁ</p>
-                                                </article>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-                            </div>
-                            <!-- 댓글리스트END  -->
+					    <script> 
+							replyList();
+						</script>      
+                    </div>
+                          
 				</div>
+				<!-- 댓글 관련 @@@@@ -->
 
                 </div><!-- End off container -->
             </section>
@@ -283,7 +313,7 @@
     	<%@ include file="/WEB-INF/include/js_import.jsp" %>
     	
     	<!-- 신고하기 모달 창  -->
-    	<script>
+    	<script type="text/javascript">
 		    window.onload = function() {
 		 
 		    function onClick() {
@@ -333,7 +363,7 @@
     	
     	<!-- 댓글 자바스크립트   -->
     	<script type="text/javascript">
-    	
+ 
     		<!-- 해당 동영상 게시글에 대한 댓글 작성시 이벤트 발생 함수  -->
 			 $("#reply_btn").click(function(){									  
 				  var video_number = $("#video_number").val(); // 동영상 게시글 번호 
@@ -352,14 +382,35 @@
 				  	 type : "post",
 				   	 data : data,
 				     success : function(){
-				    	 console.log("댓글 작성 성공!")
-				    	 //replyList();
-				    	 //$("#reply_content").val("");
-				     }
+				    	 console.log("댓글 작성 성공!");				    	 
+				    	 $("#reply_content").val("");				    	 			    	
+				    	 replyList();	
+				     },
+				     error : function() {
+						 alert("댓글 작성중 에러발생 ... 다시 댓글을 작성해주세요!");
+					 }
 				  });
 			 });
 	
-    	
+    		 /* 답글을 작성할수 있는 폼생성 */
+			 $(document).on("click", ".replyBtn", function(){
+				
+				 //부모댓글 번호를 가져옴 
+				 var reply_ref = $(this).attr("reply_number");
+				 console.log("부모 댓글 번호 : " + reply_ref);
+				 console.log("현재 this : " +$(this).parent().parent().html());
+				 
+				 //추가될 답글 폼태그 
+				 var replyTag = "";
+				 replyTag += "<div class='input_area'><textarea name='reply_content' id='reply_content' class='reply_content'></textarea>";
+				 replyTag += "<button type='button' class='reply_insert'";
+				 replyTag += "reply_ref='"+$(this).attr("reply_num")+"'>작성</button>";
+				 replyTag += "<button type='button' class='reply_cancel'";
+				 replyTag += "reply_ref='"+$(this).attr("reply_num")+"'>취소</button>";
+				 replyTag += "</div>";
+					  
+				 $(this).parent().parent().children(".col-sm-12").html(replyTag);
+			});
     	</script>
     	
 </html>

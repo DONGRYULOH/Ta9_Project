@@ -38,7 +38,24 @@
 			values(#{video_number},#{reply_content},#{reply_register},0,0,0)
 	</insert>
 	
+	<!-- 댓글 작성후 ref값 변경  -->
+	<update id="replyUpdate_ref" parameterType="com.example.demo.category.dto.VideoReplyDto" keyProperty="reply_number"	>
+		<selectKey order ="BEFORE" keyProperty="reply_number" resultType="int">
+   			select max(reply_number) 
+   			from video_reply 
+   			where video_number = #{video_number}
+   		</selectKey>
+		update video_reply 
+			set reply_orgin_number = #{reply_number}
+		where reply_number = #{reply_number}
+	</update>
 	
+	<!-- 댓글 리스트 가져오기 -->
+	<select id="getReplyList" parameterType="int" resultType="com.example.demo.category.dto.VideoReplyDto">
+		select reply_number,video_number,reply_content,reply_register,reply_insert_date,reply_orgin_number,reply_order,reply_depth
+			from video_reply
+		where video_number = #{video_number}	
+	</select>
 </mapper>
 
 
