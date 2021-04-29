@@ -54,8 +54,22 @@
 	<select id="getReplyList" parameterType="int" resultType="com.example.demo.category.dto.VideoReplyDto">
 		select reply_number,video_number,reply_content,reply_register,reply_insert_date,reply_orgin_number,reply_order,reply_depth
 			from video_reply
-		where video_number = #{video_number}	
+		 where video_number = #{video_number}
+	    order by reply_number desc	
 	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="replyUpdate" parameterType="com.example.demo.category.dto.VideoReplyDto" >
+		update video_reply 
+			set reply_content = #{reply_content}
+		where reply_number = #{reply_number} 
+	</update>
+	
+	<delete id="replyDelete" parameterType="com.example.demo.category.dto.VideoReplyDto" >
+		delete 
+			from video_reply 
+		where reply_number = #{reply_number}
+	</delete>
 </mapper>
 
 

@@ -28,6 +28,13 @@ public interface CategoryDao {
 	// 댓글 작성후 ref 값 변경 
 	int replyUpdate_ref(VideoReplyDto videoReplyDto) throws Exception;
 
+	// 댓글 리스트 
 	List<VideoReplyDto> getReplyList(int video_number) throws Exception;
+
+	// 댓글 수정 
+	int replyUpdate(VideoReplyDto videoReplyDto) throws Exception;
+
+	// 댓글 삭제 
+	int replyDelete(VideoReplyDto videoReplyDto) throws Exception;
 
 }

@@ -118,6 +118,23 @@ public class CategoryController {
 							
 	}
 	
+	// 댓글 수정  AJAX
+	@ResponseBody
+	@RequestMapping(value="replyUpdate", method=RequestMethod.POST)
+	public int replyUpdate(VideoReplyDto videoReplyDto){
+		
+		return categoryService.replyUpdate(videoReplyDto);
+		
+	}
+	
+	// 댓글 수정  AJAX
+	@ResponseBody
+	@RequestMapping(value="replyDelete", method=RequestMethod.POST)
+	public int replyDelete(VideoReplyDto videoReplyDto){
+		
+		return categoryService.replyDelete(videoReplyDto);
+		
+	}
 	
 	
 }

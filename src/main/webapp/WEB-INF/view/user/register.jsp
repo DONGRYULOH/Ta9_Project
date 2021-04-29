@@ -28,27 +28,6 @@
     </head>
 
     <body data-spy="scroll" data-target=".navbar-collapse">
-      
-		<!-- 새로고침시 로딩 효과 -->
-        <div id="loading">
-            <div id="loading-center">
-                <div id="loading-center-absolute">
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                    <div class="object"></div>
-                </div>
-            </div>
-        </div>
-
-      
-
 
         <div class="culmn">
 
@@ -155,18 +134,18 @@
 						console.log("1 = 중복o / 0 = 중복x : "+ data);											
 						if (data == 1) {
 								// 1 : 아이디가 중복될때 
-								$("#id_check").text("사용중인 아이디입니다 :p");
+								$("#id_check").text("사용중인 아이디입니다!");
 								$("#id_check").css("color", "red");
 								validate[0] = false;
 						} 
 						else{ // 2 : 중복되는 아이디가 없는 경우 정규 표현식 검증  														
 								if(!id.test(user_id)){								
-									$('#id_check').text("아이디는 영문 대소문자,숫자 5~12 자리만 가능합니다 :)");
+									$('#id_check').text("아이디는 영문 대소문자,숫자 5~12 자리만 가능합니다!");
 									$('#id_check').css('color', 'red');
 									validate[0] = false;
 								} else if(id.test(user_id)){
 									//사용가능 
-									$('#id_check').text("사용가능한ID입니다 :) :)");
+									$('#id_check').text("사용가능한ID입니다!");
 									$('#id_check').css('color', 'blue');
 									validate[0] = true;
 								}							
@@ -177,7 +156,7 @@
 					}
 				});
 		 	}else{ // ID 입력칸이 비어있을 경우 
-		 		$('#id_check').text('아이디를 입력해주세요 :)');
+		 		$('#id_check').text('아이디를 입력해주세요!');
 				$('#id_check').css('color', 'red');		
 				validate[0] = false; 		
 		 	}		
@@ -188,11 +167,11 @@
 			var user_pwd = $('#user_pwd').val();
 			if (!pwd.test($(this).val()) || blank.test($(this).val())) {
 				//alert("패스워드"+$(this).val());
-				$('#pwd').text("8~20자에 특수문자가 반드시 포함된 영어 대소문자 + 숫자를 사용하세요 :) :)");
+				$('#pwd').text("8~20자에 특수문자가 반드시 포함된 영어 대소문자 + 숫자를 사용하세요!");
 				$('#pwd').css('color', 'red');
 				validate[1] = false;
 			} else {
-				$('#pwd').text("사용가능한 패스워드");
+				$('#pwd').text("사용가능한 패스워드!");
 				$('#pwd').css('color', 'blue');
 				validate[1] = true;
 			}
@@ -202,7 +181,7 @@
 		// 3.패스워드 일치여부 확인
 		$('#user_pwd_check,#user_pwd').keyup(function() {
 			if ($('#user_pwd').val() != $('#user_pwd_check').val()) {
-				$('#pwd_check').text("비밀번호가 다릅니다.");
+				$('#pwd_check').text("비밀번호가 다릅니다!");
 				$('#pwd_check').css('color', 'red');
 				validate[2] = false;
 			}else if($('#user_pwd_check').val() == ''){
@@ -210,7 +189,7 @@
 				$('#pwd_check').css('color', 'red');
 				validate[2] = false;
 			}else{
-				$('#pwd_check').text("비밀번호가 일치합니다.");
+				$('#pwd_check').text("비밀번호가 일치합니다!");
 				$('#pwd_check').css('color', 'blue');
 				validate[2] = true;
 			}
@@ -238,12 +217,12 @@
 						} 
 						else{ // 2 : 중복되는 닉네임이 없는 경우 														
 								if(!nickname.test(user_nickname)){								
-									$('#nickname_check').text("4~10자의 영어 대소문자만 가능합니다 :) :)");
+									$('#nickname_check').text("4~10자의 영어 대소문자만 가능합니다!");
 									$('#nickname_check').css('color', 'red');
 									validate[3] = false;
 								} else if(nickname.test(user_nickname)){
 									//사용가능 
-									$('#nickname_check').text("사용가능한 닉네임 입니다 :) :)");
+									$('#nickname_check').text("사용가능한 닉네임 입니다!");
 									$('#nickname_check').css('color', 'blue');
 									validate[3] = true;
 								}							
@@ -254,7 +233,7 @@
 					}
 				});
 		 	}else{ // ID 입력칸이 비어있을 경우 
-		 		$('#nickname_check').text('닉네임을 입력해주세요 :)');
+		 		$('#nickname_check').text('닉네임을 입력해주세요!');
 				$('#nickname_check').css('color', 'red');		
 				validate[3] = false; 		
 		 	}		

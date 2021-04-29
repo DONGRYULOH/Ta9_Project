@@ -92,6 +92,28 @@ public class CategoryService {
 		}
 		return replyList;
 	}
+
+	// 댓글 수정 
+	public int replyUpdate(VideoReplyDto videoReplyDto) {
+		try {
+			 return categoryDao.replyUpdate(videoReplyDto);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("댓글 수정 중 에러발생!!" + e.getMessage());
+		}
+		return 0;
+	}
+	
+	// 댓글 삭제 
+	public int replyDelete(VideoReplyDto videoReplyDto) {
+		try {
+			 return categoryDao.replyDelete(videoReplyDto);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("댓글 삭제 중 에러발생!!" + e.getMessage());
+		}
+		return 0;
+	}
 	
 	
 }
