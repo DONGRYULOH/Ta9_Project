@@ -76,13 +76,14 @@
         <script type="text/javascript">  	
         
         	var user_session = '${UserSession}';
-        	var user_nickname = '${UserSession.user_nickname}';        	
+        	var user_nickname = '${UserSession.user_nickname}'; 
+        	var reply_count = '${videoDetail.reply_count}'; 
         	
     		function replyList(){
     			
     			$.getJSON("replyList?n=" + $("#video_number").val() , function(getReplyList){
 					
-    				var reply_view = "<h4 class='m-bottom-30'>Comment</h4>";
+    				var reply_view = "<h4 class='m-bottom-30'>Comment("+reply_count+")</h4>";
 
     				 /* 해당 동영상 게시글에 해당하는 모든 댓글 가져와서 뿌려주기 */
     				 $(getReplyList).each(function(){
@@ -122,9 +123,9 @@
 	                                         
 	                        reply_view +="</div>"
 	                                   		+"</div>"
-	                                   +"<article class='comments_bottom_text m-top-10'>"
+	                                   +"<div class='comments_bottom_text m-top-10' id='abc'>"
 	                                     +"<p>"+this.reply_content+"</p>"
-	                                   +"</article>"
+	                                   +"</div>"
 	                               +"</div>"
 	                              +"</div>"
 	                             +"</div><hr>";
@@ -141,9 +142,9 @@
 	                                         +"</div>"                 
                     					+ "</div>"
 	                                   +"</div>"
-	                                   +"<article class='comments_bottom_text m-top-10'>"
+	                                   +"<div class='comments_bottom_text m-top-10' id='abc'>"
 	                                     +"<p>"+this.reply_content+"</p>"
-	                                   +"</article>";
+	                                   +"</div>";
                                   
 	                            // 로그인한 유저의 세션의 닉네임이 댓글을 작성한 닉네임과 똑같을경우 수정과 삭제가 가능 
 	                          	if(user_nickname == this.reply_register){	                          		  
@@ -269,7 +270,7 @@
 				<div class="row" style="margin-left: 0px;margin-top: 20px;">
 					<!-- 로그인 되지 않은 상태일떄 -->
 					 <c:if test="${UserSession == null }">
-					  	<p>소감을 남기시려면 <a href="/login">로그인</a>해주세요</p>
+					  	<p>댓글을 남기시려면 <a href="/login">로그인</a>해주세요</p>
 					 </c:if>
 					 <!-- 로그인이 된경우 -->
 					 <c:if test="${UserSession != null}">
@@ -280,7 +281,7 @@
 							   </div>
 							   
 							   <div align="right" style="width: 740px;">							    							    
-							    	<button type="button" id="reply_btn">소감 남기기</button>							    							   								
+							    	<button type="button" id="reply_btn">댓글 남기기</button>							    							   								
 							   </div>						   
 					 </c:if>
 					 				 
@@ -413,16 +414,14 @@
 			 });
 	
 			<!-- 댓글 수정창 부분 모달창 -->
-			$(document).on("click", ".modify_reply", function(){
-				 //$(".replyModal").attr("style", "display:block;");
+			$(document).on("click", ".modify_reply", function(){				 
 				 $(".replyModal").fadeIn(200);
 				 
 				 var reply_number = $(this).attr("reply_number");
-				 var reply_content = $(this).parent().parent().children(".replyContent").text();
-				 console.log("현재 댓글 번호 : " + reply_number);
+				 //var reply_content = $(this).parent().parent().parent().parent().parent().parent().text();				 
 				 //console.log("현재 this 가라키는 것은??"+$(this).html());
 				 
-				 $(".modal_reply_content").val(reply_content);
+				 //$(".modal_reply_content").val(reply_content);
 				 $(".modal_modify_btn").attr("reply_number", reply_number);		 
 			});
 			

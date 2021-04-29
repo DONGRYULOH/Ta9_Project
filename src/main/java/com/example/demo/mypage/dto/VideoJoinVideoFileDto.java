@@ -24,8 +24,11 @@ public class VideoJoinVideoFileDto {
 	private String orgin_video_thumb;
 	private String stored_video_thumb;
 	
+	// 유저 닉네임 
 	private String user_nickname;
 	
+	// 댓글 개수 
+	private int reply_count;
 	
 	
 }

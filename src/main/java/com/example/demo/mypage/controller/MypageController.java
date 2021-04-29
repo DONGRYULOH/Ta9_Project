@@ -95,11 +95,13 @@ public class MypageController {
 	
 	// 동영상 게시물 상세 페이지 이동
 	@RequestMapping(value = "/mypage_videoDetail",method = RequestMethod.GET)
-	public String mypage_videoDetail(@RequestParam("n") int video_number, Model model) {
+	public String mypage_videoDetail(@RequestParam("n") int video_number, Model model,HttpSession session) {
 		
+		UserDto user = (UserDto)session.getAttribute("User");
 		// 동영상 게시물 번호에 해당하는 정보 가져오기 
 		VideoJoinVideoFileDto videoDetail = mypageService.getVideoDetail(video_number);
 		model.addAttribute("videoDetail",videoDetail);
+		model.addAttribute("UserSession",user);
 		
 		return "myPage/mypage_videoDetail";
 	}

@@ -24,5 +24,6 @@ public class CvideoJoinVideoFileDto {
 	private String orgin_video_thumb;
 	private String stored_video_thumb;
 	
-	
+	// 댓글수
+	private int reply_count;
 }
