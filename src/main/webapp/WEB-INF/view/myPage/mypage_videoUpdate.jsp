@@ -9,7 +9,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <title>Pouseidon - Free HTML5 Model Agency Bootstrap Template</title>
+        <title>MyPage</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <%@ include file="/WEB-INF/include/head_import.jsp" %>

@@ -1,7 +1,9 @@
 package com.example.demo.user.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.api.NaverSearch;
 import com.example.demo.user.dao.UserDao;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.dto.VideoCartDto;
@@ -25,6 +28,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Resource(name="NaverSearch")
+	private NaverSearch naverSearch;
 	
 	//ID 중복체크 검사 
 	@RequestMapping(value = "/idCheck",method = RequestMethod.POST)
@@ -97,6 +103,16 @@ public class UserController {
 				model.addAttribute("result2",resultSet.get("loginAttCk"));
 				model.addAttribute("msg2","오늘 최초 로그인이시네요~ 100EXP 지급완료!");
 			}	
+			
+			Map<String,Object> sportsList = naverSearch.sportsSearch("sports");
+			Map<String,Object> it = naverSearch.itSearch("IT");
+			Map<String,Object> economyList = naverSearch.economySearch("경제");
+			Map<String,Object> foreignList = naverSearch.foreignSearch("foreign");
+			
+			model.addAttribute("sportsList",sportsList);
+			model.addAttribute("it",it);
+			model.addAttribute("economyList",economyList);
+			model.addAttribute("foreignList",foreignList);
 		}  
 								
 		model.addAttribute("login_msg","로그인 실패! 다시 시도 바람!");
