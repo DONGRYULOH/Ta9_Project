@@ -6,16 +6,14 @@
   		
   	<!-- 카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오기 -->
  	<select id="getCategoryList" parameterType="hashMap" resultType="com.example.demo.category.dto.CvideoJoinVideoFileDto">
- 		  select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
-					vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,count(v.video_number) as 'reply_count'
-				from video v JOIN video_file vf
-					on v.video_number = vf.video_number	
-						JOIN  video_reply vr 
-			        on vr.video_number = v.video_number    
-			 where v.category_code = #{cateCode}
-		   group by v.video_number
-	     order by v.video_number desc
-   		LIMIT #{pageStart},#{perPageNum} 
+	 	      select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
+						vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,
+	                    (select count(vr.reply_number) from video_reply vr where vr.video_number = v.video_number) as 'reply_count'
+					from video v JOIN video_file vf
+						on v.video_number = vf.video_number			
+				 where v.category_code = #{cateCode}
+	         order by v.video_number desc
+   		  LIMIT #{pageStart},#{perPageNum} 
  	</select>
 	
 	<!-- 해당 동영상 게시물 신고사유 INSERT -->

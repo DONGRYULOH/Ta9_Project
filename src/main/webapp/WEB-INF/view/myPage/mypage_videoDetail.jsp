@@ -29,12 +29,13 @@
         
         	var user_session = '${UserSession}';
         	var user_nickname = '${UserSession.user_nickname}';        	
+        	var reply_count = '${videoDetail.reply_count}';
         	
     		function replyList(){
     			
     			$.getJSON("replyList?n=" + $("#video_number").val() , function(getReplyList){
 					
-    				var reply_view = "<h4 class='m-bottom-30'>Comment</h4>";
+    				var reply_view = "<h4 class='m-bottom-30'>Comment("+reply_count+")</h4>";
 
     				 /* 해당 동영상 게시글에 해당하는 모든 댓글 가져와서 뿌려주기 */
     				 $(getReplyList).each(function(){
