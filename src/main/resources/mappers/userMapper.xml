@@ -24,11 +24,6 @@
 				values(#{user_id},#{user_pwd},#{user_nickname})		
 	</insert>
 	
-	<!-- 회원가입후 회원 상태 추가 -->
-	<!-- <insert id="register_st" parameterType="com.example.demo.user.dto.UserDto" >
-		insert into user_st(user_id) values(#{user_id})		
-	</insert> -->
-	
 	<!-- 로그인 처리 검사 -->
 	<select id="signIn" parameterType="com.example.demo.user.dto.UserDto" resultType="com.example.demo.user.dto.UserDto">
 			select * 

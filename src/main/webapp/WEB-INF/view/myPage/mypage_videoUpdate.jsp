@@ -225,7 +225,7 @@
     		
     		// 가장 많이 쓰이는 이미지 파일 형식인 jpeg,gif,png,bmp 만 업로드가 가능하도록 검증   
     		if(event.target.files[0].type != "image/jpeg" && event.target.files[0].type != "image/gif" && event.target.files[0].type != "image/png" && event.target.files[0].type != "image/bmp"){
-    			validate[2] = false;
+    			validate[1] = false;
     			alert("해당 이미지 파일 형식은 현재 웹사이트에서 지원하지 않습니다! (jpeg,gif,png,bmp로 끝나는 이미지 파일 형식만 업로드 가능합니다!)"); 
     			return false;
     		}

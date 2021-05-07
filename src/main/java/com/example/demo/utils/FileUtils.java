@@ -47,9 +47,6 @@ public class FileUtils {
 			// 3.썸네일 파일 + 동영상 파일 업로드 하기 
 			while(iterator.hasNext()) {
 				multipartFile = MultipartHttpServletRequest.getFile(iterator.next());
-	
-				System.out.println("파일 이름 : " + multipartFile.getOriginalFilename());
-				System.out.println("파일 크기 : " + multipartFile.getSize());
 				
 				// multipartFile 안에 있는 이름이 "video_file" 경우 지정된 장소에 업로드 
 				if(multipartFile.getName().equals("video_File")) {
@@ -89,7 +86,7 @@ public class FileUtils {
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("파일(동영상,썸네일)을 업로드하는 도중 에러 발생 ... " + e.getMessage());
+			System.err.println("파일(동영상,썸네일)을 업로드하는 도중 에러 발생 ... " + e.getMessage());
 		}		
 		
 		return videoFile; 
@@ -126,10 +123,6 @@ public class FileUtils {
 				// 3.기존에 올렸던 썸네일 이미지 삭제후 새로운 썸네일 이미지 업로드 처리
 				while(iterator.hasNext()) {
 					multipartFile = MultipartHttpServletRequest.getFile(iterator.next());
-		
-					System.out.println("파일 이름 : " + multipartFile.getOriginalFilename());
-					System.out.println("파일 크기 : " + multipartFile.getSize());
-					
 	
 					// multipartFile 안에 있는 이름이 "video_thumbNail" 경우 지정된 장소에 업로드 
 					originalFileName = multipartFile.getOriginalFilename(); //원본파일의 이름을 받아옴 (exam.png)
@@ -158,7 +151,7 @@ public class FileUtils {
 				}
 			}catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("썸네일 파일 업로드 도중 에러 발생 ... " + e.getMessage());
+				System.err.println("썸네일 파일 업로드 도중 에러 발생 ... " + e.getMessage());
 			}		
 			
 			return thumbFile; 

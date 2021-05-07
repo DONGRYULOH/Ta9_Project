@@ -111,8 +111,7 @@ public class MypageController {
 	public String mypage_videoDelete(@RequestParam("n") int video_number) {
 		
 		// 해당 동영상 게시물 삭제하기 
-		int result = mypageService.deleteVideo(video_number);
-		System.out.println("삭제된 결과값 : " + result );
+		mypageService.deleteVideo(video_number);
 		
 		return "redirect:/mypage_videoList";
 	}
@@ -136,7 +135,6 @@ public class MypageController {
 		Map<String,Object> thumbFile = new HashMap<String,Object>(); 	
 		thumbFile.put("video_number", videoDto.getVideo_number());
 				
-		//System.out.println("기존에 올린 썸네일 이미지 존재 여부:"+request.getParameter("orgin_video_thumbNail"));
 		// 1.새로운 썸네일 이미지를 첨부한 경우(동영상 게시글 + 동영상 썸네일 이미지 업데이트 처리)  
 		if(request.getParameter("orgin_video_thumbNail") == null) {
 			// 1-1. 현재 유저가 삭제하고자 하는 썸네일명을 DB에서 꺼내옴 
@@ -146,7 +144,7 @@ public class MypageController {
 			fileUtils.parseDeleteFileInfo(thumbFile,request,thumbNail);
 			
 			// 1-3. 동영상 게시글 업데이트 처리
-			int result = mypageService.videoBrdUpdate(videoDto);
+			mypageService.videoBrdUpdate(videoDto);
 			
 			// 1-4. 동영상 썸네일 이미지 업데이트 처리
 			mypageService.videoThumbUpdate(thumbFile);
@@ -155,10 +153,9 @@ public class MypageController {
 		// 2.썸네일 이미지를 수정하지 않은 경우(동영상 게시글만 업데이트 처리)
 		if(request.getParameter("orgin_video_thumbNail") != null) { 
 			// 2-1. 동영상 게시글 업데이트 처리 
-			int result = mypageService.videoBrdUpdate(videoDto);
+			mypageService.videoBrdUpdate(videoDto);
 		}
-	
-		
+			
 		redirectAttributes.addAttribute("n",videoDto.getVideo_number());
 		return "redirect:mypage_videoDetail";
 	}
@@ -168,7 +165,7 @@ public class MypageController {
 	@RequestMapping("/mypage_info")
 	public String mypage_info(HttpSession session,Model model) {
 		
-		// 현재 세션에 저장되어 있는 유저 정보  
+		// 세션이 있을 경우 해당 세션의 유저 정보를 가져옴 
 		UserDto user = (UserDto)session.getAttribute("User");
 		if(user != null) user = mypageService.getUserInfo(user.getUser_id());
 		

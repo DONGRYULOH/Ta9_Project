@@ -18,7 +18,7 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String home(Model model) {
-		Map<String,Object> sportsList = naverSearch.sportsSearch("sports");
+		Map<String,Object> sportsList = naverSearch.sportsSearch("축구");
 		Map<String,Object> it = naverSearch.itSearch("IT");
 		Map<String,Object> economyList = naverSearch.economySearch("경제");
 		Map<String,Object> foreignList = naverSearch.foreignSearch("foreign");

@@ -46,16 +46,13 @@ public class MypageService {
 			if(count == 0) { // 경험치 적립 가능(0이면 해당 날짜에 업로드한 동영상 게시물이 없다는 뜻)  				
 				
 				// 1-1.해당 유저의 경험치를 Update 시켜줌 
-				int exp_result = mypageDao.ExpUpdate(user.getUser_id());
-				System.out.println("경험치 업데이트 결과값 :" + exp_result);
+				int exp_result = mypageDao.ExpUpdate(user.getUser_id());				
 				
 				// 1-2.경험치가 정상적으로 Update 되면 해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출
 				if(exp_result == 1) {
 					mypageDao.rankUpdateCkProcedures(user.getUser_id()); 
 				}
 				
-			}else {
-				System.out.println("이미 적립 됨");
 			}
 			
 			// 2.파일(비디오,썸네일 이미지)을 제외한 게시글 정보 Insert 
