@@ -40,4 +40,7 @@ public interface CategoryDao {
 	// 댓글 많은순 정렬해서 가져오기 
 	List<CvideoJoinVideoFileDto> getCategoryRList(Map<String, Object> list) throws Exception;
 
+	// 검색 
+	List<CvideoJoinVideoFileDto> getCategorySearchList(Map<String, Object> searchList) throws Exception;
+
 }

@@ -118,6 +118,22 @@ public class CategoryService {
 		}
 		return 0;
 	}
+
+	// 검색 
+	public List<CvideoJoinVideoFileDto> getCategorySearchList(String cateCode, Pagination page, String keyword) {
+		try {
+			 Map<String,Object> searchList = new HashMap<>();
+			 searchList.put("cateCode", cateCode);
+			 searchList.put("perPageNum", page.getPerPageNum());
+			 searchList.put("pageStart", page.getPageStart());
+			 searchList.put("keyword", keyword);
+			 return categoryDao.getCategorySearchList(searchList);
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("검색 중 에러발생!!" + e.getMessage());
+		}
+		return null;
+	}
 	
 	
 }

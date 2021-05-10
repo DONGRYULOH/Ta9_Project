@@ -34,6 +34,31 @@ public class CategoryController {
 	@Autowired
 	private MypageService mypageService;
 	
+	//검색 
+	@RequestMapping(value = "/category_search")
+	public String category_search(@RequestParam("cateCode") String cateCode,@RequestParam(value = "keyword",defaultValue = "not") String keyword,Model model,Pagination page,HttpSession session,@RequestParam(value = "sort",defaultValue = "no") String sort) {
+				
+		UserDto user = (UserDto)session.getAttribute("User");	
+				
+		System.out.println("검색 키워드 :" + keyword);
+		// 페이지를 만들기 위한 PageMaker 객체 생성 
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(page);
+		pageMaker.setTotalCount(categoryService.totalCount(cateCode)); // 해당 카테고리의 총 동영상 게시글 수
+		
+		List<CvideoJoinVideoFileDto> categoryList = categoryService.getCategorySearchList(cateCode,page,keyword);
+
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryListSize", categoryList.size());
+		model.addAttribute("cateCode", cateCode);
+		model.addAttribute("pageMaker", pageMaker);		
+		model.addAttribute("UserSession",user);
+		model.addAttribute("Sort",sort);
+		
+		return "Category/categoryList";
+	}
+	
+	// 카테고리별 동영상 게시물 리스트 
 	@RequestMapping(value = "/categoryList",method=RequestMethod.GET)
 	public String categoryList(@RequestParam("cateCode") String cateCode,@RequestParam(value = "sort",defaultValue = "no") String sort,Model model,Pagination page,HttpSession session) {
 				

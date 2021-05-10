@@ -51,27 +51,41 @@
 
 			<div class="container" style="margin-top: 50px;">		
 				
-				<!-- 정렬(최신순,댓글많은순) -->
+				
 				<div class="row" style="padding-bottom: 50px;margin-top: 10px;">
-					<div class="dropdown" >
-					  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="sort">
-					  <c:if test="${Sort eq 'no' || Sort eq 'latest'}">
-					  	최신순
-					  </c:if>
-					  <c:if test="${Sort eq 'replyest' }">
-					  	댓글많은순
-					  </c:if>
-					  <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu" >
-					    <li>
-					   	 	<a href="categoryList?cateCode=${cateCode}&sort=latest" id="latest_sort">최신순</a>
-					    </li>
-					    <li>					    	
-					    	<a href="categoryList?cateCode=${cateCode}&sort=replyest" id="reply_sort">댓글많은순</a>
-					    </li>					    
-					  </ul>
-					</div>			
+				
+					<!-- 정렬(최신순,댓글많은순) -->
+					<div class="col-md-8">
+						<div class="dropdown" >
+						  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="sort">
+						  <c:if test="${Sort eq 'no' || Sort eq 'latest'}">
+						  	최신순
+						  </c:if>
+						  <c:if test="${Sort eq 'replyest' }">
+						  	댓글많은순
+						  </c:if>
+						  <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" >
+						    <li>
+						   	 	<a href="categoryList?cateCode=${cateCode}&sort=latest" id="latest_sort">최신순</a>
+						    </li>
+						    <li>					    	
+						    	<a href="categoryList?cateCode=${cateCode}&sort=replyest" id="reply_sort">댓글많은순</a>
+						    </li>					    
+						  </ul>
+						</div>	
+					</div>
+					
+					<!-- 검색 -->
+					<div class="col-md-4">
+						<form role="form" method="post" autocomplete="off" action="/category_search" >
+							<input type="text"  id="keyword" name="keyword" placeholder="검색하려는 제목">
+							<input type="hidden" value="${cateCode}" name="cateCode">							
+							<button type="submit" ><i class="fa fa-search"></i></button>
+						</form>		  
+					</div>
+					
 				</div>								
 				
 				<c:forEach items="${categoryList}" var="list" begin="0" end="${categoryListSize}"  step="1" varStatus="status">

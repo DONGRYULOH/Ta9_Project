@@ -79,11 +79,27 @@
 		where reply_number = #{reply_number} 
 	</update>
 	
+	<!-- 댓글 삭제 -->
 	<delete id="replyDelete" parameterType="com.example.demo.category.dto.VideoReplyDto" >
 		delete 
 			from video_reply 
 		where reply_number = #{reply_number}
 	</delete>
+	
+	<!-- 검색 -->
+	<select id="getCategorySearchList" parameterType="hashMap" resultType="com.example.demo.category.dto.CvideoJoinVideoFileDto">
+		      SELECT v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
+					 vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,
+	                 (SELECT count(vr.reply_number) FROM video_reply vr WHERE vr.video_number = v.video_number) AS 'reply_count'
+					FROM video v JOIN video_file vf
+					  ON v.video_number = vf.video_number			
+				 WHERE v.category_code = #{cateCode}  
+				 <if test="!keyword.equals('') || keyword != null || !keyword.equals('not') " >
+				 	 AND v.video_title LIKE CONCAT ('%' ,#{keyword}, '%')
+				 </if>	
+	         ORDER BY v.video_number DESC
+   		  LIMIT #{pageStart},#{perPageNum} 
+	</select>
 </mapper>
 
 

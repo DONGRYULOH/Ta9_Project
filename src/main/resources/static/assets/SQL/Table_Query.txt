@@ -1,33 +1,32 @@
 
--- 비디오 테이블 
+-- 동영상 테이블 
 CREATE TABLE video (
-	video_number	INT	NOT NULL auto_increment,
-	user_id	VARCHAR(20)	NOT NULL,
-	category_code	VARCHAR(10)	NOT NULL,
-	video_title	VARCHAR(150) NOT NULL,
-	public_check	CHAR(1)	NOT NULL,
-	video_reports	INT	NOT NULL DEFAULT 0,
-	video_insert_date	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	video_rank_limit INT NOT NULL DEFAULT 0,
+	video_number	INT	NOT NULL auto_increment, -- 동영상 번호(PK) 
+	user_id	VARCHAR(20)	NOT NULL, -- 유저아이디(FK) 
+	category_code	VARCHAR(10)	NOT NULL, -- 카테고리코드(FK) 
+	video_title	VARCHAR(150) NOT NULL, -- 제목 
+	public_check	CHAR(1)	NOT NULL, -- 공개여부 
+	video_reports	INT	NOT NULL DEFAULT 0, -- 신고수 
+	video_insert_date	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 영상올린날짜
+	video_rank_limit INT NOT NULL DEFAULT 0, -- 등급제한 
     PRIMARY KEY(video_number)
 );
 
 -- 유저 테이블 
 CREATE TABLE `user` (
-	`user_id`	VARCHAR(20)	NOT NULL,
-	`user_pwd`	VARCHAR(100)	NOT NULL,
-	`user_nickname`	VARCHAR(20)	NOT NULL,
-	`user_exp`	INT	NOT NULL	DEFAULT 0,
-	`user_rank`	VARCHAR(20)	NOT NULL DEFAULT 'Bronze',
-	`user_rank_code`	INT	NOT NULL DEFAULT 1,
-	`user_insertdate`	DATETIME	NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`user_leavedate`	DATETIME	NULL
+	`user_id`	VARCHAR(20)	NOT NULL, -- 아이디(PK)
+	`user_pwd`	VARCHAR(100)	NOT NULL, -- 패스워드 
+	`user_nickname`	VARCHAR(20)	NOT NULL, -- 닉네임
+	`user_exp`	INT	NOT NULL	DEFAULT 0, -- 경험치 
+	`user_rank`	VARCHAR(20)	NOT NULL DEFAULT 'Bronze', -- 등급명 
+	`user_rank_code`	INT	NOT NULL DEFAULT 1, -- 등급코드 
+	`user_insertdate`	DATETIME	NOT NULL DEFAULT CURRENT_TIMESTAMP -- 가입일자 
 );
 
 -- 비디오_카테고리 테이블 
 CREATE TABLE `video_category` (
-	`category_code`	VARCHAR(10)	NOT NULL,
-	`category_name`	VARCHAR(50)	NOT NULL
+	`category_code`	VARCHAR(10)	NOT NULL, -- 카테고리 코드(PK) 
+	`category_name`	VARCHAR(50)	NOT NULL -- 카테고리명 
 );
 
 insert into video_category(category_code,category_name) 
@@ -41,52 +40,52 @@ insert into video_category(category_code,category_name)
 insert into video_category(category_code,category_name) 
 		values("105","ETC");    
 
--- 비디오_파일 테이블 
+-- 동영상_파일 테이블 
 CREATE TABLE `video_file` (
-	`video_number`	INT	NOT NULL,
-	`orgin_video_name`	VARCHAR(300)	NULL,
-	`stored_video_name`	VARCHAR(300)	NULL,
-	`orgin_video_thumb`	VARCHAR(300)	NULL,
-	`stored_video_thumb`	VARCHAR(300)	NULL
+	`video_number`	INT	NOT NULL, -- 동영상번호(PK) 
+	`orgin_video_name`	VARCHAR(300)	NULL, -- 원본파일명 
+	`stored_video_name`	VARCHAR(300)	NULL, -- 서버에 저장될 파일명 
+	`orgin_video_thumb`	VARCHAR(300)	NULL, -- 원본썸네일명 
+	`stored_video_thumb`	VARCHAR(300)	NULL -- 서버에 저장될 썸네일명 
 );
 
--- 비디오 댓글 테이블 
+-- 동영상 댓글 테이블 
 CREATE TABLE `video_reply` (
-	`reply_number`	INT	NOT NULL AUTO_INCREMENT,
-	`video_number`	INT	NOT NULL,
-	`reply_content`	VARCHAR(100) NOT NULL,
-	`reply_register`VARCHAR(20) NOT NULL,
-	`reply_insert_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`reply_orgin_number` INT NOT NULL,
-	`reply_order`	INT	NOT NULL,
-	`reply_depth`	INT	NOT NULL,
+	`reply_number`	INT	NOT NULL AUTO_INCREMENT, -- 댓글번호(PK) 
+	`video_number`	INT	NOT NULL, -- 동영상 번호(FK) 
+	`reply_content`	VARCHAR(100) NOT NULL, -- 댓글내용 
+	`reply_register`VARCHAR(20) NOT NULL, -- 작성자
+	`reply_insert_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 작성일 
+	`reply_orgin_number` INT NOT NULL, -- 부모댓글번호 
+	`reply_order`	INT	NOT NULL, -- 댓글순서 
+	`reply_depth`	INT	NOT NULL, -- 댓글깊이 
     primary key(reply_number)
 );
 
 -- 출석체크 테이블 
 CREATE TABLE `attendance` (
-	`att_number` INT NOT NULL AUTO_INCREMENT,
-	`user_id`	VARCHAR(20)	NOT NULL,
-	`att_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`att_number` INT NOT NULL AUTO_INCREMENT, -- 출석번호(PK) 
+	`user_id`	VARCHAR(20)	NOT NULL, -- 유저아이디(FK)
+	`att_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 출석일 
 	PRIMARY KEY(att_number)
 );
 
 -- 신고 테이블 
 CREATE TABLE `blame` (
-	`blame_number`	INT	NOT NULL AUTO_INCREMENT,
-	`video_number`	INT	NOT NULL,
-	`user_id`	VARCHAR(20)	NOT NULL,
-	`blame_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`blame_name`	VARCHAR(300) NOT NULL,
+	`blame_number`	INT	NOT NULL AUTO_INCREMENT, -- 신고번호(PK) 
+	`video_number`	INT	NOT NULL, -- 동영상번호(FK)
+	`user_id`	VARCHAR(20)	NOT NULL, -- 유저ID(FK)
+	`blame_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 신고일 
+	`blame_name`	VARCHAR(300) NOT NULL, -- 신고사유 
     PRIMARY KEY(blame_number)
 );
 
 
--- 비디오 위시리스트 테이블 
+-- 동영상 위시리스트 테이블 
 CREATE TABLE `video_cart` (
-	`video_cart_number`	INT	NOT NULL AUTO_INCREMENT,
-	`user_id`	VARCHAR(20)	NOT NULL,
-	`video_number`	INT	NOT NULL,
+	`video_cart_number`	INT	NOT NULL AUTO_INCREMENT, -- 카트번호(PK)
+	`user_id`	VARCHAR(20)	NOT NULL, -- 유저ID(FK)
+	`video_number`	INT	NOT NULL, -- 동영상번호(FK) 
     PRIMARY KEY(video_cart_number)
 );
 
@@ -186,15 +185,6 @@ REFERENCES `video` (
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 테이블 생성 + 제약조건 끝 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-
--- 동영상 게시물 업로드시 하루에 한번만 100P 지급 
--- 해당 유저가 오늘날짜에 동영상 게시물을 업로드 헀는지 검사 (없으면 0 , 있으면 1이상) 
-select count(*)
-	from video
- where user_id = 'admin' and date_format(video_date,'%Y-%m-%d') = curdate();
- 
- 
- 
  -- <해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저>
  CREATE DEFINER=`root`@`%` PROCEDURE `rankUpdateCk_procedure`(
 	IN this_user_id VARCHAR(20)
