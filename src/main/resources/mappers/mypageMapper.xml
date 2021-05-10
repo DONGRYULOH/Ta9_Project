@@ -21,15 +21,27 @@
   				values(#{video_number},#{orgin_video_name},#{stored_video_name},#{orgin_video_thumb},#{stored_video_thumb})  		
   </insert>
   		
-  <!-- 해당 유저에 해당하는 동영상 게시물 리스트 가져오기  -->
+  <!-- 해당 유저에 해당하는 동영상 게시물 리스트 가져오기(최신순)  -->
   <select id="getVideoList" parameterType="hashmap" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto" >
-	  	select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
-		vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,
-        (select count(vr.reply_number) from video_reply vr where vr.video_number = v.video_number) as 'reply_count'
-			 from video v inner join video_file vf 
-	    	on v.video_number = vf.video_number
-	      where user_id = #{user_id}
-	   order by v.video_number desc
+	  	SELECT v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
+				vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,
+        		(SELECT count(vr.reply_number) FROM video_reply vr WHERE vr.video_number = v.video_number) AS 'reply_count'
+			 FROM video v INNER JOIN video_file vf 
+	    	ON v.video_number = vf.video_number
+	      WHERE user_id = #{user_id}
+	   ORDER BY v.video_number DESC
+	  LIMIT #{pageStart},#{perPageNum}
+  </select>
+  
+  <!-- 해당 유저에 해당하는 동영상 게시물 리스트 가져오기(댓글많은순)  -->
+  <select id="getVideoRList" parameterType="hashmap" resultType="com.example.demo.mypage.dto.VideoJoinVideoFileDto" >
+	  	SELECT v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
+				vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,
+       			 (SELECT count(vr.reply_number) FROM video_reply vr WHERE vr.video_number = v.video_number) AS 'reply_count'
+			 FROM video v INNER JOIN video_file vf 
+	    	ON v.video_number = vf.video_number
+	      WHERE user_id = #{user_id}
+	    ORDER BY reply_count DESC,v.video_number DESC <!-- 댓글수가 똑같다면 가장 최신에 올린 게시물을 먼저 나오게 함  -->
 	  LIMIT #{pageStart},#{perPageNum}
   </select>
 	
@@ -102,14 +114,30 @@
    			 where video_number = #{video_number}
 	</update>
 	
-	 <!-- 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기  -->
+	 <!-- 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기(최신순)  -->
 	  <select id="mypage_cartList" parameterType="hashmap" resultType="com.example.demo.mypage.dto.VideoCart_FileDto" >
-		  	select *
+		  	select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
+						vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,vc.video_cart_number,
+                        (select count(vr.reply_number) from video_reply vr where vr.video_number = v.video_number) as 'reply_count'
 					from (select * from video_cart where user_id = #{user_id}) vc JOIN video v 
 				 on vc.video_number = v.video_number
 				   JOIN video_file vf 
 				on vc.video_number = vf.video_number
-		   LIMIT #{pageStart},#{perPageNum}
+		   order by v.video_number desc
+		  LIMIT #{pageStart},#{perPageNum}
+	  </select>
+	  
+	   <!-- 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기(댓글많은순)  -->
+	  <select id="mypage_cartRList" parameterType="hashmap" resultType="com.example.demo.mypage.dto.VideoCart_FileDto" >
+		  	select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
+						vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,vc.video_cart_number,
+                        (select count(vr.reply_number) from video_reply vr where vr.video_number = v.video_number) as 'reply_count'
+					from (select * from video_cart where user_id = #{user_id}) vc JOIN video v 
+				 on vc.video_number = v.video_number
+				   JOIN video_file vf 
+				on vc.video_number = vf.video_number
+		   order by reply_count desc,v.video_number desc
+		  LIMIT #{pageStart},#{perPageNum}
 	  </select>
 	  
 	  <!-- 동영상 게시물 위시리스트 페이지에서 해당 게시물 제거 -->

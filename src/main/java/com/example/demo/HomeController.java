@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.api.NaverSearch;
+import com.example.demo.api.NewsCategory;
 
 @Controller
 public class HomeController {
@@ -18,15 +21,16 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String home(Model model) {
-		Map<String,Object> sportsList = naverSearch.sportsSearch("축구");
-		Map<String,Object> it = naverSearch.itSearch("IT");
-		Map<String,Object> economyList = naverSearch.economySearch("경제");
-		Map<String,Object> foreignList = naverSearch.foreignSearch("foreign");
 		
-		model.addAttribute("sportsList",sportsList);
-		model.addAttribute("it",it);
-		model.addAttribute("economyList",economyList);
-		model.addAttribute("foreignList",foreignList);
+		NewsCategory newsCategory = new NewsCategory();
+		List<Map<String,Object>> newsList = new ArrayList<Map<String,Object>>();
+		
+		for(int i=0;i<newsCategory.getNewsList().size();i++) {
+			newsList.add(naverSearch.Search(newsCategory.getNewsList().get(i)));
+		}
+			
+		model.addAttribute("allList",newsList);
+		model.addAttribute("allListSize",newsList.size());
 		
 		return "index";
 	}

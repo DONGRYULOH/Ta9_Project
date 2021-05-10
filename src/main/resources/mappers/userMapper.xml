@@ -6,46 +6,48 @@
   		
 	 <!-- ID 중복체크 검사 -->
 	 <select id="idCheck" parameterType="String" resultType="int">
-	 		select count(*) 
-	 			from user
-	 		 where user_id = #{user_id} 
+	 		SELECT count(*) 
+	 			FROM user
+	 		 WHERE user_id = #{user_id} 
 	 </select>
   
 	 <!-- 닉네임 중복체크 검사 -->
 	 <select id="nicknameCheck" parameterType="String" resultType="int">
-	 		select count(*) 
-	 			from user
-	 		 where user_nickname = #{user_nickname} 
+	 		SELECT count(*) 
+	 			FROM user
+	 		 WHERE user_nickname = #{user_nickname} 
 	 </select>
 
   	<!-- 회원 가입 -->
 	<insert id="register" parameterType="com.example.demo.user.dto.UserDto" >
-		insert into user(user_id,user_pwd,user_nickname)
-				values(#{user_id},#{user_pwd},#{user_nickname})		
+		INSERT INTO user(user_id,user_pwd,user_nickname)
+				VALUES(#{user_id},#{user_pwd},#{user_nickname})		
 	</insert>
 	
 	<!-- 로그인 처리 검사 -->
 	<select id="signIn" parameterType="com.example.demo.user.dto.UserDto" resultType="com.example.demo.user.dto.UserDto">
-			select * 
-				from user
-			 where user_id = #{user_id}  
+			SELECT * 
+				FROM user
+			 WHERE user_id = #{user_id}  
 	</select>
 	
 	<!-- 해당 날짜에 처음 로그인인지 아닌지 검사 -->
 	<select id="loginCheck" parameterType="String" resultType="int">
-			select count(*) 
-				from attendance
- 			 where user_id = #{user_id} and date_format(att_date,'%Y-%m-%d') = curdate() 
+			SELECT count(*) 
+				FROM attendance
+ 			 WHERE user_id = #{user_id} AND date_format(att_date,'%Y-%m-%d') = curdate() 
 	</select>
 	
 	<!-- 처음 로그인 시도일 경우 출석체크 테이블에 출석하기  -->
 	<insert id="loginAttInsert" parameterType="String">
-		insert into attendance(user_id) values(#{user_id})
+		INSERT INTO attendance(user_id) VALUES(#{user_id})
 	</insert>
 	
 	<!-- 처음 로그인 시도일 경우 해당 유저의 경험치 100EXP 추가  -->
 	<update id="loginExpInsert" parameterType="String">
-		update user set user_exp = user_exp + 100 where user_id = #{user_id}
+		UPDATE user 
+			SET user_exp = user_exp + 100 
+		 WHERE user_id = #{user_id}
 	</update>
 	
 	<!--  해당 유저의 등급 상승 여부 확인후 업데이트 하는 스토어드 프로시저 호출  -->
@@ -55,26 +57,28 @@
 	
 	<!--  해당 유저가 해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크  -->
 	<select id="videoCartCk" parameterType="com.example.demo.user.dto.VideoCartDto" resultType="int">
-		select count(*) 
-			from video_cart 
-		 where user_id = #{user_id} AND video_number = #{video_number}
+		SELECT count(*) 
+			FROM video_cart 
+		 WHERE user_id = #{user_id} AND video_number = #{video_number}
 	</select>
 	
-	<!--  해당 유저가 해당 동영상 게시물을 자신의 위시리스트 목록에 추가했는지 체크  -->
+	<!--  해당 동영상 게시물을 위시리스트에 담기 -->
 	<insert id="addVideoCart" parameterType="com.example.demo.user.dto.VideoCartDto">
-		insert into video_cart(user_id,video_number) values(#{user_id},#{video_number})				
+		INSERT INTO video_cart(user_id,video_number) VALUES(#{user_id},#{video_number})				
 	</insert>
 	
 	<!-- 로그인 처리 검사 -->
 	<select id="userTotalCount" parameterType="String" resultType="int">
-			select count(*)
-				from video 			
-   		      where user_id = #{user_id} 
+			SELECT count(*)
+				FROM video 			
+   		      WHERE user_id = #{user_id} 
 	</select>
 	
 	<!-- 패스워드 변경 -->
 	<update id="pwd_update" parameterType="com.example.demo.user.dto.UserDto">
-			update user set user_pwd = #{user_pwd} where user_id = #{user_id}
+			UPDATE user 
+				SET user_pwd = #{user_pwd} 
+			 WHERE user_id = #{user_id}			
 	</update>
 	
 </mapper>

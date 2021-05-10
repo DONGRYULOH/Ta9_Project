@@ -41,16 +41,28 @@
 				<!-- Mypage 공통 메뉴바 -->
 				<%@ include file="/WEB-INF/view/myPage/include/myPage_menu.jsp" %>
 				
-				<!-- <div class="row" style="padding-bottom: 50px;margin-top: 10px;">
+				<!-- 정렬(최신순,댓글많은순) -->
+				<div class="row" style="padding-bottom: 50px;margin-top: 10px;">
 					<div class="dropdown" >
-					  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">최신순
-					  <span class="caret"></span></button>
+					  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="sort">
+					  <c:if test="${Sort eq 'no' || Sort eq 'latest'}">
+					  	최신순
+					  </c:if>
+					  <c:if test="${Sort eq 'replyest' }">
+					  	댓글많은순
+					  </c:if>
+					  <span class="caret"></span>
+					  </button>
 					  <ul class="dropdown-menu" >
-					    <li><a href="#">최신순</a></li>
-					    <li><a href="#">조회수</a></li>					    
+					    <li>
+					   	 	<a href="mypage_cartList?sort=latest" id="latest_sort">최신순</a>
+					    </li>
+					    <li>					    	
+					    	<a href="mypage_cartList?sort=replyest" id="reply_sort">댓글많은순</a>
+					    </li>					    
 					  </ul>
 					</div>			
-				</div> -->
+				</div>		
 				
 			<c:if test="${vcf != null}">
 				<c:forEach items="${vcf}" var="list" begin="0" end="${vcfSize}"  step="1" varStatus="status">
@@ -69,7 +81,10 @@
 							</div>	
 							<div class="row">
 								<h5><fmt:formatDate value="${list.video_insert_date}" pattern="yyyy-MM-dd"/></h5>								
-							</div>			
+							</div>
+							<div class="row">
+								<h5>[${list.reply_count}]</h5>
+							</div>				
 						</div>
 						<!-- 전체공개,등급별 공개 여부 -->
 						<div class="col-md-2">

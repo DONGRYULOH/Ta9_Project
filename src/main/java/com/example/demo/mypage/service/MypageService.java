@@ -71,14 +71,18 @@ public class MypageService {
 	}
 	
 	// 해당 유저에 해당하는 동영상 게시물 리스트 가져오기 
-	public List<VideoJoinVideoFileDto> getVideoList(String user_id,Pagination page) {
+	public List<VideoJoinVideoFileDto> getVideoList(String user_id,Pagination page,String sort) {
 		try {			
 			Map<String,Object> userVideoList = new HashMap<>();
 			userVideoList.put("user_id", user_id);
 			userVideoList.put("perPageNum", page.getPerPageNum());
 			userVideoList.put("pageStart", page.getPageStart());
 			
-			return mypageDao.getVideoList(userVideoList);
+			if(sort.equals("no") || sort.equals("latest")) {
+				return mypageDao.getVideoList(userVideoList); // 최신순 정렬 
+			}else {
+				return mypageDao.getVideoRList(userVideoList); // 댓글많은순 정렬 
+			}				
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.err.println("해당 유저에 해당하는 동영상 게시물 리스트 가져오는중 에러발생 !!" + e.getMessage());
@@ -179,14 +183,18 @@ public class MypageService {
 	}
 
 	// 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기  
-	public List<VideoCart_FileDto> mypage_cartList(String user_id,Pagination page) {
+	public List<VideoCart_FileDto> mypage_cartList(String user_id,Pagination page,String sort) {
 		try {
 			Map<String,Object> userVideoList = new HashMap<>();
 			userVideoList.put("user_id", user_id);
 			userVideoList.put("perPageNum", page.getPerPageNum());
 			userVideoList.put("pageStart", page.getPageStart());
 			
-			return mypageDao.mypage_cartList(userVideoList);
+			if(sort.equals("no") || sort.equals("latest")) {
+				return mypageDao.mypage_cartList(userVideoList); // 최신순 정렬 
+			}else {
+				return mypageDao.mypage_cartRList(userVideoList); // 댓글많은순 정렬 
+			}						
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.err.println("현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기 중 에러발생!!" + e.getMessage());

@@ -36,5 +36,8 @@ public interface CategoryDao {
 
 	// 댓글 삭제 
 	int replyDelete(VideoReplyDto videoReplyDto) throws Exception;
+	
+	// 댓글 많은순 정렬해서 가져오기 
+	List<CvideoJoinVideoFileDto> getCategoryRList(Map<String, Object> list) throws Exception;
 
 }

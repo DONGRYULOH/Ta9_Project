@@ -1,6 +1,8 @@
 package com.example.demo.user.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.api.NaverSearch;
+import com.example.demo.api.NewsCategory;
 import com.example.demo.user.dao.UserDao;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.dto.VideoCartDto;
@@ -95,7 +98,7 @@ public class UserController {
 		// 로그인 성공여부에 따라 이동될 주소 ( -1 : 로그인 실패 , 1 : 로그인 성공)
 		String url = "user/login";
 		
-		// 로그인 성공시 세션 부여하기 
+		// <로그인 성공시 세션 부여하기 + 뉴스기사리스트 가져오기> 
 		HashMap<String,Integer> resultSet = userService.signIn(userDto,session);		
 		if(resultSet.get("loginCk") == 1) { // 로그인 성공시 index 페이지로 이동 
 			url = "index";
@@ -103,16 +106,15 @@ public class UserController {
 				model.addAttribute("result2",resultSet.get("loginAttCk"));
 				model.addAttribute("msg2","오늘 최초 로그인이시네요~ 100EXP 지급완료!");
 			}	
+			NewsCategory newsCategory = new NewsCategory();
+			List<Map<String,Object>> newsList = new ArrayList<Map<String,Object>>();
 			
-			Map<String,Object> sportsList = naverSearch.sportsSearch("sports");
-			Map<String,Object> it = naverSearch.itSearch("IT");
-			Map<String,Object> economyList = naverSearch.economySearch("경제");
-			Map<String,Object> foreignList = naverSearch.foreignSearch("foreign");
-			
-			model.addAttribute("sportsList",sportsList);
-			model.addAttribute("it",it);
-			model.addAttribute("economyList",economyList);
-			model.addAttribute("foreignList",foreignList);
+			for(int i=0;i<newsCategory.getNewsList().size();i++) {
+				newsList.add(naverSearch.Search(newsCategory.getNewsList().get(i)));
+			}
+				
+			model.addAttribute("allList",newsList);
+			model.addAttribute("allListSize",newsList.size());
 		}  
 								
 		model.addAttribute("login_msg","로그인 실패! 다시 시도 바람!");

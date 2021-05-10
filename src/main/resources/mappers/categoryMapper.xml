@@ -4,18 +4,30 @@
  
 <mapper namespace="com.example.demo.category.dao.CategoryDao"><!--namespace를 통해 UserDAO와 연결합니다. -->
   		
-  	<!-- 카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오기 -->
+  	<!-- 카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오기(최신순) -->
  	<select id="getCategoryList" parameterType="hashMap" resultType="com.example.demo.category.dto.CvideoJoinVideoFileDto">
-	 	      select v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
-						vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,
-	                    (select count(vr.reply_number) from video_reply vr where vr.video_number = v.video_number) as 'reply_count'
-					from video v JOIN video_file vf
-						on v.video_number = vf.video_number			
-				 where v.category_code = #{cateCode}
-	         order by v.video_number desc
+	 	      SELECT v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
+					 vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,
+	                 (SELECT count(vr.reply_number) FROM video_reply vr WHERE vr.video_number = v.video_number) AS 'reply_count'
+					FROM video v JOIN video_file vf
+					  ON v.video_number = vf.video_number			
+				 WHERE v.category_code = #{cateCode}
+	         ORDER BY v.video_number DESC
    		  LIMIT #{pageStart},#{perPageNum} 
  	</select>
 	
+	<!-- 카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오기(댓글많은순) -->
+ 	<select id="getCategoryRList" parameterType="hashMap" resultType="com.example.demo.category.dto.CvideoJoinVideoFileDto">
+	 	      SELECT v.video_number,v.user_id,v.category_code,v.video_title,v.public_check,v.video_reports,v.video_insert_date,v.video_rank_limit,
+					 vf.orgin_video_name,vf.stored_video_name,vf.orgin_video_thumb,vf.stored_video_thumb,
+	                 (SELECT count(vr.reply_number) FROM video_reply vr WHERE vr.video_number = v.video_number) AS 'reply_count'
+				   FROM video v JOIN video_file vf
+					 ON v.video_number = vf.video_number			
+				 WHERE v.category_code = #{cateCode}
+	         ORDER BY reply_count DESC,v.video_number DESC <!-- 댓글수가 똑같다면 가장 최신에 올린 게시물을 먼저 나오게 함  -->
+   		  LIMIT #{pageStart},#{perPageNum} 
+ 	</select>
+ 	
 	<!-- 해당 동영상 게시물 신고사유 INSERT -->
 	<insert id="reportInsert" parameterType="com.example.demo.category.dto.BlameDto" >
 		insert into blame(video_number,user_id,blame_name) values(#{video_number},#{user_id},#{blame_name})

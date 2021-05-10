@@ -35,7 +35,7 @@ public class CategoryController {
 	private MypageService mypageService;
 	
 	@RequestMapping(value = "/categoryList",method=RequestMethod.GET)
-	public String categoryList(@RequestParam("cateCode") String cateCode,Model model,Pagination page,HttpSession session) {
+	public String categoryList(@RequestParam("cateCode") String cateCode,@RequestParam(value = "sort",defaultValue = "no") String sort,Model model,Pagination page,HttpSession session) {
 				
 		UserDto user = (UserDto)session.getAttribute("User");	
 		
@@ -44,13 +44,14 @@ public class CategoryController {
 		pageMaker.setCri(page);
 		pageMaker.setTotalCount(categoryService.totalCount(cateCode)); // 해당 카테고리의 총 동영상 게시글 수
 		
-		List<CvideoJoinVideoFileDto> categoryList = categoryService.getCategoryList(cateCode,page);
+		List<CvideoJoinVideoFileDto> categoryList = categoryService.getCategoryList(cateCode,page,sort);
 					
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryListSize", categoryList.size());
 		model.addAttribute("cateCode", cateCode);
 		model.addAttribute("pageMaker", pageMaker);		
 		model.addAttribute("UserSession",user);
+		model.addAttribute("Sort",sort);
 		
 		return "Category/categoryList";
 	}

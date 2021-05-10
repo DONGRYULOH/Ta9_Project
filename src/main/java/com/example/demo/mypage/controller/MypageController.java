@@ -73,7 +73,7 @@ public class MypageController {
 	
 	// 동영상 게시물 리스트 페이지 이동 
 	@RequestMapping(value = "/mypage_videoList",method = RequestMethod.GET)
-	public String mypage_videoList(HttpSession session,Pagination page,Model model) {
+	public String mypage_videoList(HttpSession session,Pagination page,Model model,@RequestParam(value = "sort",defaultValue = "no") String sort ){
 		
 		UserDto user = (UserDto)session.getAttribute("User");
 		
@@ -82,12 +82,13 @@ public class MypageController {
 		pageMaker.setCri(page);
 		pageMaker.setTotalCount(mypageService.userTotalCount(user.getUser_id())); // 해당 유저의 총 동영상 게시물 수 
 
-		List<VideoJoinVideoFileDto> videoBrdList = mypageService.getVideoList(user.getUser_id(),page);
+		List<VideoJoinVideoFileDto> videoBrdList = mypageService.getVideoList(user.getUser_id(),page,sort);
 
 		if(videoBrdList != null) {
 			model.addAttribute("videoBrdList",videoBrdList);
 			model.addAttribute("videoBrdListSize",videoBrdList.size());
-			model.addAttribute("pageMaker", pageMaker);	
+			model.addAttribute("pageMaker", pageMaker);
+			model.addAttribute("Sort",sort);
 		}
 		
 		return "myPage/mypage_videoList";
@@ -176,7 +177,7 @@ public class MypageController {
 	
 	// 동영상 게시물 위시리스트 페이지 이동 
 	@RequestMapping("/mypage_cartList")
-	public String mypage_cartList(HttpSession session,Model model,Pagination page) {
+	public String mypage_cartList(HttpSession session,Model model,Pagination page,@RequestParam(value = "sort",defaultValue = "no") String sort) {
 		
 		UserDto user = (UserDto)session.getAttribute("User");
 		
@@ -186,11 +187,12 @@ public class MypageController {
 		pageMaker.setTotalCount(mypageService.userCartTotalCount(user.getUser_id())); // 해당 유저의 총 동영상 게시물 수 
 		
 		// 현재 세션에 저장되어 있는 유저에 대한 위시리스트 목록 가져오기  
-		List<VideoCart_FileDto> vcf = mypageService.mypage_cartList(user.getUser_id(),page);
+		List<VideoCart_FileDto> vcf = mypageService.mypage_cartList(user.getUser_id(),page,sort);
 		
 		model.addAttribute("vcf",vcf);
 		model.addAttribute("vcfSize",vcf.size());
 		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("Sort",sort);
 		
 		return "myPage/mypage_cartList";
 	}

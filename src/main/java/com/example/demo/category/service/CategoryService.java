@@ -21,14 +21,18 @@ public class CategoryService {
 	private CategoryDao categoryDao;
 	
 	// 카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오기 
-	public List<CvideoJoinVideoFileDto> getCategoryList(String cateCode,Pagination page) {
+	public List<CvideoJoinVideoFileDto> getCategoryList(String cateCode,Pagination page,String sort) {
 		try {
 			Map<String,Object> list = new HashMap<>();
 			list.put("cateCode", cateCode);
 			list.put("perPageNum", page.getPerPageNum());
 			list.put("pageStart", page.getPageStart());
 			
-			return categoryDao.getCategoryList(list);
+			if(sort.equals("no") || sort.equals("latest")) {
+				return categoryDao.getCategoryList(list); // 최신순 정렬 
+			}else {
+				return categoryDao.getCategoryRList(list); // 댓글많은순 정렬 
+			}						
 		} catch (Exception e) {
 			e.getStackTrace();
 			System.err.println("카테고리 코드 번호에 해당되는 모든 동영상 게시물 가져오는중 에러발생 !!" + e.getMessage());

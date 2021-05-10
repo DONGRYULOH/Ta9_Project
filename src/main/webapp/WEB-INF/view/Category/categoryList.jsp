@@ -28,29 +28,51 @@
                             <div class="home_text">                            	
                                 <c:choose>
                             		<c:when test="${cateCode == '101'}">
-                                		<h1 class="text-white text-uppercase">스포츠(카테고리)</h1>
+                                		<h1 class="text-white text-uppercase">스포츠</h1>
                                 	</c:when>
                                 	<c:when test="${cateCode == '102'}">
-                                		<h1 class="text-white text-uppercase">개발(카테고리)</h1>
+                                		<h1 class="text-white text-uppercase">개발</h1>
                                 	</c:when>
                                 	<c:when test="${cateCode == '103'}">
-                                		<h1 class="text-white text-uppercase">경제(카테고리)</h1>
+                                		<h1 class="text-white text-uppercase">경제</h1>
                                 	</c:when>
                                 	<c:when test="${cateCode == '104'}">
-                                		<h1 class="text-white text-uppercase">외국어(카테고리)</h1>
+                                		<h1 class="text-white text-uppercase">외국어</h1>
                                 	</c:when>
                                 	<c:when test="${cateCode == '105'}">
-                                		<h1 class="text-white text-uppercase">ETC(카테고리)</h1>
+                                		<h1 class="text-white text-uppercase">ETC</h1>
                                 	</c:when>
                                 </c:choose>
                             </div>
                         </div>
-                    </div><!--End off row-->
-                </div><!--End off container -->
+                 </div><!--End off row-->
+             </div><!--End off container -->
         </div>  	             
 
-			<!-- 스포츠 관련 컨테이너 -->
-			<div class="container" style="margin-top: 50px;">			
+			<div class="container" style="margin-top: 50px;">		
+				
+				<!-- 정렬(최신순,댓글많은순) -->
+				<div class="row" style="padding-bottom: 50px;margin-top: 10px;">
+					<div class="dropdown" >
+					  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="sort">
+					  <c:if test="${Sort eq 'no' || Sort eq 'latest'}">
+					  	최신순
+					  </c:if>
+					  <c:if test="${Sort eq 'replyest' }">
+					  	댓글많은순
+					  </c:if>
+					  <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" >
+					    <li>
+					   	 	<a href="categoryList?cateCode=${cateCode}&sort=latest" id="latest_sort">최신순</a>
+					    </li>
+					    <li>					    	
+					    	<a href="categoryList?cateCode=${cateCode}&sort=replyest" id="reply_sort">댓글많은순</a>
+					    </li>					    
+					  </ul>
+					</div>			
+				</div>								
 				
 				<c:forEach items="${categoryList}" var="list" begin="0" end="${categoryListSize}"  step="1" varStatus="status">
 					<div class="row" style="margin-bottom: 40px;">												
@@ -188,4 +210,15 @@
     </body>
     	
     	<%@ include file="/WEB-INF/include/js_import.jsp" %>
+    	
+    	<!-- 최신순,댓글많은순 클릭시 펑션 -->
+    	<script type="text/javascript">
+			$('#latest_sort').click(function(){						  						 
+				document.getElementById("sort").innerHTML = "최신순<span class='caret'></span>";			   							  
+			});
+			
+			$('#reply_sort').click(function(){
+				document.getElementById("sort").innerHTML = "댓글많은순<span class='caret'></span>";						 					   							  
+			});
+		</script>
 </html>

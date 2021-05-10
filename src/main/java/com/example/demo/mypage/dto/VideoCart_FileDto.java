@@ -22,4 +22,7 @@ public class VideoCart_FileDto {
 	private String stored_video_name;
 	private String orgin_video_thumb;
 	private String stored_video_thumb;
+	
+	// 댓글 개수 
+	private int reply_count;
 }
