@@ -100,6 +100,25 @@
 	         ORDER BY v.video_number DESC
    		  LIMIT #{pageStart},#{perPageNum} 
 	</select>
+	
+	<!--  
+		게시물 차트에 뿌려주는 쿼리 
+	<select id="getCateCnt" parameterType="String" resultType="int">
+		select count(*) 
+			from video
+		 where category_code = #{category_code} AND date_format(video_insert_date,'%Y-%m-%d') = curdate()
+	</select>
+	
+
+	<select id="getAllCateCnt"  resultType="int">
+		select count(*) 
+			from video
+		 where date_format(video_insert_date,'%Y-%m-%d') = curdate()
+	</select>
+	
+	-->
+	
+	
 </mapper>
 
 

@@ -104,7 +104,7 @@
 							
 							<!-- 동영상 파일 선택 -->
 							<div class="row" style="margin-bottom: 30px;">																  	  	
-							  	  <input type="file" id="video_File" name="video_File" onchange="setVideo(event);"/>				  	  								  	  	
+							  	  <input type="file" id="video_File" name="video_File" onchange="setVideo(event);" required/>				  	  								  	  	
 							</div>	
 		
 							
@@ -134,15 +134,9 @@
     
     	/* 1.썸네일 이미지 선택시 화면에 표시해주기 + 용량 제한 */
     	function setThumbnail(event) { 
-    			console.log(event);
     			
-    		if($('#video_thumbNail').val() == null){
-    			return;
-    		}
     		$("#image_container").empty();
-
-    		console.log("파일 타입:" + event.target.files[0].type);   
-    		//console.log("파일 사이즈:" + event.target.files[0].size);    		
+    		    		  	
     		// 파일 업로드 용량이 50MB 까지 올릴수 있도록 제한 시킴 
     		if(event.target.files[0].size > 50000000){
     			validate[1] = false;
@@ -152,7 +146,7 @@
     		
     		// 가장 많이 쓰이는 이미지 파일 형식인 jpeg,gif,png,bmp 만 업로드가 가능하도록 검증   
     		if(event.target.files[0].type != "image/jpeg" && event.target.files[0].type != "image/gif" && event.target.files[0].type != "image/png" && event.target.files[0].type != "image/bmp"){
-    			validate[2] = false;
+    			validate[1] = false;
     			alert("해당 이미지 파일 형식은 현재 웹사이트에서 지원하지 않습니다! (jpeg,gif,png,bmp로 끝나는 이미지 파일 형식만 업로드 가능합니다!)"); 
     			return false;
     		}
@@ -176,9 +170,6 @@
     	
     	/* 2.비디오 영상 올릴시 용량 제한 + HTML5 지원하는 비디오 타입(mp4,ogg/ogv,webm)검증 */
     	function setVideo(event) {     		    		    
-    		
-
-    		console.log("파일 타입:" + event.target.files[0].type);
     		
     		// 파일 업로드 용량이 100MB 까지 올릴수 있도록 제한 시킴 (100 000 000 byte -> 100MB)
     		if(event.target.files[0].size > 100000000){
@@ -205,14 +196,16 @@
     	    if( $("#video_title").val().trim() == '' || $("#video_title").val().trim() == null){ // 공백 검증 
     	    	validate[0] = false;
     	    	alert("제목을 입력해주세요!");
+    	    	return false;
     	    }else if($("#video_title").val().length > 100){ // 글자수 검증(100자 이내)    	    	 
     	    	validate[0] = false; 
     	    	alert("제목은 100자 이내로만 입력 가능합니다!");
+    	    	return false;
     	    }else{
     	    	validate[0] = true;
     	    }
     		
-			// 2. 전체 유효성 검증 
+			// 2.전체 유효성 검증 
 			for (let i = 0; i < validate.length; i++) {
 				if (validate[i] == false) {
 					switch (i) {

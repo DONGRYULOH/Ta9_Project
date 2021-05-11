@@ -43,4 +43,13 @@ public interface CategoryDao {
 	// 검색 
 	List<CvideoJoinVideoFileDto> getCategorySearchList(Map<String, Object> searchList) throws Exception;
 
+	// 오늘 등록된 전체 동영상 게시물 개수  
+	//Integer getAllCateCnt() throws Exception;
+	
+	// 오늘 등록된 카테고리별 동영상 게시물 수 
+	//Integer getCateCnt(String category_code) throws Exception;
+	
+	
+		
+
 }

@@ -175,7 +175,7 @@
 							  	  <input type="file" id="video_thumbNail" name="video_thumbNail" onchange="setThumbnail(event);"/>
 							  	  <div id="image_container">
 							  	  		<img src="/fileUpload/${videoDetail.stored_video_thumb}"  />
-							  	  		<input type="hidden" value="orgin_ok" name="orgin_video_thumbNail" />
+							  	  		<input type="hidden" value="orgin_ok" name="orgin_video_thumbNail" id="orgin_video_thumbNail"/>
 							  	  </div>				  	
 							  	   <!-- 
 							  	   		동영상 게시글을 수정했을때 name="orgin_video_thumbNail" 해당 값이 없으면
@@ -213,9 +213,7 @@
     	function setThumbnail(event) { 
     		
     		$("#image_container").empty();
-
-    		console.log("파일 타입:" + event.target.files[0].type);   
-    		//console.log("파일 사이즈:" + event.target.files[0].size);    		
+ 		
     		// 파일 업로드 용량이 50MB 까지 올릴수 있도록 제한 시킴 
     		if(event.target.files[0].size > 50000000){
     			validate[1] = false;
@@ -261,7 +259,16 @@
     	    	validate[0] = true;
     	    }
     		
-			// 2. 전체 유효성 검증 
+    		// 2.썸네일 이미지 공백검증 
+    		if($("#video_thumbNail").val() == '' ||  $("#video_thumbNail").val() == null || $("#video_thumbNail").val().empty() ){
+    			if( $("#orgin_video_thumbNail").val() == null){
+    				validate[1] = false; 
+    	    		alert("썸네일 파일을 첨부해주세요!");
+    	    		return false;
+    			}    	    	
+    		}
+    		
+			// 3. 전체 유효성 검증 
 			for (let i = 0; i < validate.length; i++) {
 				if (validate[i] == false) {
 					switch (i) {

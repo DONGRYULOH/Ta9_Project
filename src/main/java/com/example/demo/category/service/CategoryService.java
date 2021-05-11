@@ -1,5 +1,6 @@
 package com.example.demo.category.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,6 +135,27 @@ public class CategoryService {
 		}
 		return null;
 	}
+
+	// 오늘 등록된 카테고리별 동영상 게시물 수 가져오기 
+	/*
+	public Map<String,Integer> getCategoryCount() {		
+		try {
+			Map<String,Integer> allCategoryCount = new HashMap<>();
+			allCategoryCount.put("sports", categoryDao.getCateCnt("101")); //스포츠 
+			allCategoryCount.put("it", categoryDao.getCateCnt("102")); // 개발 
+			allCategoryCount.put("economey", categoryDao.getCateCnt("103")); //경제
+			allCategoryCount.put("foregin", categoryDao.getCateCnt("104")); //외국어
+			allCategoryCount.put("etc", categoryDao.getCateCnt("105")); //ETC
+			allCategoryCount.put("all", categoryDao.getAllCateCnt()); //전체 동영상 게시물 수  
+			
+			return allCategoryCount;
+		} catch (Exception e) {
+			e.getStackTrace();
+			System.err.println("오늘 등록된 카테고리별 동영상 게시물 수 가져오는 중 에러발생!!" + e.getMessage());
+		}
+		return null;
+	}
+	*/
 	
 	
 }

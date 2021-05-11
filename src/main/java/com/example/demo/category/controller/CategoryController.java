@@ -130,8 +130,7 @@ public class CategoryController {
 		//현재세션에 저장되어있는 유저닉네임 가져오기 
 		UserDto user = (UserDto)session.getAttribute("User");		
 		videoReplyDto.setReply_register(user.getUser_nickname());
-		int result = categoryService.replyInsert(videoReplyDto);
-		System.out.println("댓글 작성 결과값:" + result);
+		categoryService.replyInsert(videoReplyDto);		
 		
 	}
 	
